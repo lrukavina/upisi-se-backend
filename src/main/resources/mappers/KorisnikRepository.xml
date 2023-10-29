@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.korisnik.KorisnikRepository">
+    <resultMap id="korisnikResultMap" type="Korisnik">
+        <id property="id" column="id" />
+        <id property="ime" column="ime" />
+        <id property="prezime" column="prezime" />
+        <id property="email" column="email" />
+        <id property="korisnickoIme" column="korisnicko_ime" />
+        <id property="lozinka" column="lozinka" />
+        <id property="rola" column="rola" />
+    </resultMap>
+
+    <sql id="korisnikSelectColumns">
+        ${alias}.id,
+        ${alias}.ime,
+        ${alias}.prezime,
+        ${alias}.email,
+        ${alias}.korisnicko_ime,
+        ${alias}.lozinka,
+        ${alias}.rola
+    </sql>
+
+    <select id="dohvatiPoId" parameterType="Integer" resultMap="korisnikResultMap">
+        SELECT  <include refid="korisnikSelectColumns">
+        <property name="alias" value="korisnik"/>
+    </include>
+        FROM korisnik
+        WHERE korisnik.id = #{id}
+    </select>
+
+    <select id="dohvatiPoKorisnickomImenu" parameterType="String" resultMap="korisnikResultMap">
+        SELECT  <include refid="korisnikSelectColumns">
+                 <property name="alias" value="korisnik"/>
+                </include>
+          FROM korisnik
+         WHERE korisnik.korisnicko_ime = #{korisnickoIme}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO korisnik (ime,
+                             prezime,
+                             email,
+                             korisnicko_ime,
+                             lozinka,
+                             rola)
+        VALUES (#{ime, jdbcType=VARCHAR},
+                #{prezime, jdbcType=VARCHAR},
+                #{email, jdbcType=VARCHAR},
+                #{korisnickoIme, jdbcType=VARCHAR},
+                #{lozinka, jdbcType=VARCHAR},
+                #{rola, jdbcType=VARCHAR})
+    </insert>
+</mapper>
