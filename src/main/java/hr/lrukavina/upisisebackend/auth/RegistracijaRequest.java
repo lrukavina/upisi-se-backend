@@ -1,16 +1,19 @@
 package hr.lrukavina.upisisebackend.auth;
 
 import hr.lrukavina.upisisebackend.model.korisnik.Rola;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
-@AllArgsConstructor
+@SuperBuilder
+@NoArgsConstructor
 public class RegistracijaRequest {
   private String ime;
   private String prezime;
+  private String jmbag;
+  private String adresa;
   private String lozinka;
   private Rola rola;
+  private Integer visokoUcilisteId;
 }
