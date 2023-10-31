@@ -19,13 +19,19 @@ public class Korisnik implements UserDetails {
   private Integer id;
   private String ime;
   private String prezime;
+  private String jmbag;
+  private String adresa;
   private String email;
   private String korisnickoIme;
   private String lozinka;
   private Rola rola;
+  private Integer visokoUcilisteId;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
+    if (rola == null) {
+      return null;
+    }
     return List.of(new SimpleGrantedAuthority(rola.name()));
   }
 
