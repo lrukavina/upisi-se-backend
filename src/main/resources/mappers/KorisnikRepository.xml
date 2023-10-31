@@ -8,50 +8,86 @@
         <id property="id" column="id" />
         <id property="ime" column="ime" />
         <id property="prezime" column="prezime" />
+        <id property="jmbag" column="jmbag" />
+        <id property="adresa" column="adresa" />
         <id property="email" column="email" />
         <id property="korisnickoIme" column="korisnicko_ime" />
         <id property="lozinka" column="lozinka" />
         <id property="rola" column="rola" />
+        <id property="visokoUcilisteId" column="visoko_uciliste_id" />
     </resultMap>
 
     <sql id="korisnikSelectColumns">
         ${alias}.id,
         ${alias}.ime,
         ${alias}.prezime,
+        ${alias}.jmbag,
+        ${alias}.adresa,
         ${alias}.email,
         ${alias}.korisnicko_ime,
         ${alias}.lozinka,
-        ${alias}.rola
+        ${alias}.rola,
+        ${alias}.visoko_uciliste_id
     </sql>
 
-    <select id="dohvatiPoId" parameterType="Integer" resultMap="korisnikResultMap">
-        SELECT  <include refid="korisnikSelectColumns">
-        <property name="alias" value="korisnik"/>
-    </include>
-        FROM korisnik
-        WHERE korisnik.id = #{id}
+    <select id="dohvati" parameterType="Integer" resultMap="korisnikResultMap">
+        select  <include refid="korisnikSelectColumns">
+                 <property name="alias" value="korisnik"/>
+                </include>
+        from korisnik
+        where korisnik.id = #{korisnikId}
     </select>
 
     <select id="dohvatiPoKorisnickomImenu" parameterType="String" resultMap="korisnikResultMap">
-        SELECT  <include refid="korisnikSelectColumns">
+        select  <include refid="korisnikSelectColumns">
                  <property name="alias" value="korisnik"/>
                 </include>
-          FROM korisnik
-         WHERE korisnik.korisnicko_ime = #{korisnickoIme}
+          from korisnik
+         where korisnik.korisnicko_ime = #{korisnickoIme}
     </select>
 
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO korisnik (ime,
-                             prezime,
-                             email,
-                             korisnicko_ime,
-                             lozinka,
-                             rola)
-        VALUES (#{ime, jdbcType=VARCHAR},
+        insert into korisnik (ime,
+                              prezime,
+                              jmbag,
+                              adresa,
+                              email,
+                              korisnicko_ime,
+                              lozinka,
+                              rola,
+                              visoko_uciliste_id)
+        values (#{ime, jdbcType=VARCHAR},
                 #{prezime, jdbcType=VARCHAR},
+                #{jmbag, jdbcType=VARCHAR},
+                #{adresa, jdbcType=VARCHAR},
                 #{email, jdbcType=VARCHAR},
                 #{korisnickoIme, jdbcType=VARCHAR},
                 #{lozinka, jdbcType=VARCHAR},
-                #{rola, jdbcType=VARCHAR})
+                #{rola, jdbcType=VARCHAR},
+                #{visokoUcilisteId, jdbcType=BIGINT})
     </insert>
+
+    <update id="azuriraj">
+        update korisnik
+           set korisnik.ime                = #{ime, jdbcType=VARCHAR},
+               korisnik.prezime            = #{prezime, jdbcType=VARCHAR},
+               korisnik.jmbag              = #{jmbag, jdbcType=VARCHAR},
+               korisnik.adresa             = #{adresa, jdbcType=VARCHAR},
+               korisnik.email              = #{email, jdbcType=VARCHAR},
+               korisnik.korisnicko_ime     = #{korisnickoIme, jdbcType=VARCHAR},
+               korisnik.lozinka            = #{lozinka, jdbcType=VARCHAR},
+               korisnik.rola               = #{rola, jdbcType=VARCHAR},
+               korisnik.visoko_uciliste_id = #{visokoUcilisteId, jdbcType=VARCHAR}
+        where  korisnik.id                 =  #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisiPoKorisnickomImenu" parameterType="String">
+        delete from korisnik
+        where korisnik.korisnicko_ime = #{korisnickoIme}
+    </delete>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from korisnik
+        where korisnik.id = #{korisnikId}
+    </delete>
 </mapper>

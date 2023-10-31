@@ -20,7 +20,7 @@ public class ApplicationConfig {
 
   @Bean
   public UserDetailsService userDetailsService() {
-    return korisnikManager::dohvatiPoKorisnickomImenu;
+    return korisnikManager::dohvati;
   }
 
   @Bean

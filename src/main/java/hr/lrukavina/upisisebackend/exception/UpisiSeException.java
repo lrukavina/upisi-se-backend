@@ -14,6 +14,12 @@ public class UpisiSeException extends RuntimeException {
     this.status = status;
   }
 
+  public UpisiSeException(VrstaPoruke vrstaPoruke) {
+    Poruka poruka = Poruka.buildPoruka(vrstaPoruke);
+    this.poruke = List.of(poruka);
+    this.status = HttpStatus.BAD_REQUEST;
+  }
+
   public List<Poruka> getPoruke() {
     return poruke;
   }

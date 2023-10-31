@@ -27,10 +27,13 @@ public class AuthService {
         Korisnik.builder()
             .ime(request.getIme())
             .prezime(request.getPrezime())
+            .jmbag(request.getJmbag())
+            .adresa(request.getAdresa())
             .email(email)
             .korisnickoIme(korisnickoIme)
             .lozinka(passwordEncoder.encode(request.getLozinka()))
             .rola(request.getRola())
+            .visokoUcilisteId(request.getVisokoUcilisteId())
             .build();
     korisnikManager.spremi(korisnik);
     var jwtToken = jwtService.generateToken(korisnik);
@@ -45,7 +48,7 @@ public class AuthService {
   public AuthResponse authenticate(AuthRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getKorisnickoIme(), request.getLozinka()));
-    var user = korisnikManager.dohvatiPoKorisnickomImenu(request.getKorisnickoIme());
+    var user = korisnikManager.dohvati(request.getKorisnickoIme());
     var jwtToken = jwtService.generateToken(user);
     return AuthResponse.builder().token(jwtToken).build();
   }
