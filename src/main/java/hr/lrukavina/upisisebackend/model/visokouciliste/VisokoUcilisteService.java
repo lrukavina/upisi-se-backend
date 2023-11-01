@@ -7,7 +7,7 @@ import hr.lrukavina.upisisebackend.model.visokouciliste.response.VisokoUcilisteD
 public interface VisokoUcilisteService {
   VisokoUcilisteDto dohvati(String sifra);
 
-  void spremi(SpremiVisokoUcilisteRequest visokoUciliste);
+  VisokoUcilisteDto spremi(SpremiVisokoUcilisteRequest visokoUciliste);
 
   VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest visokoUciliste, String sifra);
 

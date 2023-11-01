@@ -27,9 +27,10 @@ public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
 
   @Override
   @Transactional
-  public void spremi(SpremiVisokoUcilisteRequest request) {
+  public VisokoUcilisteDto spremi(SpremiVisokoUcilisteRequest request) {
     VisokoUciliste visokoUciliste = VisokoUcilisteMapper.pripremiSpremanje(request);
     manager.spremi(visokoUciliste);
+    return VisokoUcilisteMapper.toDto(visokoUciliste);
   }
 
   @Override

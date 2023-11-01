@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class VisokoUcilisteDto {
+  private String sifra;
   private String naziv;
   private String adresa;
   private String postanskiBroj;

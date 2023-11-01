@@ -30,6 +30,7 @@ public class KorisnikMapper {
     return KorisnikDto.builder()
         .ime(korisnik.getIme())
         .prezime(korisnik.getPrezime())
+        .korisnickoIme(korisnik.getKorisnickoIme())
         .jmbag(korisnik.getJmbag())
         .adresa(korisnik.getJmbag())
         .rola(korisnik.getRola())

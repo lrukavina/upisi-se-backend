@@ -11,6 +11,7 @@ public class VisokoUcilisteMapper {
 
   public static VisokoUcilisteDto toDto(VisokoUciliste visokoUciliste) {
     return VisokoUcilisteDto.builder()
+        .sifra(Utils.sifrirajId(visokoUciliste.getId()))
         .naziv(visokoUciliste.getNaziv())
         .adresa(visokoUciliste.getAdresa())
         .postanskiBroj(visokoUciliste.getPostanskiBroj())
