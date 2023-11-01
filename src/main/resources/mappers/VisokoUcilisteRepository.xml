@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.visokouciliste.VisokoUciliste">
+    <resultMap id="visokoUcilisteResultMap" type="VisokoUciliste">
+        <id property="id" column="id" />
+        <id property="naziv" column="naziv" />
+        <id property="adresa" column="adresa" />
+        <id property="postanskiBroj" column="postanski_broj" />
+        <id property="mjesto" column="mjesto" />
+        <id property="iban" column="iban" />
+        <id property="oib" column="oib" />
+    </resultMap>
+
+    <sql id="visokoUcilisteSelectColumns">
+        ${alias}.id,
+        ${alias}.naziv,
+        ${alias}.adresa,
+        ${alias}.postanski_broj,
+        ${alias}.mjesto,
+        ${alias}.iban,
+        ${alias}.oib
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="visokoUcilisteResultMap">
+        select  <include refid="visokoUcilisteSelectColumns">
+                 <property name="alias" value="visoko_uciliste"/>
+                </include>
+        from visoko_uciliste
+        where visoko_uciliste.id = #{visokoUcilisteId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into visoko_uciliste (naziv,
+                                     adresa,
+                                     postanski_broj,
+                                     mjesto,
+                                     iban,
+                                     oib)
+        values (#{naziv, jdbcType=VARCHAR},
+                #{adresa, jdbcType=VARCHAR},
+                #{postanskiBroj, jdbcType=VARCHAR},
+                #{mjesto, jdbcType=VARCHAR},
+                #{iban, jdbcType=VARCHAR},
+                #{oib, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="azuriraj">
+        update visoko_uciliste
+        set visoko_uciliste.naziv           = #{naziv, jdbcType=VARCHAR},
+            visoko_uciliste.adresa          = #{adresa, jdbcType=VARCHAR},
+            visoko_uciliste.postanski_broj  = #{postanskiBroj, jdbcType=VARCHAR},
+            visoko_uciliste.mjesto          = #{mjesto, jdbcType=VARCHAR},
+            visoko_uciliste.iban            = #{iban, jdbcType=VARCHAR},
+            visoko_uciliste.oib             = #{oib, jdbcType=VARCHAR}
+        where  visoko_uciliste.id           =  #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from visoko_uciliste
+        where visoko_uciliste.id = #{visokoUcilisteId}
+    </delete>
+</mapper>
