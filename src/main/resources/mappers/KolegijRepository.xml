@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.kolegij.KolegijRepository">
+    <resultMap id="kolegijResultMap" type="Kolegij">
+        <id property="id" column="id" />
+        <id property="naziv" column="naziv" />
+        <id property="ects" column="ects" />
+        <id property="semestar" column="semestar" />
+        <id property="isvuSifra" column="isvu_sifra" />
+        <id property="obavezan" column="obavezan" />
+        <id property="studijId" column="studij_id" />
+    </resultMap>
+
+    <sql id="kolegijSelectColumns">
+        ${alias}.id,
+        ${alias}.naziv,
+        ${alias}.ects,
+        ${alias}.semestar,
+        ${alias}.isvu_sifra
+        ${alias}.obavezan
+        ${alias}.studij_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="kolegijResultMap">
+        select  <include refid="kolegijSelectColumns">
+                 <property name="alias" value="kolegij"/>
+                </include>
+        from kolegij
+        where kolegij.id = #{kolegijId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into kolegij (naziv,
+                             ects,
+                             semestar,
+                             isvu_sifra,
+                             obavezan,
+                             studij_id)
+        values (#{naziv, jdbcType=VARCHAR},
+                #{ects, jdbcType=INTEGER},
+                #{semestar, jdbcType=INTEGER},
+                #{isvuSifra, jdbcType=VARCHAR},
+                #{obavezan, jdbcType=CHAR},
+                #{studijId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update kolegij
+        set kolegij.naziv      = #{naziv, jdbcType=VARCHAR},
+            kolegij.ects       = #{ects, jdbcType=INTEGER},
+            kolegij.semestar   = #{semestar, jdbcType=INTEGER},
+            kolegij.isvu_sifra = #{isvuSifra, jdbcType=VARCHAR},
+            kolegij.obavezan   = #{obavezan, jdbcType=CHAR},
+            kolegij.studij_id  = #{studijId, jdbcType=BIGINT}
+        where kolegij.id       = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from kolegij
+        where kolegij.id = #{kolegijId}
+    </delete>
+</mapper>

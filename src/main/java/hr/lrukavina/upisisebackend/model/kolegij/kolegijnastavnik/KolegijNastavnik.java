@@ -1,4 +1,4 @@
-package hr.lrukavina.upisisebackend.model.kolegij;
+package hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

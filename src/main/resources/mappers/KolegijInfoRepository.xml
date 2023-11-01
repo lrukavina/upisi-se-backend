@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.kolegij.kolegijinfo.KolegijInfoRepository">
+    <resultMap id="kolegijInfoResultMap" type="KolegijInfo">
+        <id property="id" column="id" />
+        <id property="informacije" column="informacije" />
+        <id property="kolegijId" column="kolegij_id" />
+    </resultMap>
+
+    <sql id="kolegijInfoSelectColumns">
+        ${alias}.id,
+        ${alias}.informacije,
+        ${alias}.kolegij_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="kolegijInfoResultMap">
+        select  <include refid="kolegijInfoSelectColumns">
+                 <property name="alias" value="kolegij_info"/>
+                </include>
+        from kolegij_info
+        where kolegij_info.id = #{kolegijInfoId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into kolegij_info (informacije,
+                                  kolegij_id)
+        values (#{informacije, jdbcType=VARCHAR},
+                #{kolegijId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update kolegij_info
+        set kolegij_info.informacije = #{informacije, jdbcType=VARCHAR},
+            kolegij_info.kolegij_id  = #{kolegijId, jdbcType=BIGINT}
+        where kolegij_info.id             = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from kolegij_info
+        where kolegij_info.id = #{kolegijInfoId}
+    </delete>
+</mapper>

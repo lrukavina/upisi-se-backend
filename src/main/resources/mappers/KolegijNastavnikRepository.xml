@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.KolegijNastavnikRepository">
+    <resultMap id="kolegijNastavnikResultMap" type="KolegijNastavnik">
+        <id property="id" column="id" />
+        <id property="ime" column="ime" />
+        <id property="prezime" column="prezime" />
+        <id property="titula" column="titula" />
+        <id property="kolegijId" column="kolegij_id" />
+    </resultMap>
+
+    <sql id="kolegijNastavnikSelectColumns">
+        ${alias}.id,
+        ${alias}.ime,
+        ${alias}.prezime,
+        ${alias}.titula,
+        ${alias}.kolegij_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="kolegijNastavnikResultMap">
+        select  <include refid="kolegijNastavnikSelectColumns">
+                 <property name="alias" value="kolegij_nastavnik"/>
+                </include>
+        from kolegij_nastavnik
+        where kolegij_nastavnik.id = #{kolegijNastavnikId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into kolegij_nastavnik (ime,
+                                       prezime,
+                                       titula,
+                                       kolegij_id)
+        values (#{ime, jdbcType=VARCHAR},
+                #{prezime, jdbcType=VARCHAR},
+                #{titula, jdbcType=VARCHAR},
+                #{kolegijId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update kolegij_nastavnik
+        set kolegij_nastavnik.ime         = #{ime, jdbcType=VARCHAR},
+            kolegij_nastavnik.prezime     = #{prezime, jdbcType=VARCHAR},
+            kolegij_nastavnik.titula      = #{titula, jdbcType=VARCHAR},
+            kolegij_nastavnik.kolegij_id  = #{kolegijId, jdbcType=BIGINT}
+        where kolegij_nastavnik.id        = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from kolegij_nastavnik
+        where kolegij_nastavnik.id = #{kolegijNastavnik}
+    </delete>
+</mapper>
