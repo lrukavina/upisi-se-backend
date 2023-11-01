@@ -2,7 +2,7 @@ package hr.lrukavina.upisisebackend.model.korisnik;
 
 import hr.lrukavina.upisisebackend.exception.UpisiSeException;
 import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
-import hr.lrukavina.upisisebackend.model.korisnik.request.AzurirajKorisnikaRequest;
+import hr.lrukavina.upisisebackend.model.korisnik.request.AzurKorisnikaRequest;
 import hr.lrukavina.upisisebackend.model.korisnik.response.KorisnikDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class KorisnikServiceImpl implements KorisnikService {
 
   @Override
   @Transactional
-  public KorisnikDto azuriraj(AzurirajKorisnikaRequest request, String korisnickoIme) {
+  public KorisnikDto azuriraj(AzurKorisnikaRequest request, String korisnickoIme) {
     Korisnik korisnik = manager.dohvati(korisnickoIme);
     if (korisnik == null) {
       throw new UpisiSeException(VrstaPoruke.KORISNIK_NE_POSTOJI_U_BAZI);

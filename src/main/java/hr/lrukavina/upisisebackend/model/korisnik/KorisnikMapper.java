@@ -1,7 +1,7 @@
 package hr.lrukavina.upisisebackend.model.korisnik;
 
 import hr.lrukavina.upisisebackend.common.SifraOpis;
-import hr.lrukavina.upisisebackend.model.korisnik.request.AzurirajKorisnikaRequest;
+import hr.lrukavina.upisisebackend.model.korisnik.request.AzurKorisnikaRequest;
 import hr.lrukavina.upisisebackend.model.korisnik.response.KorisnikDto;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 public class KorisnikMapper {
   private KorisnikMapper() {}
 
-  public static void pripremiZaAzuriranje(AzurirajKorisnikaRequest request, Korisnik korisnik) {
+  public static void pripremiZaAzuriranje(AzurKorisnikaRequest request, Korisnik korisnik) {
     Korisnik korisnikRequest =
         Korisnik.builder()
             .ime(request.getIme())

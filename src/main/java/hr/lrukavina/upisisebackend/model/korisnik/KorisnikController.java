@@ -1,6 +1,6 @@
 package hr.lrukavina.upisisebackend.model.korisnik;
 
-import hr.lrukavina.upisisebackend.model.korisnik.request.AzurirajKorisnikaRequest;
+import hr.lrukavina.upisisebackend.model.korisnik.request.AzurKorisnikaRequest;
 import hr.lrukavina.upisisebackend.model.korisnik.response.KorisnikDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class KorisnikController {
 
   @PutMapping("/azuriraj/{korisnickoIme}")
   public ResponseEntity<KorisnikDto> azuriraj(
-      @RequestBody AzurirajKorisnikaRequest request, @PathVariable final String korisnickoIme) {
+          @RequestBody AzurKorisnikaRequest request, @PathVariable final String korisnickoIme) {
     return ResponseEntity.ok(korisnikService.azuriraj(request, korisnickoIme));
   }
 
