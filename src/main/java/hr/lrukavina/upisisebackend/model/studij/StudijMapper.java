@@ -4,6 +4,7 @@ import hr.lrukavina.upisisebackend.common.SifraOpis;
 import hr.lrukavina.upisisebackend.model.studij.request.AzurStudijRequest;
 import hr.lrukavina.upisisebackend.model.studij.request.SpremiStudijRequest;
 import hr.lrukavina.upisisebackend.model.studij.response.StudijDto;
+import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 
@@ -17,7 +18,9 @@ public class StudijMapper {
         .sifra(Utils.sifrirajId(studij.getId()))
         .nazivStudija(studij.getNazivStudija())
         .nazivSmjera(studij.getNazivSmjera())
-        .ectsCijena(NumberFormat.getCurrencyInstance().format(studij.getEctsCijena()))
+        .ectsCijena(
+            NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
+                .format(studij.getEctsCijena()))
         .visokoUciliste(visokoUciliste)
         .build();
   }
