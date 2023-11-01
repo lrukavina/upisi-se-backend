@@ -13,7 +13,9 @@ public class RegistracijaRequest {
   private String prezime;
   private String jmbag;
   private String adresa;
+  private String email;
+  private String korisnickoIme;
   private String lozinka;
   private Rola rola;
-  private Integer visokoUcilisteId;
+  private String visokoUcilisteSifra;
 }

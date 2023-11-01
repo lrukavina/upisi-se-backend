@@ -27,4 +27,18 @@ public class Utils {
     }
     return nullFieldovi;
   }
+
+  public static Integer desifrirajId(String sifra) {
+    if (sifra == null) {
+      return null;
+    }
+    return Integer.valueOf(sifra);
+  }
+
+  public static String sifrirajId(Integer id) {
+    if (id == null) {
+      return null;
+    }
+    return String.format("%03d", id);
+  }
 }
