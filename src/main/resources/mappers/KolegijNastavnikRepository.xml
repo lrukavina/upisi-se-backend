@@ -28,6 +28,14 @@
         where kolegij_nastavnik.id = #{kolegijNastavnikId}
     </select>
 
+    <select id="dohvatiPoKolegijId" parameterType="Integer" resultMap="kolegijNastavnikResultMap">
+        select  <include refid="kolegijNastavnikSelectColumns">
+                 <property name="alias" value="kolegij_nastavnik"/>
+                </include>
+        from kolegij_nastavnik
+        where kolegij_nastavnik.kolegij_id = #{kolegijId}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into kolegij_nastavnik (ime,
                                        prezime,

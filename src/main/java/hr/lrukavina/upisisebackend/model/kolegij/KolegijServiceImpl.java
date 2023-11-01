@@ -1,0 +1,98 @@
+package hr.lrukavina.upisisebackend.model.kolegij;
+
+import hr.lrukavina.upisisebackend.common.SifraOpis;
+import hr.lrukavina.upisisebackend.common.SifraOpisHelper;
+import hr.lrukavina.upisisebackend.exception.UpisiSeException;
+import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
+import hr.lrukavina.upisisebackend.model.kolegij.kolegijinfo.KolegijInfo;
+import hr.lrukavina.upisisebackend.model.kolegij.kolegijinfo.KolegijInfoManager;
+import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.KolegijNastavnik;
+import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.KolegijNastavnikManager;
+import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.request.AzurKolegijNastavnikRequest;
+import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
+import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
+import hr.lrukavina.upisisebackend.utils.Utils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class KolegijServiceImpl implements KolegijService {
+  private final KolegijManager kolegijManager;
+  private final KolegijInfoManager kolegijInfoManager;
+  private final KolegijNastavnikManager kolegijNastavnikManager;
+  private final SifraOpisHelper sifraOpisHelper;
+
+  @Override
+  public KolegijDto dohvati(String sifra) {
+    Kolegij kolegij = kolegijManager.dohvati(Utils.desifrirajId(sifra));
+    if (kolegij == null) {
+      throw new UpisiSeException(VrstaPoruke.KOLEGIJ_NE_POSTOJI_U_BAZI);
+    }
+    KolegijInfo kolegijInfo = kolegijInfoManager.dohvatiPoKolegijId(kolegij.getId());
+
+    List<KolegijNastavnik> kolegijNastavnici =
+        kolegijNastavnikManager.dohvatiPoKolegijId(kolegij.getId());
+
+    SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
+
+    return KolegijMapper.toDto(
+        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  @Override
+  @Transactional
+  public KolegijDto spremi(SpremiKolegijRequest request) {
+    Kolegij kolegij = KolegijMapper.pripremiSpremanjeZaKolegij(request);
+
+    KolegijInfo kolegijInfo =
+        KolegijMapper.prirpemiSpremanjeZaKolegijInfo(request.getKolegijInfo());
+
+    List<KolegijNastavnik> kolegijNastavnici =
+        request.getNastavnici().stream()
+            .map(KolegijMapper::pripremiSpremanjeZaKolegijNastavnik)
+            .toList();
+
+    kolegijManager.spremi(kolegij);
+    kolegijInfoManager.spremi(kolegijInfo);
+    kolegijNastavnici.forEach(kolegijNastavnikManager::spremi);
+
+    SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
+    return KolegijMapper.toDto(
+        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  @Override
+  @Transactional
+  public KolegijDto azuriraj(AzurKolegijRequest request, String sifra) {
+    Kolegij kolegij = kolegijManager.dohvati(Utils.desifrirajId(sifra));
+    if (kolegij == null) {
+      throw new UpisiSeException(VrstaPoruke.KOLEGIJ_NE_POSTOJI_U_BAZI);
+    }
+    KolegijInfo kolegijInfo = kolegijInfoManager.dohvatiPoKolegijId(kolegij.getId());
+
+    List<KolegijNastavnik> kolegijNastavnici =
+        kolegijNastavnikManager.dohvatiPoKolegijId(kolegij.getId());
+
+    SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
+
+    KolegijMapper.pripremiKolegijZaAzuriranje(request, kolegij);
+    KolegijMapper.pripremiKolegijInfoZaAzuriranje(request.getKolegijInfo(), kolegijInfo);
+    // todo dovrsiti:
+    for (AzurKolegijNastavnikRequest nastavnikRequest : request.getNastavnici()) {
+      // KolegijMapper.pripremiKolegijNastavnikZaAzuriranje(nastavnikRequest);
+    }
+
+    return KolegijMapper.toDto(
+        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  @Override
+  public void izbrisi(String sifra) {
+    kolegijManager.izbrisi(Utils.desifrirajId(sifra));
+  }
+}

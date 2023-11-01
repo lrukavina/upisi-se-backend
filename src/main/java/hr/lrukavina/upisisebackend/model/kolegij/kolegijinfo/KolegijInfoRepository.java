@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface KolegijInfoRepository {
   KolegijInfo dohvati(Integer kolegijInfoId);
 
+  KolegijInfo dohvatiPoKolegijId(Integer kolegijId);
+
   void spremi(KolegijInfo kolegijInfo);
 
   void azuriraj(KolegijInfo kolegijInfo);

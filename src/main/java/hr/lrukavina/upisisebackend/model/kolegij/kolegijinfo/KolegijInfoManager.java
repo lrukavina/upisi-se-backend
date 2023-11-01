@@ -12,6 +12,10 @@ public class KolegijInfoManager {
     return repository.dohvati(kolegijInfoId);
   }
 
+  public KolegijInfo dohvatiPoKolegijId(Integer kolegijId) {
+    return repository.dohvatiPoKolegijId(kolegijId);
+  }
+
   public void spremi(KolegijInfo kolegijInfo) {
     repository.spremi(kolegijInfo);
   }
