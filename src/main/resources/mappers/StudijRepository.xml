@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.studij.StudijRepository">
+    <resultMap id="studijResultMap" type="Studij">
+        <id property="id" column="id" />
+        <id property="nazivStudija" column="naziv_studija" />
+        <id property="nazivSmjera" column="naziv_smjera" />
+        <id property="ectsCijena" column="ects_cijena" />
+        <id property="visokoUcilisteId" column="visoko_uciliste_id" />
+    </resultMap>
+
+    <sql id="studijSelectColumns">
+        ${alias}.id,
+        ${alias}.naziv_studija,
+        ${alias}.naziv_smjera,
+        ${alias}.ects_cijena,
+        ${alias}.visoko_uciliste_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="studijResultMap">
+        select  <include refid="studijSelectColumns">
+                 <property name="alias" value="studij"/>
+                </include>
+        from studij
+        where studij.id = #{studijId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into studij (naziv_studija,
+                            naziv_smjera,
+                            ects_cijena,
+                            visoko_uciliste_id)
+        values (#{nazivStudija, jdbcType=VARCHAR},
+                #{nazivSmjera, jdbcType=VARCHAR},
+                #{ectsCijena, jdbcType=INTEGER},
+                #{visokoUcilisteId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update studij
+        set studij.naziv_studija      = #{nazivStudija, jdbcType=VARCHAR},
+            studij.naziv_smjera       = #{nazivSmjera, jdbcType=VARCHAR},
+            studij.ects_cijena        = #{ectsCijena, jdbcType=INTEGER},
+            studij.visoko_uciliste_id = #{visokoUcilisteId, jdbcType=BIGINT}
+        where studij.id               = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from studij
+        where studij.id = #{studijId}
+    </delete>
+</mapper>
