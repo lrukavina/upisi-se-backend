@@ -17,6 +17,9 @@ public class KorisnikServiceImpl implements KorisnikService {
   @Override
   public KorisnikDto dohvati(String korisnickoIme) {
     Korisnik korisnik = manager.dohvati(korisnickoIme);
+    if (korisnik == null) {
+      throw new UpisiSeException(VrstaPoruke.KORISNIK_NE_POSTOJI_U_BAZI);
+    }
     return KorisnikMapper.toDto(korisnik);
   }
 

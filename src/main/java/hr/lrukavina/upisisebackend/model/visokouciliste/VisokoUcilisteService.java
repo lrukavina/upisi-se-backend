@@ -9,7 +9,7 @@ public interface VisokoUcilisteService {
 
   void spremi(SpremiVisokoUcilisteRequest visokoUciliste);
 
-  void azuriraj(AzurVisokoUcilisteRequest visokoUciliste);
+  VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest visokoUciliste);
 
   void izbrisi(Integer visokoUcilisteId);
 }
