@@ -35,7 +35,7 @@ public class Utils {
     return Integer.valueOf(sifra);
   }
 
-  public String sifrirajId(Integer id) {
+  public static String sifrirajId(Integer id) {
     if (id == null) {
       return null;
     }

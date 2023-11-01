@@ -12,7 +12,6 @@ public class KorisnikDto {
   private String prezime;
   private String jmbag;
   private String adresa;
-  private String lozinka;
   private Rola rola;
   private SifraOpis visokoUciliste;
 }
