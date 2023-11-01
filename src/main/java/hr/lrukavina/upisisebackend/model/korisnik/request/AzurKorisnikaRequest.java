@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class AzurirajKorisnikaRequest extends RegistracijaRequest {
+public class AzurKorisnikaRequest extends RegistracijaRequest {
   private String email;
   private String korisnickoIme;
 }
