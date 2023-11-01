@@ -8,5 +8,6 @@
     </typeAliases>
     <mappers>
         <mapper resource="mappers/KorisnikRepository.xml"/>
+        <mapper resource="mappers/VisokoUcilisteRepository.xml"/>
     </mappers>
 </configuration>

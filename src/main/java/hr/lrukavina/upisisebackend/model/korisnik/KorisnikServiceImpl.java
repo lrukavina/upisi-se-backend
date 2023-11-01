@@ -31,7 +31,7 @@ public class KorisnikServiceImpl implements KorisnikService {
   private SifraOpis dohvatiVisokoUciliste(Integer id) {
     VisokoUciliste visokoUciliste = visokoUcilisteManager.dohvati(id);
     if (visokoUciliste == null) {
-      throw new UpisiSeException(VrstaPoruke.VISOKO_UCILISTE_NE_POSTOJI_U_BAZI);
+      return null;
     }
     return SifraOpis.builder()
         .sifra(Utils.sifrirajId(visokoUciliste.getId()))
