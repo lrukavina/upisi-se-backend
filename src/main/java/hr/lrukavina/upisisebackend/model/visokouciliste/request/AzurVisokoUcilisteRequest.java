@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public class AzurVisokoUcilisteRequest {
-  private String sifra;
   private String naziv;
   private String adresa;
   private String postanskiBroj;

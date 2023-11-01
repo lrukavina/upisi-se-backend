@@ -17,8 +17,8 @@ public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
   private final VisokoUcilisteManager manager;
 
   @Override
-  public VisokoUcilisteDto dohvati(Integer visokoUcilisteId) {
-    VisokoUciliste visokoUciliste = manager.dohvati(visokoUcilisteId);
+  public VisokoUcilisteDto dohvati(String sifra) {
+    VisokoUciliste visokoUciliste = manager.dohvati(Utils.desifrirajId(sifra));
     if (visokoUciliste == null) {
       throw new UpisiSeException(VrstaPoruke.VISOKO_UCILISTE_NE_POSTOJI_U_BAZI);
     }
@@ -34,8 +34,8 @@ public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
 
   @Override
   @Transactional
-  public VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest request) {
-    VisokoUciliste visokoUciliste = manager.dohvati(Utils.desifrirajId(request.getSifra()));
+  public VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest request, String sifra) {
+    VisokoUciliste visokoUciliste = manager.dohvati(Utils.desifrirajId(sifra));
     if (visokoUciliste == null) {
       throw new UpisiSeException(VrstaPoruke.VISOKO_UCILISTE_NE_POSTOJI_U_BAZI);
     }
@@ -45,5 +45,7 @@ public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
   }
 
   @Override
-  public void izbrisi(Integer visokoUcilisteId) {}
+  public void izbrisi(String sifra) {
+    manager.izbrisi(Utils.desifrirajId(sifra));
+  }
 }

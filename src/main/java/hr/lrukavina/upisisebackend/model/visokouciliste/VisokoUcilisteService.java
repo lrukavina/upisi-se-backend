@@ -5,11 +5,11 @@ import hr.lrukavina.upisisebackend.model.visokouciliste.request.SpremiVisokoUcil
 import hr.lrukavina.upisisebackend.model.visokouciliste.response.VisokoUcilisteDto;
 
 public interface VisokoUcilisteService {
-  VisokoUcilisteDto dohvati(Integer visokoUcilisteId);
+  VisokoUcilisteDto dohvati(String sifra);
 
   void spremi(SpremiVisokoUcilisteRequest visokoUciliste);
 
-  VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest visokoUciliste);
+  VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest visokoUciliste, String sifra);
 
-  void izbrisi(Integer visokoUcilisteId);
+  void izbrisi(String sifra);
 }
