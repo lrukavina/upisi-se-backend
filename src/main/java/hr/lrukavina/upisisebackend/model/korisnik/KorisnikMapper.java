@@ -18,7 +18,7 @@ public class KorisnikMapper {
             .korisnickoIme(request.getKorisnickoIme())
             .lozinka(request.getLozinka())
             .rola(request.getRola())
-            .visokoUcilisteId(request.getVisokoUcilisteId())
+            .visokoUcilisteId(Utils.desifrirajId(request.getVisokoUcilisteSifra()))
             .build();
 
     BeanUtils.copyProperties(korisnikRequest, korisnik, Utils.ignoreNullFieldove(korisnikRequest));

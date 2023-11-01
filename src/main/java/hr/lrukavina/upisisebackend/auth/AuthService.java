@@ -4,6 +4,7 @@ import hr.lrukavina.upisisebackend.config.JwtService;
 import hr.lrukavina.upisisebackend.model.korisnik.Korisnik;
 import hr.lrukavina.upisisebackend.model.korisnik.KorisnikManager;
 import hr.lrukavina.upisisebackend.utils.Konstante;
+import hr.lrukavina.upisisebackend.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,7 +34,7 @@ public class AuthService {
             .korisnickoIme(korisnickoIme)
             .lozinka(passwordEncoder.encode(request.getLozinka()))
             .rola(request.getRola())
-            .visokoUcilisteId(request.getVisokoUcilisteId())
+            .visokoUcilisteId(Utils.desifrirajId(request.getVisokoUcilisteSifra()))
             .build();
     korisnikManager.spremi(korisnik);
     var jwtToken = jwtService.generateToken(korisnik);
