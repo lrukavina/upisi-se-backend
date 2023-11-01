@@ -10,6 +10,7 @@ import lombok.Data;
 public class KorisnikDto {
   private String ime;
   private String prezime;
+  private String korisnickoIme;
   private String jmbag;
   private String adresa;
   private Rola rola;

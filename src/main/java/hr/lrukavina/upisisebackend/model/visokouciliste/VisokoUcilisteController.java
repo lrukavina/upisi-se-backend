@@ -1,6 +1,7 @@
 package hr.lrukavina.upisisebackend.model.visokouciliste;
 
 import hr.lrukavina.upisisebackend.model.visokouciliste.request.AzurVisokoUcilisteRequest;
+import hr.lrukavina.upisisebackend.model.visokouciliste.request.SpremiVisokoUcilisteRequest;
 import hr.lrukavina.upisisebackend.model.visokouciliste.response.VisokoUcilisteDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,12 @@ public class VisokoUcilisteController {
   @GetMapping("/dohvati/{sifra}")
   public ResponseEntity<VisokoUcilisteDto> dohvati(@PathVariable final String sifra) {
     return ResponseEntity.ok(visokoUcilisteService.dohvati(sifra));
+  }
+
+  @PostMapping("/spremi")
+  public ResponseEntity<VisokoUcilisteDto> spremi(
+      @RequestBody SpremiVisokoUcilisteRequest request) {
+    return ResponseEntity.ok(visokoUcilisteService.spremi(request));
   }
 
   @PutMapping("/azuriraj/{sifra}")

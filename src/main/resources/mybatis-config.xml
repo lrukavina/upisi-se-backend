@@ -9,5 +9,6 @@
     <mappers>
         <mapper resource="mappers/KorisnikRepository.xml"/>
         <mapper resource="mappers/VisokoUcilisteRepository.xml"/>
+        <mapper resource="mappers/StudijRepository.xml"/>
     </mappers>
 </configuration>
