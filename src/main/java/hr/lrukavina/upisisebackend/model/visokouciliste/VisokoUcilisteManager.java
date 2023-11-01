@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 public class VisokoUcilisteManager {
   private final VisokoUcilisteRepository repository;
 
-  VisokoUciliste dohvati(Integer visokoUcilisteId) {
+  public VisokoUciliste dohvati(Integer visokoUcilisteId) {
     return repository.dohvati(visokoUcilisteId);
   }
 
-  void spremi(VisokoUciliste visokoUciliste) {
+  public void spremi(VisokoUciliste visokoUciliste) {
     repository.spremi(visokoUciliste);
   }
 
-  void azuriraj(VisokoUciliste visokoUciliste) {
+  public void azuriraj(VisokoUciliste visokoUciliste) {
     repository.azuriraj(visokoUciliste);
   }
 
-  void izbrisi(Integer visokoUcilisteId) {
+  public void izbrisi(Integer visokoUcilisteId) {
     repository.izbrisi(visokoUcilisteId);
   }
 }

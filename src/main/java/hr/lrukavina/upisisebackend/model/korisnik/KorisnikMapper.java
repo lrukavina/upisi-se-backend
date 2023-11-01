@@ -26,13 +26,7 @@ public class KorisnikMapper {
     BeanUtils.copyProperties(korisnikRequest, korisnik, Utils.ignoreNullFieldove(korisnikRequest));
   }
 
-  public static KorisnikDto toDto(Korisnik korisnik) {
-    // todo implementirati nakon implementacije visokog ucilista
-    SifraOpis visokoUciliste =
-        SifraOpis.builder()
-            .sifra(Utils.sifrirajId(korisnik.getVisokoUcilisteId()))
-            .opis("Tehničko Veleučilište u Zagrebu")
-            .build();
+  public static KorisnikDto toDto(Korisnik korisnik, SifraOpis visokoUciliste) {
     return KorisnikDto.builder()
         .ime(korisnik.getIme())
         .prezime(korisnik.getPrezime())
