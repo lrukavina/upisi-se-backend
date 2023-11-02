@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.upis.UpisRepository">
+    <resultMap id="upisResultMap" type="Upis">
+        <id property="id" column="id" />
+        <id property="semestar" column="semestar" />
+        <id property="tstampOd" column="tstamp_od" />
+        <id property="tstampDo" column="tstamp_do" />
+        <id property="studijId" column="studij_id" />
+    </resultMap>
+
+    <sql id="upisSelectColumns">
+        ${alias}.id,
+        ${alias}.semestar,
+        ${alias}.tstamp_od,
+        ${alias}.tstamp_do,
+        ${alias}.studij_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="upisResultMap">
+        select  <include refid="upisSelectColumns">
+                 <property name="alias" value="upis"/>
+                </include>
+        from upis
+        where upis.id = #{upisId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into upis (semestar,
+                          tstamp_od,
+                          tstamp_do,
+                          studij_id)
+        values (#{semestar, jdbcType=INTEGER},
+                #{tstampOd, jdbcType=TIMESTAMP},
+                #{tstampDo, jdbcType=TIMESTAMP},
+                #{studijId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update upis
+        set upis.semestar  = #{nazivStudija, jdbcType=INTEGER},
+            upis.tstamp_od = #{nazivSmjera, jdbcType=TIMESTAMP},
+            upis.tstamp_do = #{ectsCijena, jdbcType=TIMESTAMP},
+            upis.studij_id = #{visokoUcilisteId, jdbcType=BIGINT}
+        where upis.id      = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from upis
+        where upis.id = #{upisId}
+    </delete>
+</mapper>
