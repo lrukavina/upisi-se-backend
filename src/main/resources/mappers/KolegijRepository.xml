@@ -19,8 +19,8 @@
         ${alias}.naziv,
         ${alias}.ects,
         ${alias}.semestar,
-        ${alias}.isvu_sifra
-        ${alias}.obavezan
+        ${alias}.isvu_sifra,
+        ${alias}.obavezan,
         ${alias}.studij_id
     </sql>
 

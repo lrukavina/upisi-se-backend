@@ -50,16 +50,19 @@ public class KolegijServiceImpl implements KolegijService {
   @Transactional
   public KolegijDto spremi(SpremiKolegijRequest request) {
     Kolegij kolegij = KolegijMapper.pripremiSpremanjeZaKolegij(request);
+    kolegijManager.spremi(kolegij);
 
     KolegijInfo kolegijInfo =
-        KolegijMapper.prirpemiSpremanjeZaKolegijInfo(request.getKolegijInfo());
+        KolegijMapper.prirpemiSpremanjeZaKolegijInfo(request.getKolegijInfo(), kolegij.getId());
 
     List<KolegijNastavnik> kolegijNastavnici =
         request.getNastavnici().stream()
-            .map(KolegijMapper::pripremiSpremanjeZaKolegijNastavnik)
+            .map(
+                nastavnikRequest ->
+                    KolegijMapper.pripremiSpremanjeZaKolegijNastavnik(
+                        nastavnikRequest, kolegij.getId()))
             .toList();
 
-    kolegijManager.spremi(kolegij);
     kolegijInfoManager.spremi(kolegijInfo);
     kolegijNastavnici.forEach(kolegijNastavnikManager::spremi);
 
@@ -88,12 +91,13 @@ public class KolegijServiceImpl implements KolegijService {
     List<KolegijNastavnik> kolegijNastavnici = new ArrayList<>();
     for (AzurKolegijNastavnikRequest nastavnikRequest : request.getNastavnici()) {
       KolegijNastavnik kolegijNastavnik;
-      Integer kolegijNastavnikId = Utils.desifrirajId(nastavnikRequest.getKolegijSifra());
+      Integer kolegijNastavnikId = Utils.desifrirajId(nastavnikRequest.getSifra());
 
       if (kolegijNastavnikId == null) {
         kolegijNastavnik =
             spremiKolegijNastavnik(
-                KolegijMapper.azurKolegijNastavnikToSpremiRequest(nastavnikRequest));
+                KolegijMapper.azurKolegijNastavnikToSpremiRequest(nastavnikRequest),
+                kolegij.getId());
       } else {
         kolegijNastavnik =
             azurirajKolegijNastavnik(nastavnikRequest, kolegijNastavniciBaza, kolegijNastavnikId);
@@ -124,8 +128,10 @@ public class KolegijServiceImpl implements KolegijService {
     return kolegijNastavnik;
   }
 
-  private KolegijNastavnik spremiKolegijNastavnik(SpremiKolegijNastavnikRequest request) {
-    KolegijNastavnik kolegijNastavnik = KolegijMapper.pripremiSpremanjeZaKolegijNastavnik(request);
+  private KolegijNastavnik spremiKolegijNastavnik(
+      SpremiKolegijNastavnikRequest request, Integer kolegijId) {
+    KolegijNastavnik kolegijNastavnik =
+        KolegijMapper.pripremiSpremanjeZaKolegijNastavnik(request, kolegijId);
     kolegijNastavnikManager.spremi(kolegijNastavnik);
     return kolegijNastavnik;
   }

@@ -77,20 +77,18 @@ public class KolegijMapper {
         .build();
   }
 
-  public static KolegijInfo prirpemiSpremanjeZaKolegijInfo(SpremiKolegijInfoRequest request) {
-    return KolegijInfo.builder()
-        .informacije(request.getInformacije())
-        .kolegijId(Utils.desifrirajId(request.getKolegijSifra()))
-        .build();
+  public static KolegijInfo prirpemiSpremanjeZaKolegijInfo(
+      SpremiKolegijInfoRequest request, Integer kolegijId) {
+    return KolegijInfo.builder().informacije(request.getInformacije()).kolegijId(kolegijId).build();
   }
 
   public static KolegijNastavnik pripremiSpremanjeZaKolegijNastavnik(
-      SpremiKolegijNastavnikRequest request) {
+      SpremiKolegijNastavnikRequest request, Integer kolegijId) {
     return KolegijNastavnik.builder()
         .ime(request.getIme())
         .prezime(request.getPrezime())
         .titula(request.getTitula())
-        .kolegijId(Utils.desifrirajId(request.getKolegijSifra()))
+        .kolegijId(kolegijId)
         .build();
   }
 
@@ -100,7 +98,6 @@ public class KolegijMapper {
         .ime(request.getIme())
         .prezime(request.getPrezime())
         .titula(request.getTitula())
-        .kolegijSifra(request.getKolegijSifra())
         .build();
   }
 
