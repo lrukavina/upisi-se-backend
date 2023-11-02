@@ -94,6 +94,16 @@ public class KolegijMapper {
         .build();
   }
 
+  public static SpremiKolegijNastavnikRequest azurKolegijNastavnikToSpremiRequest(
+      AzurKolegijNastavnikRequest request) {
+    return SpremiKolegijNastavnikRequest.builder()
+        .ime(request.getIme())
+        .prezime(request.getPrezime())
+        .titula(request.getTitula())
+        .kolegijSifra(request.getKolegijSifra())
+        .build();
+  }
+
   public static void pripremiKolegijZaAzuriranje(AzurKolegijRequest request, Kolegij kolegij) {
     Kolegij kolegijRequest =
         Kolegij.builder()

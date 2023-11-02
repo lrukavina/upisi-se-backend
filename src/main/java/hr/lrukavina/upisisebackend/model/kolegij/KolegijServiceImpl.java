@@ -9,6 +9,7 @@ import hr.lrukavina.upisisebackend.model.kolegij.kolegijinfo.KolegijInfoManager;
 import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.KolegijNastavnik;
 import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.KolegijNastavnikManager;
 import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.request.AzurKolegijNastavnikRequest;
+import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.request.SpremiKolegijNastavnikRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -75,20 +77,57 @@ public class KolegijServiceImpl implements KolegijService {
     }
     KolegijInfo kolegijInfo = kolegijInfoManager.dohvatiPoKolegijId(kolegij.getId());
 
-    List<KolegijNastavnik> kolegijNastavnici =
+    List<KolegijNastavnik> kolegijNastavniciBaza =
         kolegijNastavnikManager.dohvatiPoKolegijId(kolegij.getId());
 
     SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
 
     KolegijMapper.pripremiKolegijZaAzuriranje(request, kolegij);
     KolegijMapper.pripremiKolegijInfoZaAzuriranje(request.getKolegijInfo(), kolegijInfo);
-    // todo dovrsiti:
+
+    List<KolegijNastavnik> kolegijNastavnici = new ArrayList<>();
     for (AzurKolegijNastavnikRequest nastavnikRequest : request.getNastavnici()) {
-      // KolegijMapper.pripremiKolegijNastavnikZaAzuriranje(nastavnikRequest);
+      KolegijNastavnik kolegijNastavnik;
+      Integer kolegijNastavnikId = Utils.desifrirajId(nastavnikRequest.getKolegijSifra());
+
+      if (kolegijNastavnikId == null) {
+        kolegijNastavnik =
+            spremiKolegijNastavnik(
+                KolegijMapper.azurKolegijNastavnikToSpremiRequest(nastavnikRequest));
+      } else {
+        kolegijNastavnik =
+            azurirajKolegijNastavnik(nastavnikRequest, kolegijNastavniciBaza, kolegijNastavnikId);
+      }
+      kolegijNastavnici.add(kolegijNastavnik);
     }
 
     return KolegijMapper.toDto(
         kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  private KolegijNastavnik azurirajKolegijNastavnik(
+      AzurKolegijNastavnikRequest request,
+      List<KolegijNastavnik> kolegijNastavnici,
+      Integer kolegijNastavnikId) {
+
+    KolegijNastavnik kolegijNastavnik =
+        kolegijNastavnici.stream()
+            .filter(nastavnik -> kolegijNastavnikId.equals(nastavnik.getId()))
+            .findFirst()
+            .orElse(null);
+
+    if (kolegijNastavnik == null) {
+      throw new UpisiSeException(VrstaPoruke.NASTAVNIK_NE_POSTOJI_U_BAZI);
+    }
+    KolegijMapper.pripremiKolegijNastavnikZaAzuriranje(request, kolegijNastavnik);
+    kolegijNastavnikManager.azuriraj(kolegijNastavnik);
+    return kolegijNastavnik;
+  }
+
+  private KolegijNastavnik spremiKolegijNastavnik(SpremiKolegijNastavnikRequest request) {
+    KolegijNastavnik kolegijNastavnik = KolegijMapper.pripremiSpremanjeZaKolegijNastavnik(request);
+    kolegijNastavnikManager.spremi(kolegijNastavnik);
+    return kolegijNastavnik;
   }
 
   @Override
