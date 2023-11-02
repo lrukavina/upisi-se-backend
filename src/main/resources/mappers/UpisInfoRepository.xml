@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.upis.upisInfo.UpisInfoRepository">
+    <resultMap id="upisInfoResultMap" type="UpisInfo">
+        <id property="id" column="id" />
+        <id property="pozivNaBroj" column="poziv_na_broj" />
+        <id property="brojEctsa" column="broj_ectsa" />
+        <id property="upisniBroj" column="upisni_broj" />
+        <id property="opis" column="opis" />
+        <id property="status" column="status" />
+        <id property="upisId" column="upis_id" />
+        <id property="korisnikId" column="korisnik_id" />
+    </resultMap>
+
+    <sql id="upisInfoSelectColumns">
+        ${alias}.id,
+        ${alias}.poziv_na_broj,
+        ${alias}.broj_ectsa,
+        ${alias}.upisni_broj,
+        ${alias}.opis,
+        ${alias}.status,
+        ${alias}.upis_id,
+        ${alias}.korisnik_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="upisInfoResultMap">
+        select  <include refid="upisInfoSelectColumns">
+                 <property name="alias" value="upis_info"/>
+                </include>
+        from upis_info
+        where upis_info.id = #{upisInfoId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into upis_info (poziv_na_broj,
+                               broj_ectsa,
+                               upisni_broj,
+                               opis,
+                               status,
+                               upis_id,
+                               korisnik_id)
+        values (#{pozivNaBroj, jdbcType=VARCHAR},
+                #{brojEctsa, jdbcType=INTEGER},
+                #{upisniBroj, jdbcType=VARCHAR},
+                #{opis, jdbcType=VARCHAR},
+                #{status, jdbcType=VARCHAR},
+                #{upisId, jdbcType=BIGINT},
+                #{korisnikId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update upis_info
+        set upis_info.poziv_na_broj  = #{pozivNaBroj, jdbcType=VARCHAR},
+            upis_info.broj_ectsa     = #{brojEctsa, jdbcType=INTEGER},
+            upis_info.upisni_broj    = #{upisniBroj, jdbcType=VARCHAR},
+            upis_info.opis           = #{opis, jdbcType=VARCHAR}
+            upis_info.status         = #{status, jdbcType=VARCHAR},
+            upis_info.upis_id        = #{upisId, jdbcType=BIGINT},
+            upis_info.korisnik_id    = #{korisnikId, jdbcType=BIGINT}
+        where upis_info.id           = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from upis_info
+        where upis_info.id = #{upisInfoId}
+    </delete>
+</mapper>
