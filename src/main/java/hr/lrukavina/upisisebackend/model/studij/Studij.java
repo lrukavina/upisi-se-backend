@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,6 +15,6 @@ public class Studij {
   private Integer id;
   private String nazivStudija;
   private String nazivSmjera;
-  private Integer ectsCijena;
+  private BigDecimal ectsCijena;
   private Integer visokoUcilisteId;
 }

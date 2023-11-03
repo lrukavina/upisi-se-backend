@@ -32,6 +32,16 @@
         where kolegij.id = #{kolegijId}
     </select>
 
+    <select id="dohvatiPoUpisId" parameterType="Integer" resultMap="kolegijResultMap">
+        select  <include refid="kolegijSelectColumns">
+                 <property name="alias" value="kolegij"/>
+                </include>
+        from kolegij
+        inner join upis_kolegij on kolegij.id = upis_kolegij.kolegij_id
+        inner join upis on upis_kolegij.upis_id = upis.id
+        where upis.id = #{upisId}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into kolegij (naziv,
                              ects,

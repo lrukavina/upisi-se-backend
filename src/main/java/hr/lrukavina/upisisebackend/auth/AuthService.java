@@ -31,12 +31,14 @@ public class AuthService {
             .ime(request.getIme())
             .prezime(request.getPrezime())
             .jmbag(request.getJmbag())
+            .semestar(request.getSemestar())
             .adresa(request.getAdresa())
             .email(email)
             .korisnickoIme(korisnickoIme)
             .lozinka(passwordEncoder.encode(request.getLozinka()))
             .rola(request.getRola())
             .visokoUcilisteId(Utils.desifrirajId(request.getVisokoUcilisteSifra()))
+            .studijId(Utils.desifrirajId(request.getStudijSifra()))
             .build();
     korisnikManager.spremi(korisnik);
     var jwtToken = jwtService.generateToken(korisnik);

@@ -12,9 +12,11 @@ public class RegistracijaRequest {
   private String ime;
   private String prezime;
   private String jmbag;
+  private Integer semestar;
   private String adresa;
   private String email;
   private String lozinka;
   private Rola rola;
   private String visokoUcilisteSifra;
+  private String studijSifra;
 }

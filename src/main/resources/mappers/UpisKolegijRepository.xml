@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.upis.upiskolegij.UpisKolegijRepository">
+
+    <insert id="spremi">
+        insert into upis_kolegij (upis_id,
+                                  kolegij_id)
+        values (#{upisId, jdbcType=BIGINT},
+                #{kolegijId, jdbcType=BIGINT})
+    </insert>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from upis_kolegij
+        where upis_id = #{upisId}
+    </delete>
+</mapper>

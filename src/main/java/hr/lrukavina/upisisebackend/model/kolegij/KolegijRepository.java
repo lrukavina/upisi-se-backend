@@ -3,10 +3,14 @@ package hr.lrukavina.upisisebackend.model.kolegij;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface KolegijRepository {
   Kolegij dohvati(Integer kolegijId);
+
+  List<Kolegij> dohvatiPoUpisId(Integer upisId);
 
   void spremi(Kolegij kolegij);
 

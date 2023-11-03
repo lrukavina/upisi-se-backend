@@ -12,7 +12,9 @@ public class KorisnikDto {
   private String prezime;
   private String korisnickoIme;
   private String jmbag;
+  private Integer semestar;
   private String adresa;
   private Rola rola;
   private SifraOpis visokoUciliste;
+  private SifraOpis studij;
 }

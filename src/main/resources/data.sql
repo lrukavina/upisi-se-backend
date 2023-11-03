@@ -1,5 +1,6 @@
-insert into korisnik(ime, prezime, jmbag, adresa, email, korisnicko_ime, lozinka, rola) values
-('Luka', 'Rukavina', null, null, 'lrukavina@tvz.hr', 'lrukavina', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'ADMIN');
+insert into korisnik(ime, prezime, jmbag, semestar, adresa, email, korisnicko_ime, lozinka, rola, visoko_uciliste_id, studij_id) values
+('Luka', 'Rukavina', null, null, null, 'lrukavina@tvz.hr', 'lrukavina', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'ADMIN', null, null),
+('Pero', 'Perić', '1234567890', 3, 'Vukovarska 25', 'pperic@tvz.hr', 'pperic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1);
 
 insert into visoko_uciliste(naziv, adresa, postanski_broj, mjesto, iban, oib) values
 ('Tehničko veleučilište u Zagrebu', 'Vrbik 8', '10000', 'Zagreb', 'HR1723600001101234565', '08814003451'),
@@ -14,7 +15,7 @@ insert into visoko_uciliste(naziv, adresa, postanski_broj, mjesto, iban, oib) va
 ('Prirodoslovno-matematički fakultet-matematički odsjek', 'Bijenička cesta 30', '10000', 'Zagreb', 'HR1723600001101234565', '08814003451');
 
 insert into studij(naziv_studija, naziv_smjera, ects_cijena, visoko_uciliste_id) values
-('Stručni prijediplomski studij Računarstvo', 'Programsko inženjerstvo', 33, 1),
+('Stručni prijediplomski studij Računarstvo', 'Programsko inženjerstvo', 33.33, 1),
 ('Stručni prijediplomski studij Računarstvo', 'Inženjerstvo računalnih sustava i mreža', 33, 1),
 ('Stručni diplomski studij Digitalna ekonomija', 'Digitalna ekonomija', 33, 1),
 ('Stručni prijediplomski studij Graditeljstvo', 'Građevinsko poduzetništvo', 33, 1),
@@ -61,22 +62,29 @@ insert into kolegij_nastavnik(ime, prezime, titula, kolegij_id) values
 ('John', 'Doe', 'dr.sc.', 9),
 ('John', 'Doe', 'dr.sc.', 10);
 
-insert into upis(semestar, tstamp_od, tstamp_do, studij_id) values
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 1),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 2),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 3),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 4),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 5),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 6),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 7),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 8),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 9),
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 10);
+insert into upis(semestar, tstamp_od, tstamp_do, min_broj_ectsa, max_broj_ectsa, studij_id) values
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 1),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 2),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 3),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 4),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 5),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 6),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 7),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 8),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30 ,9),
+(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30 ,10);
 
-insert into upis_info(poziv_na_broj, broj_ectsa, upisni_broj, opis, status, upis_id, korisnik_id) values
-('370-0246073114-7', 30, 'UB0001', 'Školarina zimski semestar 2023/2024 UB0001', 'U_TIJEKU', 1, 1);
+insert into upis_kolegij(upis_id, kolegij_id) values
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5);
 
-insert into upis_info_kolegij(upis_info_id, kolegij_id) values
+insert into upisni_list(broj_ectsa, upisni_broj, cijena_ects, ukupna_cijena, status, upis_id, korisnik_id) values
+(30, 'UB0001', 33.33, 1000, 'U_TIJEKU', 1, 1);
+
+insert into upisni_list_kolegij(upisni_list_id, kolegij_id) values
 (1, 1),
 (1, 2),
 (1, 3),
