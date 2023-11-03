@@ -2,6 +2,8 @@ package hr.lrukavina.upisisebackend.common;
 
 import hr.lrukavina.upisisebackend.model.kolegij.Kolegij;
 import hr.lrukavina.upisisebackend.model.kolegij.KolegijManager;
+import hr.lrukavina.upisisebackend.model.korisnik.Korisnik;
+import hr.lrukavina.upisisebackend.model.korisnik.KorisnikManager;
 import hr.lrukavina.upisisebackend.model.studij.Studij;
 import hr.lrukavina.upisisebackend.model.studij.StudijManager;
 import hr.lrukavina.upisisebackend.model.visokouciliste.VisokoUciliste;
@@ -16,6 +18,7 @@ public class SifraOpisHelper {
   private final VisokoUcilisteManager visokoUcilisteManager;
   private final StudijManager studijManager;
   private final KolegijManager kolegijManager;
+  private final KorisnikManager korisnikManager;
 
   public SifraOpis dohvatiVisokoUciliste(Integer id) {
     VisokoUciliste visokoUciliste = visokoUcilisteManager.dohvati(id);
@@ -30,6 +33,16 @@ public class SifraOpisHelper {
 
   public SifraOpis dohvatiStudij(Integer id) {
     Studij studij = studijManager.dohvati(id);
+    if (studij == null) {
+      return null;
+    }
+    return SifraOpis.builder()
+        .sifra(Utils.sifrirajId(studij.getId()))
+        .opis(studij.getNazivStudija() + "(" + studij.getNazivSmjera() + ")")
+        .build();
+  }
+
+  public SifraOpis dohvatiStudij(Studij studij) {
     if (studij == null) {
       return null;
     }
@@ -57,6 +70,17 @@ public class SifraOpisHelper {
     return SifraOpis.builder()
         .sifra(Utils.sifrirajId(kolegij.getId()))
         .opis(kolegij.getNaziv())
+        .build();
+  }
+
+  public SifraOpis dohvatiKorisnika(Integer id) {
+    Korisnik korisnik = korisnikManager.dohvati(id);
+    if (korisnik == null) {
+      return null;
+    }
+    return SifraOpis.builder()
+        .sifra(Utils.sifrirajId(korisnik.getId()))
+        .opis(korisnik.getIme() + " " + korisnik.getPrezime())
         .build();
   }
 }

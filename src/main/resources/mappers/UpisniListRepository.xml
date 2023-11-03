@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.lrukavina.upisisebackend.model.upisnilist.UpisniListRepository">
+    <resultMap id="upisniListResultMap" type="UpisniList">
+        <id property="id" column="id" />
+        <id property="brojEctsa" column="broj_ectsa" />
+        <id property="cijenaPoEctsu" column="cijena_ects" />
+        <id property="ukupnaCijena" column="ukupna_cijena" />
+        <id property="upisniBroj" column="upisni_broj" />
+        <id property="status" column="status" />
+        <id property="upisId" column="upis_id" />
+        <id property="korisnikId" column="korisnik_id" />
+    </resultMap>
+
+    <sql id="upisniListSelectColumns">
+        ${alias}.id,
+        ${alias}.broj_ectsa,
+        ${alias}.cijena_ects,
+        ${alias}.ukupna_cijena,
+        ${alias}.upisni_broj,
+        ${alias}.status,
+        ${alias}.upis_id,
+        ${alias}.korisnik_id
+    </sql>
+
+    <select id="dohvati" parameterType="Integer" resultMap="upisniListResultMap">
+        select  <include refid="upisniListSelectColumns">
+                 <property name="alias" value="upisni_list"/>
+                </include>
+        from upisni_list
+        where upisni_list.id = #{upisniListId}
+    </select>
+
+    <select id="dohvatiPoKorisnikId" parameterType="Integer" resultMap="upisniListResultMap">
+        select  <include refid="upisniListSelectColumns">
+                 <property name="alias" value="upisni_list"/>
+                </include>
+        from upisni_list
+        where upisni_list.korisnik_id = #{korisnikId}
+    </select>
+
+    <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into upisni_list (broj_ectsa,
+                                 cijena_ects,
+                                 ukupna_cijena,
+                                 upisni_broj,
+                                 status,
+                                 upis_id,
+                                 korisnik_id)
+        values (#{brojEctsa, jdbcType=INTEGER},
+                #{cijenaPoEctsu, jdbcType=DECIMAL},
+                #{ukupnaCijena, jdbcType=DECIMAL},
+                #{upisniBroj, jdbcType=VARCHAR},
+                #{status, jdbcType=VARCHAR},
+                #{upisId, jdbcType=BIGINT},
+                #{korisnikId, jdbcType=BIGINT})
+    </insert>
+
+    <update id="azuriraj">
+        update upisni_list
+        set upisni_list.broj_ectsa        = #{brojEctsa, jdbcType=INTEGER},
+            upisni_list.cijena_ects       = #{cijenaPoEctsu, jdbcType=DECIMAL},
+            upisni_list.ukupna_cijena     = #{ukupnaCijena, jdbcType=DECIMAL},
+            upisni_list.upisni_broj       = #{upisniBroj, jdbcType=VARCHAR},
+            upisni_list.status            = #{status, jdbcType=VARCHAR},
+            upisni_list.upis_id           = #{upisId, jdbcType=BIGINT},
+            upisni_list.korisnik_id       = #{korisnikId, jdbcType=BIGINT}
+        where upisni_list.id              = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="izbrisi" parameterType="Integer">
+        delete from upisni_list
+        where upisni_list.id = #{upisniListId}
+    </delete>
+</mapper>

@@ -9,12 +9,14 @@
         <id property="ime" column="ime" />
         <id property="prezime" column="prezime" />
         <id property="jmbag" column="jmbag" />
+        <id property="semestar" column="semestar" />
         <id property="adresa" column="adresa" />
         <id property="email" column="email" />
         <id property="korisnickoIme" column="korisnicko_ime" />
         <id property="lozinka" column="lozinka" />
         <id property="rola" column="rola" />
         <id property="visokoUcilisteId" column="visoko_uciliste_id" />
+        <id property="studijId" column="studij_id" />
     </resultMap>
 
     <sql id="korisnikSelectColumns">
@@ -22,12 +24,14 @@
         ${alias}.ime,
         ${alias}.prezime,
         ${alias}.jmbag,
+        ${alias}.semestar,
         ${alias}.adresa,
         ${alias}.email,
         ${alias}.korisnicko_ime,
         ${alias}.lozinka,
         ${alias}.rola,
-        ${alias}.visoko_uciliste_id
+        ${alias}.visoko_uciliste_id,
+        ${alias}.studij_id
     </sql>
 
     <select id="dohvati" parameterType="Integer" resultMap="korisnikResultMap">
@@ -46,39 +50,53 @@
          where korisnik.korisnicko_ime = #{korisnickoIme}
     </select>
 
+    <select id="dohvatiPoSemestru" parameterType="Integer" resultMap="korisnikResultMap">
+        select  <include refid="korisnikSelectColumns">
+                 <property name="alias" value="korisnik"/>
+                </include>
+        from korisnik
+        where korisnik.semestar = #{semestar}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into korisnik (ime,
                               prezime,
                               jmbag,
+                              semestar,
                               adresa,
                               email,
                               korisnicko_ime,
                               lozinka,
                               rola,
-                              visoko_uciliste_id)
+                              visoko_uciliste_id,
+                              studij_id)
         values (#{ime, jdbcType=VARCHAR},
                 #{prezime, jdbcType=VARCHAR},
                 #{jmbag, jdbcType=VARCHAR},
+                #{semestar, jdbcType=INTEGER},
                 #{adresa, jdbcType=VARCHAR},
                 #{email, jdbcType=VARCHAR},
                 #{korisnickoIme, jdbcType=VARCHAR},
                 #{lozinka, jdbcType=VARCHAR},
                 #{rola, jdbcType=VARCHAR},
-                #{visokoUcilisteId, jdbcType=BIGINT})
+                #{visokoUcilisteId, jdbcType=BIGINT},
+                #{studijId, jdbcType=BIGINT})
     </insert>
 
     <update id="azuriraj">
         update korisnik
-           set korisnik.ime                = #{ime, jdbcType=VARCHAR},
-               korisnik.prezime            = #{prezime, jdbcType=VARCHAR},
-               korisnik.jmbag              = #{jmbag, jdbcType=VARCHAR},
-               korisnik.adresa             = #{adresa, jdbcType=VARCHAR},
-               korisnik.email              = #{email, jdbcType=VARCHAR},
-               korisnik.korisnicko_ime     = #{korisnickoIme, jdbcType=VARCHAR},
-               korisnik.lozinka            = #{lozinka, jdbcType=VARCHAR},
-               korisnik.rola               = #{rola, jdbcType=VARCHAR},
-               korisnik.visoko_uciliste_id = #{visokoUcilisteId, jdbcType=VARCHAR}
-        where  korisnik.id                 =  #{id, jdbcType=BIGINT}
+           set korisnik.ime                   = #{ime, jdbcType=VARCHAR},
+               korisnik.prezime               = #{prezime, jdbcType=VARCHAR},
+               korisnik.jmbag                 = #{jmbag, jdbcType=VARCHAR},
+               korisnik.semestar              = #{semestar, jdbcType=INTEGER},
+               korisnik.adresa                = #{adresa, jdbcType=VARCHAR},
+               korisnik.email                 = #{email, jdbcType=VARCHAR},
+               korisnik.korisnicko_ime        = #{korisnickoIme, jdbcType=VARCHAR},
+               korisnik.lozinka               = #{lozinka, jdbcType=VARCHAR},
+               korisnik.rola                  = #{rola, jdbcType=VARCHAR},
+               korisnik.visoko_uciliste_id    = #{visokoUcilisteId, jdbcType=BIGINT},
+               korisnik.studij_id             = #{studijId, jdbcType=BIGINT}
+        where  korisnik.id                    =  #{id, jdbcType=BIGINT}
     </update>
 
     <delete id="izbrisiPoKorisnickomImenu" parameterType="String">

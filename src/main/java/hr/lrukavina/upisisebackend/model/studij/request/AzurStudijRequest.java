@@ -4,12 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
 public class AzurStudijRequest {
   private String nazivStudija;
   private String nazivSmjera;
-  private Integer ectsCijena;
+  private BigDecimal ectsCijena;
   private String visokoUcilisteSifra;
 }

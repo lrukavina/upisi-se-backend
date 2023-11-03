@@ -20,12 +20,14 @@ public class Korisnik implements UserDetails {
   private String ime;
   private String prezime;
   private String jmbag;
+  private Integer semestar;
   private String adresa;
   private String email;
   private String korisnickoIme;
   private String lozinka;
   private Rola rola;
   private Integer visokoUcilisteId;
+  private Integer studijId;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

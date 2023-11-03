@@ -15,26 +15,30 @@ public class KorisnikMapper {
             .ime(request.getIme())
             .prezime(request.getPrezime())
             .jmbag(request.getJmbag())
+            .semestar(request.getSemestar())
             .adresa(request.getAdresa())
             .email(request.getEmail())
             .korisnickoIme(request.getKorisnickoIme())
             .lozinka(request.getLozinka())
             .rola(request.getRola())
             .visokoUcilisteId(Utils.desifrirajId(request.getVisokoUcilisteSifra()))
+            .studijId(Utils.desifrirajId(request.getStudijSifra()))
             .build();
 
     BeanUtils.copyProperties(korisnikRequest, korisnik, Utils.ignoreNullFieldove(korisnikRequest));
   }
 
-  public static KorisnikDto toDto(Korisnik korisnik, SifraOpis visokoUciliste) {
+  public static KorisnikDto toDto(Korisnik korisnik, SifraOpis visokoUciliste, SifraOpis studij) {
     return KorisnikDto.builder()
         .ime(korisnik.getIme())
         .prezime(korisnik.getPrezime())
         .korisnickoIme(korisnik.getKorisnickoIme())
         .jmbag(korisnik.getJmbag())
+        .semestar(korisnik.getSemestar())
         .adresa(korisnik.getJmbag())
         .rola(korisnik.getRola())
         .visokoUciliste(visokoUciliste)
+        .studij(studij)
         .build();
   }
 }

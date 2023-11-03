@@ -35,7 +35,7 @@
                             visoko_uciliste_id)
         values (#{nazivStudija, jdbcType=VARCHAR},
                 #{nazivSmjera, jdbcType=VARCHAR},
-                #{ectsCijena, jdbcType=INTEGER},
+                #{ectsCijena, jdbcType=DECIMAL},
                 #{visokoUcilisteId, jdbcType=BIGINT})
     </insert>
 
@@ -43,7 +43,7 @@
         update studij
         set studij.naziv_studija      = #{nazivStudija, jdbcType=VARCHAR},
             studij.naziv_smjera       = #{nazivSmjera, jdbcType=VARCHAR},
-            studij.ects_cijena        = #{ectsCijena, jdbcType=INTEGER},
+            studij.ects_cijena        = #{ectsCijena, jdbcType=DECIMAL},
             studij.visoko_uciliste_id = #{visokoUcilisteId, jdbcType=BIGINT}
         where studij.id               = #{id, jdbcType=BIGINT}
     </update>

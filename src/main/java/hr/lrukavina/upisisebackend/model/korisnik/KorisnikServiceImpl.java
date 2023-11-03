@@ -23,7 +23,9 @@ public class KorisnikServiceImpl implements KorisnikService {
       throw new UpisiSeException(VrstaPoruke.KORISNIK_NE_POSTOJI_U_BAZI);
     }
     return KorisnikMapper.toDto(
-        korisnik, sifraOpisHelper.dohvatiVisokoUciliste(korisnik.getVisokoUcilisteId()));
+        korisnik,
+        sifraOpisHelper.dohvatiVisokoUciliste(korisnik.getVisokoUcilisteId()),
+        sifraOpisHelper.dohvatiStudij(korisnik.getStudijId()));
   }
 
   @Override
@@ -36,7 +38,9 @@ public class KorisnikServiceImpl implements KorisnikService {
     KorisnikMapper.pripremiZaAzuriranje(request, korisnik);
     manager.azuriraj(korisnik);
     return KorisnikMapper.toDto(
-        korisnik, sifraOpisHelper.dohvatiVisokoUciliste(korisnik.getVisokoUcilisteId()));
+        korisnik,
+        sifraOpisHelper.dohvatiVisokoUciliste(korisnik.getVisokoUcilisteId()),
+        sifraOpisHelper.dohvatiStudij(korisnik.getStudijId()));
   }
 
   @Override

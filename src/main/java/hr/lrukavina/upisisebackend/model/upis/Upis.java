@@ -12,9 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Upis {
-    private Integer id;
-    private Integer semestar;
-    private LocalDateTime tstampOd;
-    private LocalDateTime tstampDo;
-    private Integer studijId;
+  private Integer id;
+  private Integer semestar;
+  private Integer minBrojEctsa;
+  private Integer maxBrojEctsa;
+  private LocalDateTime tstampOd;
+  private LocalDateTime tstampDo;
+  private Integer studijId;
 }

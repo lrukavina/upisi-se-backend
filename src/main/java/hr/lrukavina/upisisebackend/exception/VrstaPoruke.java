@@ -6,7 +6,9 @@ public enum VrstaPoruke {
   VISOKO_UCILISTE_NE_POSTOJI_U_BAZI("03", "Visoko učilište ne postoji u bazi podataka"),
   STUDIJ_NE_POSTOJI_U_BAZI("04", "Studij ne postoji u bazi podataka"),
   KOLEGIJ_NE_POSTOJI_U_BAZI("05", "Kolegij ne postoji u bazi podataka"),
-  NASTAVNIK_NE_POSTOJI_U_BAZI("06", "Nastavnik kolegija ne postoji u bazi podataka");
+  NASTAVNIK_NE_POSTOJI_U_BAZI("06", "Nastavnik kolegija ne postoji u bazi podataka"),
+  UPIS_NE_POSTOJI_U_BAZI("07", "Upis ne postoji u bazi podataka"),
+  UPISNI_LIST_NE_POSTOJI_U_BAZI("08", "Upisni list ne postoji u bazi podataka");
 
   private final String sifra;
   private final String poruka;

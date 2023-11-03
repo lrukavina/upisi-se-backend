@@ -14,6 +14,8 @@
         <mapper resource="mappers/KolegijInfoRepository.xml"/>
         <mapper resource="mappers/KolegijNastavnikRepository.xml"/>
         <mapper resource="mappers/UpisRepository.xml"/>
-        <mapper resource="mappers/UpisInfoRepository.xml"/>
+        <mapper resource="mappers/UpisniListRepository.xml"/>
+        <mapper resource="mappers/UpisKolegijRepository.xml"/>
+        <mapper resource="mappers/UpisniListKolegijRepository.xml"/>
     </mappers>
 </configuration>

@@ -1,4 +1,4 @@
-package hr.lrukavina.upisisebackend.model.upis.upisInfo;
+package hr.lrukavina.upisisebackend.model.upisnilist;
 
 public enum UpisniStatus {
   NIJE_ZAPOCET,

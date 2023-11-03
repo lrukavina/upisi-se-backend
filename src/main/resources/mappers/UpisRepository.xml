@@ -7,6 +7,8 @@
     <resultMap id="upisResultMap" type="Upis">
         <id property="id" column="id" />
         <id property="semestar" column="semestar" />
+        <id property="minBrojEctsa" column="min_broj_ectsa" />
+        <id property="maxBrojEctsa" column="max_broj_ectsa" />
         <id property="tstampOd" column="tstamp_od" />
         <id property="tstampDo" column="tstamp_do" />
         <id property="studijId" column="studij_id" />
@@ -15,6 +17,8 @@
     <sql id="upisSelectColumns">
         ${alias}.id,
         ${alias}.semestar,
+        ${alias}.min_broj_ectsa,
+        ${alias}.max_broj_ectsa,
         ${alias}.tstamp_od,
         ${alias}.tstamp_do,
         ${alias}.studij_id
@@ -30,10 +34,14 @@
 
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into upis (semestar,
+                          min_broj_ectsa,
+                          max_broj_ectsa,
                           tstamp_od,
                           tstamp_do,
                           studij_id)
         values (#{semestar, jdbcType=INTEGER},
+                #{minBrojEctsa, jdbcType=INTEGER},
+                #{maxBrojEctsa, jdbcType=INTEGER},
                 #{tstampOd, jdbcType=TIMESTAMP},
                 #{tstampDo, jdbcType=TIMESTAMP},
                 #{studijId, jdbcType=BIGINT})
@@ -41,11 +49,13 @@
 
     <update id="azuriraj">
         update upis
-        set upis.semestar  = #{nazivStudija, jdbcType=INTEGER},
-            upis.tstamp_od = #{nazivSmjera, jdbcType=TIMESTAMP},
-            upis.tstamp_do = #{ectsCijena, jdbcType=TIMESTAMP},
-            upis.studij_id = #{visokoUcilisteId, jdbcType=BIGINT}
-        where upis.id      = #{id, jdbcType=BIGINT}
+        set upis.semestar        = #{semestar, jdbcType=INTEGER},
+            upis.min_broj_ectsa  = #{minBrojEctsa, jdbcType=INTEGER},
+            upis.max_broj_ectsa  = #{maxBrojEctsa, jdbcType=INTEGER},
+            upis.tstamp_od       = #{tstampOd, jdbcType=TIMESTAMP},
+            upis.tstamp_do       = #{tstampDo, jdbcType=TIMESTAMP},
+            upis.studij_id       = #{studijId, jdbcType=BIGINT}
+        where upis.id            = #{id, jdbcType=BIGINT}
     </update>
 
     <delete id="izbrisi" parameterType="Integer">
