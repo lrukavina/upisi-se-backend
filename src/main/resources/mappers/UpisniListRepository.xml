@@ -72,7 +72,9 @@
     </update>
 
     <delete id="izbrisi" parameterType="Integer">
-        delete from upisni_list
-        where upisni_list.id = #{upisniListId}
+        update upisni_list
+           set upisni_list.status          = '${@hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus@NIJE_ZAPOCET}'
+         where upisni_list.id              = #{id, jdbcType=BIGINT};
+        delete from upisni_list_kolegij where upisni_list_id = #{upisniListId};
     </delete>
 </mapper>

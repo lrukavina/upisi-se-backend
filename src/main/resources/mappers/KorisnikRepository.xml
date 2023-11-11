@@ -100,12 +100,22 @@
     </update>
 
     <delete id="izbrisiPoKorisnickomImenu" parameterType="String">
-        delete from korisnik
-        where korisnik.korisnicko_ime = #{korisnickoIme}
+        delete from upisni_list_kolegij where upisni_list_id in (
+            select ul.id
+            from upisni_list ul
+                     join korisnik k on ul.korisnik_id = k.id
+            where k.korisnicko_ime = #{korisnickoIme}
+        );
+        delete from upisni_list where korisnik_id in (
+            select k.id
+            from korisnik k
+            where k.korisnicko_ime = #{korisnickoIme}
+        );
+        delete from korisnik where korisnik.korisnicko_ime = #{korisnickoIme}
     </delete>
 
     <delete id="izbrisi" parameterType="Integer">
-        delete from korisnik
-        where korisnik.id = #{korisnikId}
+        delete from upisni_list where korisnik_id = #{korisnikId};
+        delete from korisnik where korisnik.id = #{korisnikId};
     </delete>
 </mapper>
