@@ -69,7 +69,10 @@
     </update>
 
     <delete id="izbrisi" parameterType="Integer">
-        delete from kolegij
-        where kolegij.id = #{kolegijId}
+        delete from upisni_list_kolegij where kolegij_id = #{kolegijId};
+        delete from upis_kolegij where kolegij_id = #{kolegijId};
+        delete from kolegij_nastavnik where kolegij_id = #{kolegijId};
+        delete from kolegij_info where kolegij_id = #{kolegijId};
+        delete from kolegij where kolegij.id = #{kolegijId};
     </delete>
 </mapper>
