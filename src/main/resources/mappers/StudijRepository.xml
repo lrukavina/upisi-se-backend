@@ -49,7 +49,39 @@
     </update>
 
     <delete id="izbrisi" parameterType="Integer">
-        delete from studij
-        where studij.id = #{studijId}
+        delete from upisni_list_kolegij where upisni_list_id in (
+            select ul.id
+            from upisni_list ul
+                     join upis u on ul.upis_id = u.id
+                     join studij s on u.studij_id = s.id
+            where s.id = #{studijId}
+        );
+        delete from upis_kolegij where upis_id in (
+            select u.id
+            from upis u
+                     join studij s on u.studij_id = s.id
+            where s.id = #{studijId}
+        );
+        delete from upisni_list where upis_id in (
+            select u.id
+            from upis u
+                     join studij s on u.studij_id = s.id
+            where s.id = #{studijId}
+        );
+        delete from kolegij_nastavnik where kolegij_id in (
+            select k.id
+            from kolegij k
+                     join studij s on k.studij_id = s.id
+            where s.id = #{studijId}
+        );
+        delete from kolegij_info where kolegij_id in (
+            select k.id
+            from kolegij k
+                     join studij s on k.studij_id = s.id
+            where s.id = #{studijId}
+        );
+        delete from upis where studij_id = #{studijId};
+        delete from kolegij where studij_id = #{studijId};
+        delete from studij where id = #{studijId};
     </delete>
 </mapper>
