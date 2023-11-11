@@ -59,7 +59,55 @@
     </update>
 
     <delete id="izbrisi" parameterType="Integer">
-        delete from visoko_uciliste
-        where visoko_uciliste.id = #{visokoUcilisteId}
+        delete from upisni_list_kolegij where upisni_list_id in (
+            select ul.id
+            from upisni_list ul
+                     join upis u on ul.upis_id = u.id
+                     join studij s on u.studij_id = s.id
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from upis_kolegij where upis_id in (
+            select u.id
+            from upis u
+                     join studij s on u.studij_id = s.id
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from upisni_list where upis_id in (
+            select u.id
+            from upis u
+                     join studij s on u.studij_id = s.id
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from upis where studij_id in (
+            select s.id
+            from studij s
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from kolegij_nastavnik where kolegij_id in (
+            select k.id
+            from kolegij k
+                     join studij s on k.studij_id = s.id
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from kolegij_info where kolegij_id in (
+            select k.id
+            from kolegij k
+                     join studij s on k.studij_id = s.id
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from kolegij where studij_id in (
+            select s.id
+            from studij s
+                     join visoko_uciliste vu on s.visoko_uciliste_id = vu.id
+            where vu.id = #{visokoUcilisteId}
+        );
+        delete from studij where visoko_uciliste_id = #{visokoUcilisteId};
+        delete from visoko_uciliste where id = #{visokoUcilisteId};
     </delete>
 </mapper>
