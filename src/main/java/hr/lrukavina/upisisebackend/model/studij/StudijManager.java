@@ -12,6 +12,10 @@ public class StudijManager {
     return repository.dohvati(studijId);
   }
 
+  public Studij dohvatiPoUpisniListId(Integer upisniListId) {
+    return repository.dohvatiPoUpisniListId(upisniListId);
+  }
+
   public void spremi(Studij studij) {
     repository.spremi(studij);
   }
