@@ -1,6 +1,7 @@
 package hr.lrukavina.upisisebackend.model.upis.response;
 
 import hr.lrukavina.upisisebackend.common.SifraOpis;
+import hr.lrukavina.upisisebackend.common.SifraOpisKolegij;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,6 +19,6 @@ public class UpisDto {
   private String datumVrijemeOd;
   private String datumVrijemeDo;
   private String status;
-  private List<SifraOpis> obavezniKolegiji;
-  private List<SifraOpis> izborniKolegiji;
+  private List<SifraOpisKolegij> obavezniKolegiji;
+  private List<SifraOpisKolegij> izborniKolegiji;
 }

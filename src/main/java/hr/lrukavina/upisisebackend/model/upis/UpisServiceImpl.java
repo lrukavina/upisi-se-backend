@@ -2,6 +2,7 @@ package hr.lrukavina.upisisebackend.model.upis;
 
 import hr.lrukavina.upisisebackend.common.SifraOpis;
 import hr.lrukavina.upisisebackend.common.SifraOpisHelper;
+import hr.lrukavina.upisisebackend.common.SifraOpisKolegij;
 import hr.lrukavina.upisisebackend.exception.UpisiSeException;
 import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
 import hr.lrukavina.upisisebackend.model.kolegij.Kolegij;
@@ -53,13 +54,16 @@ public class UpisServiceImpl implements UpisService {
 
     List<Kolegij> kolegiji = kolegijManager.dohvatiPoUpisId(upis.getId());
 
-    List<SifraOpis> obavezniKolegiji =
-        kolegiji.stream().filter(Kolegij::isObavezan).map(sifraOpisHelper::dohvatiKolegij).toList();
+    List<SifraOpisKolegij> obavezniKolegiji =
+        kolegiji.stream()
+            .filter(Kolegij::isObavezan)
+            .map(sifraOpisHelper::dohvatiKolegijUpis)
+            .toList();
 
-    List<SifraOpis> izborniKolegiji =
+    List<SifraOpisKolegij> izborniKolegiji =
         kolegiji.stream()
             .filter(kolegij -> !kolegij.isObavezan())
-            .map(sifraOpisHelper::dohvatiKolegij)
+            .map(sifraOpisHelper::dohvatiKolegijUpis)
             .toList();
 
     return UpisMapper.toDto(

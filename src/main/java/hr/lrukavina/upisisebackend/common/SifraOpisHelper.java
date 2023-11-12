@@ -73,6 +73,18 @@ public class SifraOpisHelper {
         .build();
   }
 
+  public SifraOpisKolegij dohvatiKolegijUpis(Kolegij kolegij) {
+    if (kolegij == null) {
+      return null;
+    }
+    return SifraOpisKolegij.builder()
+        .sifra(Utils.sifrirajId(kolegij.getId()))
+        .opis(kolegij.getNaziv())
+        .semestar(kolegij.getSemestar())
+        .ects(kolegij.getEcts())
+        .build();
+  }
+
   public SifraOpis dohvatiKorisnika(Integer id) {
     Korisnik korisnik = korisnikManager.dohvati(id);
     if (korisnik == null) {
