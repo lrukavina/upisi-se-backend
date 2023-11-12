@@ -13,6 +13,8 @@ import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijUpisniListDto;
+import hr.lrukavina.upisisebackend.model.studij.Studij;
+import hr.lrukavina.upisisebackend.model.ugovor.dto.UgovorKolegijDto;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
@@ -82,6 +84,15 @@ public class KolegijMapper {
         .isvuSifra(kolegij.getIsvuSifra())
         .ects(kolegij.getEcts())
         .cijena(cijenaFormatirana)
+        .build();
+  }
+
+  public static UgovorKolegijDto toUgovorKolegijDto(Kolegij kolegij, Studij studij) {
+    return UgovorKolegijDto.builder()
+        .isvuSifra(kolegij.getIsvuSifra())
+        .naziv(kolegij.getNaziv())
+        .ects(kolegij.getEcts())
+        .ectsCijena(studij.getEctsCijena())
         .build();
   }
 
