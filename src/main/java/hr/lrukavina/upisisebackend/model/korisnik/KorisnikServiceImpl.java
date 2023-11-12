@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Locale;
+
 @Service
 @RequiredArgsConstructor
 public class KorisnikServiceImpl implements KorisnikService {
@@ -60,5 +62,26 @@ public class KorisnikServiceImpl implements KorisnikService {
   @Override
   public void izbrisi(String korisnickoIme) {
     manager.izbrisi(korisnickoIme);
+  }
+
+  @Override
+  public String generirajKorisnickoIme(String ime, String prezime) {
+    String korisnickoIme = (ime.charAt(0) + prezime).toLowerCase(Locale.ROOT);
+    korisnickoIme = korisnickoIme.replaceAll("[čć]", "c").replaceAll("đ", "d").replaceAll("ž", "z");
+
+    Korisnik korisnikBaza = manager.dohvatiZadnjeg(korisnickoIme);
+    if (korisnikBaza == null) {
+      return korisnickoIme;
+    }
+    return korisnickoIme + dohvatiRedniBrojKorImena(korisnikBaza.getKorisnickoIme());
+  }
+
+  private Integer dohvatiRedniBrojKorImena(String korisnickoIme) {
+    String redniBrojStr = korisnickoIme.replaceAll("[^0-9]", "");
+    if (redniBrojStr.isEmpty()) {
+      return 1;
+    }
+    int redniBroj = Integer.parseInt(redniBrojStr);
+    return redniBroj + 1;
   }
 }

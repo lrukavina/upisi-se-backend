@@ -9,6 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KorisnikManager {
   private final KorisnikRepository repository;
+  private static final String LIKE_WILDCARD = "%";
 
   public Korisnik dohvati(Integer korisnikId) {
     return repository.dohvati(korisnikId);
@@ -16,6 +17,11 @@ public class KorisnikManager {
 
   public Korisnik dohvati(String korisnickoIme) {
     return repository.dohvatiPoKorisnickomImenu(korisnickoIme);
+  }
+
+  public Korisnik dohvatiZadnjeg(String korisnickoIme) {
+    korisnickoIme = LIKE_WILDCARD + korisnickoIme + LIKE_WILDCARD;
+    return repository.dohvatiZadnjeg(korisnickoIme);
   }
 
   public List<Korisnik> dohvatiPoSemestru(Integer semestar) {
