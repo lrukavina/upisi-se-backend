@@ -12,6 +12,10 @@ public class VisokoUcilisteManager {
     return repository.dohvati(visokoUcilisteId);
   }
 
+  public VisokoUciliste dohvatiPoUpisniListId(Integer upisniListId) {
+    return repository.dohvatiPoUpisniListId(upisniListId);
+  }
+
   public void spremi(VisokoUciliste visokoUciliste) {
     repository.spremi(visokoUciliste);
   }

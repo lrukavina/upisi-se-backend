@@ -32,6 +32,17 @@
         where visoko_uciliste.id = #{visokoUcilisteId}
     </select>
 
+    <select id="dohvatiPoUpisniListId" parameterType="Integer" resultMap="visokoUcilisteResultMap">
+             select   <include refid="visokoUcilisteSelectColumns">
+                       <property name="alias" value="visoko_uciliste"/>
+                      </include>
+              from visoko_uciliste
+        inner join studij on visoko_uciliste.id = studij.visoko_uciliste_id
+        inner join upis on studij.id = upis.studij_id
+        inner join upisni_list on upis.id = upisni_list.upis_id
+             where upisni_list.id = #{upisniListId}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into visoko_uciliste (naziv,
                                      adresa,

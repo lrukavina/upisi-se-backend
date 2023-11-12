@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface VisokoUcilisteRepository {
   VisokoUciliste dohvati(Integer visokoUcilisteId);
 
+  VisokoUciliste dohvatiPoUpisniListId(Integer upisniListId);
+
   void spremi(VisokoUciliste visokoUciliste);
 
   void azuriraj(VisokoUciliste visokoUciliste);
