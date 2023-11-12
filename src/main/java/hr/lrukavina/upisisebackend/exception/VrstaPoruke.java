@@ -9,7 +9,8 @@ public enum VrstaPoruke {
   NASTAVNIK_NE_POSTOJI_U_BAZI("06", "Nastavnik kolegija ne postoji u bazi podataka"),
   UPIS_NE_POSTOJI_U_BAZI("07", "Upis ne postoji u bazi podataka"),
   UPIS_VEC_POSTOJI_U_BAZI("08", "Upis za semestar već postoji"),
-  UPISNI_LIST_NE_POSTOJI_U_BAZI("09", "Upisni list ne postoji u bazi podataka");
+  UPISNI_LIST_NE_POSTOJI_U_BAZI("09", "Upisni list ne postoji u bazi podataka"),
+  UPIS_NEDOZVOLJENI_KOLEGIJ("10", "Odabrani kolegij nije na upisnom listu za semestar");
 
   private final String sifra;
   private final String poruka;

@@ -24,10 +24,10 @@ public class UpisniListController {
     return ResponseEntity.ok(upisniListService.dohvatiPoKorisniku(korisnickoIme));
   }
 
-  @PutMapping("/azuriraj/{sifra}")
+  @PutMapping("/azuriraj/{korisnickoIme}")
   public ResponseEntity<UpisniListDto> azuriraj(
-      @RequestBody AzurUpisniListRequest request, @PathVariable final String sifra) {
-    return ResponseEntity.ok(upisniListService.azuriraj(request, sifra));
+      @RequestBody AzurUpisniListRequest request, @PathVariable final String korisnickoIme) {
+    return ResponseEntity.ok(upisniListService.azuriraj(request, korisnickoIme));
   }
 
   @DeleteMapping("/izbrisi/{sifra}")
