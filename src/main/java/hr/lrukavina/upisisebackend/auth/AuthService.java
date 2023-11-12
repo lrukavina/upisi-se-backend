@@ -3,6 +3,7 @@ package hr.lrukavina.upisisebackend.auth;
 import hr.lrukavina.upisisebackend.config.JwtService;
 import hr.lrukavina.upisisebackend.model.korisnik.Korisnik;
 import hr.lrukavina.upisisebackend.model.korisnik.KorisnikManager;
+import hr.lrukavina.upisisebackend.model.korisnik.KorisnikService;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import lombok.RequiredArgsConstructor;
@@ -12,19 +13,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Locale;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService {
   private final KorisnikManager korisnikManager;
+  private final KorisnikService korisnikService;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
   @Transactional
   public AuthResponse register(RegistracijaRequest request) {
-    String korisnickoIme = generirajKorisnickoIme(request.getIme(), request.getPrezime());
+    String korisnickoIme =
+        korisnikService.generirajKorisnickoIme(request.getIme(), request.getPrezime());
     String email = korisnickoIme + Konstante.EMAIL_NASTAVAK;
     var korisnik =
         Korisnik.builder()
@@ -43,11 +44,6 @@ public class AuthService {
     korisnikManager.spremi(korisnik);
     var jwtToken = jwtService.generateToken(korisnik);
     return AuthResponse.builder().token(jwtToken).build();
-  }
-
-  private String generirajKorisnickoIme(String ime, String prezime) {
-    String korisnickoIme = (ime.charAt(0) + prezime).toLowerCase(Locale.ROOT);
-    return korisnickoIme.replaceAll("[čć]", "c").replaceAll("đ", "d").replaceAll("ž", "z");
   }
 
   public AuthResponse authenticate(AuthRequest request) {

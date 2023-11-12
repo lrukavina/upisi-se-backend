@@ -50,6 +50,16 @@
          where korisnik.korisnicko_ime = #{korisnickoIme}
     </select>
 
+    <select id="dohvatiZadnjeg" parameterType="String" resultMap="korisnikResultMap">
+        select  <include refid="korisnikSelectColumns">
+                 <property name="alias" value="korisnik"/>
+                </include>
+        from korisnik
+        where korisnik.korisnicko_ime like #{korisnickoIme}
+        order by korisnik.korisnicko_ime desc
+        limit 1
+    </select>
+
     <select id="dohvatiPoSemestru" parameterType="Integer" resultMap="korisnikResultMap">
         select  <include refid="korisnikSelectColumns">
                  <property name="alias" value="korisnik"/>

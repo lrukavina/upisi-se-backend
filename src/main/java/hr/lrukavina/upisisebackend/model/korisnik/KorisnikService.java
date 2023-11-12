@@ -12,4 +12,6 @@ public interface KorisnikService {
   KorisnikDto azuriraj(AzurKorisnikaRequest request, String korisnickoIme);
 
   void izbrisi(String korisnickoIme);
+
+  String generirajKorisnickoIme(String ime, String prezime);
 }
