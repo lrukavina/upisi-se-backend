@@ -1,16 +1,19 @@
 package hr.lrukavina.upisisebackend.model.upisnilist;
 
 import hr.lrukavina.upisisebackend.common.SifraOpis;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijUpisniListDto;
 import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
 
 import java.text.NumberFormat;
+import java.util.List;
 
 public class UpisniListMapper {
   private UpisniListMapper() {}
 
-  public static UpisniListDto toDto(UpisniList upisniList, SifraOpis korisnik) {
+  public static UpisniListDto toDto(
+      UpisniList upisniList, SifraOpis korisnik, List<KolegijUpisniListDto> odabraniKolegiji) {
     String cijenaPoEctsu =
         upisniList.getCijenaPoEctsu() != null
             ? NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
@@ -33,6 +36,7 @@ public class UpisniListMapper {
         .upisSifra(Utils.sifrirajId(upisniList.getUpisId()))
         .korisnikSifra(Utils.sifrirajId(upisniList.getKorisnikId()))
         .korisnik(korisnik)
+        .odabraniKolegiji(odabraniKolegiji)
         .build();
   }
 }

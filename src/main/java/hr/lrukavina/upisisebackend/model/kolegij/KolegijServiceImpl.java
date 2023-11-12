@@ -13,13 +13,18 @@ import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.request.Spremi
 import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijUpisniListDto;
+import hr.lrukavina.upisisebackend.model.studij.Studij;
+import hr.lrukavina.upisisebackend.model.studij.StudijManager;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +32,7 @@ public class KolegijServiceImpl implements KolegijService {
   private final KolegijManager kolegijManager;
   private final KolegijInfoManager kolegijInfoManager;
   private final KolegijNastavnikManager kolegijNastavnikManager;
+  private final StudijManager studijManager;
   private final SifraOpisHelper sifraOpisHelper;
 
   @Override
@@ -69,6 +75,22 @@ public class KolegijServiceImpl implements KolegijService {
     SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
     return KolegijMapper.toDto(
         kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  @Override
+  public List<KolegijUpisniListDto> dohvatiPoUpisniListId(Integer upisniListId) {
+    List<Kolegij> kolegiji = kolegijManager.dohvatiPoUpisniListId(upisniListId);
+    if (kolegiji.isEmpty()) {
+      return Collections.emptyList();
+    }
+    Integer studijId = kolegiji.get(0).getStudijId();
+    Studij studij = studijManager.dohvati(studijId);
+    if (studij == null) {
+      throw new UpisiSeException(VrstaPoruke.STUDIJ_NE_POSTOJI_U_BAZI);
+    }
+    return kolegiji.stream()
+        .map(kolegij -> KolegijMapper.toKolegijUpisniListDto(kolegij, studij.getEctsCijena()))
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -27,6 +27,10 @@ public class KolegijManager {
     return repository.dohvatiPoUpisId(upisId);
   }
 
+  public List<Kolegij> dohvatiPoUpisniListId(Integer upisniListId) {
+    return repository.dohvatiPoUpisniListId(upisniListId);
+  }
+
   public void spremi(Kolegij kolegij) {
     repository.spremi(kolegij);
   }

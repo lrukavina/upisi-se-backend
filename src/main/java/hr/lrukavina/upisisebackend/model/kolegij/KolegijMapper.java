@@ -12,9 +12,13 @@ import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.response.Koleg
 import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijUpisniListDto;
+import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +67,21 @@ public class KolegijMapper {
         .prezime(kolegijNastavnik.getPrezime())
         .titula(kolegijNastavnik.getTitula())
         .kolegij(kolegij)
+        .build();
+  }
+
+  public static KolegijUpisniListDto toKolegijUpisniListDto(
+      Kolegij kolegij, BigDecimal cijenaEcts) {
+    BigDecimal cijena = cijenaEcts.multiply(BigDecimal.valueOf(kolegij.getEcts()));
+    String cijenaFormatirana =
+        NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA).format(cijena);
+
+    return KolegijUpisniListDto.builder()
+        .naziv(kolegij.getNaziv())
+        .semestar(kolegij.getSemestar())
+        .isvuSifra(kolegij.getIsvuSifra())
+        .ects(kolegij.getEcts())
+        .cijena(cijenaFormatirana)
         .build();
   }
 
