@@ -18,9 +18,10 @@ public class UpisniListController {
     return ResponseEntity.ok(upisniListService.dohvati(sifra));
   }
 
-  @GetMapping("/dohvati/korisnik/{sifra}")
-  public ResponseEntity<UpisniListDto> dohvatiPoKorisnikSifra(@PathVariable final String sifra) {
-    return ResponseEntity.ok(upisniListService.dohvatiPoKorisnikSifra(sifra));
+  @GetMapping("/dohvati/korisnik/{korisnickoIme}")
+  public ResponseEntity<UpisniListDto> dohvatiPoKorisniku(
+      @PathVariable final String korisnickoIme) {
+    return ResponseEntity.ok(upisniListService.dohvatiPoKorisniku(korisnickoIme));
   }
 
   @PutMapping("/azuriraj/{sifra}")

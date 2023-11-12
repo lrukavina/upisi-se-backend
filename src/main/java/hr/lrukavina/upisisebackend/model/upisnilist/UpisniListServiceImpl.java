@@ -44,9 +44,8 @@ public class UpisniListServiceImpl implements UpisniListService {
   }
 
   @Override
-  public UpisniListDto dohvatiPoKorisnikSifra(String korisnikSifra) {
-    UpisniList upisniList =
-        upisniListManager.dohvatiPoKorisnikId(Utils.desifrirajId(korisnikSifra));
+  public UpisniListDto dohvatiPoKorisniku(String korisnickoIme) {
+    UpisniList upisniList = upisniListManager.dohvatiPoKorisniku(korisnickoIme);
     if (upisniList == null) {
       throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
     }
