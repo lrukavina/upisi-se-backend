@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface StudijRepository {
   Studij dohvati(Integer studijId);
 
+  Studij dohvatiPoUpisniListId(Integer upisniListId);
+
   void spremi(Studij studij);
 
   void azuriraj(Studij studij);

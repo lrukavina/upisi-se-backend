@@ -24,6 +24,10 @@ public class KorisnikManager {
     return repository.dohvatiZadnjeg(korisnickoIme);
   }
 
+  public Korisnik dohvatiPoUpisniListId(Integer upisniListId) {
+    return repository.dohvatiPoUpisniListId(upisniListId);
+  }
+
   public List<Korisnik> dohvatiPoSemestru(Integer semestar) {
     return repository.dohvatiPoSemestru(semestar);
   }
@@ -43,6 +47,4 @@ public class KorisnikManager {
   public void izbrisi(Integer korisnikId) {
     repository.izbrisi(korisnikId);
   }
-
-  // todo izbrisi sve iz ostalih tablica
 }

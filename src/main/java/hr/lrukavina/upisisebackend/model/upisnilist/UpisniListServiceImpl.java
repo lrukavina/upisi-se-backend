@@ -126,15 +126,6 @@ public class UpisniListServiceImpl implements UpisniListService {
     }
   }
 
-  // todo premjestiti u servis za naloge
-  private String generirajPozivNaBroj(String jmbag) {
-    return Konstante.UPISNI_BROJ_PREFIX
-        + Konstante.SEPEARATOR
-        + jmbag
-        + Konstante.SEPEARATOR
-        + Konstante.POZIV_NA_BROJ_SUFIX;
-  }
-
   private String generirajUpisniBroj(Integer upisId) {
     return Konstante.UPISNI_BROJ_PREFIX + Konstante.SEPEARATOR + String.format("%06d", upisId);
   }

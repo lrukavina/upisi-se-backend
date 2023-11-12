@@ -28,6 +28,16 @@
         where studij.id = #{studijId}
     </select>
 
+    <select id="dohvatiPoUpisniListId" parameterType="Integer" resultMap="studijResultMap">
+            select  <include refid="studijSelectColumns">
+                     <property name="alias" value="studij"/>
+                    </include>
+              from studij
+        inner join upis on studij.id = upis.studij_id
+        inner join upisni_list on upis.id = upisni_list.upis_id
+             where upisni_list.id = #{upisniListId}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into studij (naziv_studija,
                             naziv_smjera,
