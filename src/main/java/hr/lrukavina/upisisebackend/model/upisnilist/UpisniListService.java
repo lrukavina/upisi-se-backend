@@ -7,7 +7,7 @@ import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
 public interface UpisniListService {
   UpisniListDto dohvati(String sifra);
 
-  UpisniListDto dohvatiPoKorisnikSifra(String korisnikSifra);
+  UpisniListDto dohvatiPoKorisniku(String korisnikSifra);
 
   UpisniListDto azuriraj(AzurUpisniListRequest request, String sifra);
 

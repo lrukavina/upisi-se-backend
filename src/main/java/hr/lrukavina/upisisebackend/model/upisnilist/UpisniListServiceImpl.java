@@ -5,6 +5,8 @@ import hr.lrukavina.upisisebackend.exception.UpisiSeException;
 import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
 import hr.lrukavina.upisisebackend.model.kolegij.Kolegij;
 import hr.lrukavina.upisisebackend.model.kolegij.KolegijManager;
+import hr.lrukavina.upisisebackend.model.kolegij.KolegijService;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijUpisniListDto;
 import hr.lrukavina.upisisebackend.model.korisnik.Korisnik;
 import hr.lrukavina.upisisebackend.model.korisnik.KorisnikManager;
 import hr.lrukavina.upisisebackend.model.studij.Studij;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,6 +31,7 @@ public class UpisniListServiceImpl implements UpisniListService {
 
   private final UpisniListManager upisniListManager;
   private final KolegijManager kolegijManager;
+  private final KolegijService kolegijService;
   private final UpisniListKolegijManager upisniListKolegijManager;
   private final SifraOpisHelper sifraOpisHelper;
   private final KorisnikManager korisnikManager;
@@ -39,19 +43,26 @@ public class UpisniListServiceImpl implements UpisniListService {
     if (upisniList == null) {
       throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
     }
+
+    List<KolegijUpisniListDto> odabraniKolegiji =
+        kolegijService.dohvatiPoUpisniListId(upisniList.getId());
+
     return UpisniListMapper.toDto(
-        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()));
+        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()), odabraniKolegiji);
   }
 
   @Override
-  public UpisniListDto dohvatiPoKorisnikSifra(String korisnikSifra) {
-    UpisniList upisniList =
-        upisniListManager.dohvatiPoKorisnikId(Utils.desifrirajId(korisnikSifra));
+  public UpisniListDto dohvatiPoKorisniku(String korisnickoIme) {
+    UpisniList upisniList = upisniListManager.dohvatiPoKorisniku(korisnickoIme);
     if (upisniList == null) {
       throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
     }
+
+    List<KolegijUpisniListDto> odabraniKolegiji =
+        kolegijService.dohvatiPoUpisniListId(upisniList.getId());
+
     return UpisniListMapper.toDto(
-        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()));
+        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()), odabraniKolegiji);
   }
 
   @Override
@@ -76,7 +87,9 @@ public class UpisniListServiceImpl implements UpisniListService {
     upisniListKolegijManager.azuriraj(upisniList.getId(), kolegijIdevi);
 
     return UpisniListMapper.toDto(
-        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()));
+        upisniList,
+        sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()),
+        Collections.emptyList());
   }
 
   private Integer vratiBrojEctsa(List<Kolegij> kolegiji) {

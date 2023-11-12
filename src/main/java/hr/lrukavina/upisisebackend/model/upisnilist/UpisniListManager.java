@@ -14,8 +14,8 @@ public class UpisniListManager {
     return repository.dohvati(upisniListId);
   }
 
-  public UpisniList dohvatiPoKorisnikId(Integer korisnikId) {
-    return repository.dohvatiPoKorisnikId(korisnikId);
+  public UpisniList dohvatiPoKorisniku(String korisnickoIme) {
+    return repository.dohvatiPoKorisniku(korisnickoIme);
   }
 
   public UpisniStatus dohvatiStatusPoKorisnuku(String korisnickoIme) {
