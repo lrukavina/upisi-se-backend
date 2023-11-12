@@ -17,6 +17,7 @@ public class UpisDto {
   private Integer maxBrojEctsa;
   private String datumVrijemeOd;
   private String datumVrijemeDo;
+  private String status;
   private List<SifraOpis> obavezniKolegiji;
   private List<SifraOpis> izborniKolegiji;
 }

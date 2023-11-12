@@ -10,6 +10,8 @@ public interface UpisniListRepository {
 
   UpisniList dohvatiPoKorisnikId(Integer korisnikId);
 
+  UpisniList dohvatiPoKorisniku(String korisnickoIme);
+
   void spremi(UpisniList upisniList);
 
   void azuriraj(UpisniList upisniList);
