@@ -3,6 +3,8 @@ package hr.lrukavina.upisisebackend.model.korisnik;
 import hr.lrukavina.upisisebackend.common.SifraOpis;
 import hr.lrukavina.upisisebackend.model.korisnik.request.AzurKorisnikaRequest;
 import hr.lrukavina.upisisebackend.model.korisnik.response.KorisnikDto;
+import hr.lrukavina.upisisebackend.model.korisnik.response.KorisnikInfoDto;
+import hr.lrukavina.upisisebackend.model.studij.Studij;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 
@@ -39,6 +41,16 @@ public class KorisnikMapper {
         .rola(korisnik.getRola())
         .visokoUciliste(visokoUciliste)
         .studij(studij)
+        .build();
+  }
+
+  public static KorisnikInfoDto toInfoDto(Korisnik korisnik, Studij studij) {
+    return KorisnikInfoDto.builder()
+        .ime(korisnik.getIme())
+        .prezime(korisnik.getPrezime())
+        .nazivStudija(studij != null ? studij.getNazivStudija() : null)
+        .nazivSmjera(studij != null ? studij.getNazivSmjera() : null)
+        .semestar(korisnik.getSemestar())
         .build();
   }
 }
