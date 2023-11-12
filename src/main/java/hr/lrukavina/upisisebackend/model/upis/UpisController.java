@@ -18,6 +18,12 @@ public class UpisController {
     return ResponseEntity.ok(upisService.dohvati(sifra));
   }
 
+  @GetMapping("/dohvati/aktivne/korisnik/{korisnickoIme}")
+  public ResponseEntity<UpisDto> dohvatiAktivneZaKorisnika(
+      @PathVariable final String korisnickoIme) {
+    return ResponseEntity.ok(upisService.dohvatiAktivneZaKorisnika(korisnickoIme));
+  }
+
   @PostMapping("/spremi")
   public ResponseEntity<UpisDto> spremi(@RequestBody SpremiUpisRequest request) {
     return ResponseEntity.ok(upisService.spremi(request));

@@ -32,6 +32,19 @@
         where upis.id = #{upisId}
     </select>
 
+    <select id="dohvatiAktivneZaKorisnika" parameterType="String" resultMap="upisResultMap">
+            select  <include refid="upisSelectColumns">
+                     <property name="alias" value="upis"/>
+                    </include>
+              from upis
+        inner join studij on upis.studij_id = studij.id
+        inner join korisnik on studij.id = korisnik.studij_id
+             where korisnik.korisnicko_ime = #{korisnickoIme}
+               and tstamp_od &lt;= current_timestamp
+               and tstamp_do &gt;= current_timestamp
+             limit 1
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into upis (semestar,
                           min_broj_ectsa,

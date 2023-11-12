@@ -63,7 +63,7 @@ insert into kolegij_nastavnik(ime, prezime, titula, kolegij_id) values
 ('John', 'Doe', 'dr.sc.', 10);
 
 insert into upis(semestar, tstamp_od, tstamp_do, min_broj_ectsa, max_broj_ectsa, studij_id) values
-(3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 1),
+(3, '2023-09-01 00:00:00', '2023-12-31 00:00:00', 15, 30, 1),
 (3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 2),
 (3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 3),
 (3, '2023-09-01 00:00:00', '2023-09-30 00:00:00', 15, 30, 4),

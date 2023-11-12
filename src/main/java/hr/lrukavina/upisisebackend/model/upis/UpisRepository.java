@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface UpisRepository {
   Upis dohvati(Integer upisId);
 
+  Upis dohvatiAktivneZaKorisnika(String korisnickoIme);
+
   void spremi(Upis upis);
 
   void azuriraj(Upis upis);

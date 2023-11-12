@@ -12,6 +12,10 @@ public class UpisManager {
     return repository.dohvati(upisId);
   }
 
+  public Upis dohvatiAktivneZaKorisnika(String korisnickoIme) {
+    return repository.dohvatiAktivneZaKorisnika(korisnickoIme);
+  }
+
   public void spremi(Upis upis) {
     repository.spremi(upis);
   }

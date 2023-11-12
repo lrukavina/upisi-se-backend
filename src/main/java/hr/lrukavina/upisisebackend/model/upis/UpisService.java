@@ -7,6 +7,8 @@ import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
 public interface UpisService {
   UpisDto dohvati(String sifra);
 
+  UpisDto dohvatiAktivneZaKorisnika(String korisnickoIme);
+
   UpisDto spremi(SpremiUpisRequest request);
 
   UpisDto azuriraj(AzurUpisRequest request, String sifra);
