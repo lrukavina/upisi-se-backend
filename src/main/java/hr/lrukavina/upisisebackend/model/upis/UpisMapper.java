@@ -8,6 +8,7 @@ import hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -27,10 +28,11 @@ public class UpisMapper {
             + " "
             + upis.getTstampOd().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
+    LocalDateTime tstampDoTransformirani = upis.getTstampDo().minusMinutes(1);
     String datumVrijemeDo =
-        upis.getTstampDo().toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            tstampDoTransformirani.toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             + " "
-            + upis.getTstampDo().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+            + tstampDoTransformirani.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
     return UpisDto.builder()
         .sifra(Utils.sifrirajId(upis.getId()))
