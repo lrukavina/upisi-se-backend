@@ -37,6 +37,10 @@ public class UpisServiceImpl implements UpisService {
     if (upis == null) {
       throw new UpisiSeException(VrstaPoruke.UPIS_NE_POSTOJI_U_BAZI);
     }
+    return pripremiUpisDto(upis);
+  }
+
+  private UpisDto pripremiUpisDto(Upis upis) {
     Studij studij = studijManager.dohvati(upis.getStudijId());
 
     SifraOpis studijSifOpis = sifraOpisHelper.dohvatiStudij(studij);
@@ -57,6 +61,15 @@ public class UpisServiceImpl implements UpisService {
 
     return UpisMapper.toDto(
         upis, visokoUcilisteSifOpis, studijSifOpis, obavezniKolegiji, izborniKolegiji);
+  }
+
+  @Override
+  public UpisDto dohvatiAktivneZaKorisnika(String korisnickoIme) {
+    Upis upis = upisManager.dohvatiAktivneZaKorisnika(korisnickoIme);
+    if (upis == null) {
+      return null;
+    }
+    return pripremiUpisDto(upis);
   }
 
   @Override
