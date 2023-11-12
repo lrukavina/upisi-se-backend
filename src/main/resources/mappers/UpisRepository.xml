@@ -72,7 +72,13 @@
     </update>
 
     <delete id="izbrisi" parameterType="Integer">
-        delete from upis
-        where upis.id = #{upisId}
+        delete from upisni_list_kolegij where upisni_list_id in (
+            select ul.id
+            from upisni_list ul
+            where ul.upis_id = #{upisId}
+        );
+        delete from upisni_list where upisni_list.upis_id = #{upisId};
+        delete from upis_kolegij where upis_kolegij.upis_id = #{upisId};
+        delete from upis where upis.id = #{upisId};
     </delete>
 </mapper>
