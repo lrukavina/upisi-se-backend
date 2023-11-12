@@ -26,8 +26,6 @@ public class UpisKolegijManager {
   }
 
   public void azuriraj(Integer upisId, List<Integer> kolegijIdevi) {
-    // todo potrebno obrisati (vratiti u status NIJE_ZAPOCET)  upisni list i izbirsati veznu tablicu
-    // upisni_list_kolegij
     repository.izbrisi(upisId);
     for (Integer kolegijId : kolegijIdevi) {
       repository.spremi(upisId, kolegijId);
