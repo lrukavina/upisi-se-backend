@@ -1,5 +1,7 @@
 package hr.lrukavina.upisisebackend.model.upisnilist;
 
+import hr.lrukavina.upisisebackend.exception.UpisiSeException;
+import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,14 @@ public class UpisniListManager {
 
   public UpisniList dohvatiPoKorisnikId(Integer korisnikId) {
     return repository.dohvatiPoKorisnikId(korisnikId);
+  }
+
+  public UpisniStatus dohvatiStatusPoKorisnuku(String korisnickoIme) {
+    UpisniList upisniList = repository.dohvatiPoKorisniku(korisnickoIme);
+    if (upisniList == null) {
+      throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
+    }
+    return upisniList.getStatus();
   }
 
   public void spremi(UpisniList upisniList) {

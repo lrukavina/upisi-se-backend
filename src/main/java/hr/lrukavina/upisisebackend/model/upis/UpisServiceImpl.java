@@ -12,7 +12,9 @@ import hr.lrukavina.upisisebackend.model.upis.request.AzurUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.request.SpremiUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
 import hr.lrukavina.upisisebackend.model.upis.upiskolegij.UpisKolegijManager;
+import hr.lrukavina.upisisebackend.model.upisnilist.UpisniListManager;
 import hr.lrukavina.upisisebackend.model.upisnilist.UpisniListService;
+import hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class UpisServiceImpl implements UpisService {
   private final SifraOpisHelper sifraOpisHelper;
   private final KolegijManager kolegijManager;
   private final UpisKolegijManager upisKolegijManager;
+  private final UpisniListManager upisniListManager;
   private final UpisniListService upisniListService;
 
   @Override
@@ -37,10 +40,10 @@ public class UpisServiceImpl implements UpisService {
     if (upis == null) {
       throw new UpisiSeException(VrstaPoruke.UPIS_NE_POSTOJI_U_BAZI);
     }
-    return pripremiUpisDto(upis);
+    return pripremiUpisDto(upis, null);
   }
 
-  private UpisDto pripremiUpisDto(Upis upis) {
+  private UpisDto pripremiUpisDto(Upis upis, UpisniStatus status) {
     Studij studij = studijManager.dohvati(upis.getStudijId());
 
     SifraOpis studijSifOpis = sifraOpisHelper.dohvatiStudij(studij);
@@ -60,7 +63,7 @@ public class UpisServiceImpl implements UpisService {
             .toList();
 
     return UpisMapper.toDto(
-        upis, visokoUcilisteSifOpis, studijSifOpis, obavezniKolegiji, izborniKolegiji);
+        upis, visokoUcilisteSifOpis, studijSifOpis, obavezniKolegiji, izborniKolegiji, status);
   }
 
   @Override
@@ -69,7 +72,8 @@ public class UpisServiceImpl implements UpisService {
     if (upis == null) {
       return null;
     }
-    return pripremiUpisDto(upis);
+    UpisniStatus status = upisniListManager.dohvatiStatusPoKorisnuku(korisnickoIme);
+    return pripremiUpisDto(upis, status);
   }
 
   @Override

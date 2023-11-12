@@ -4,6 +4,7 @@ import hr.lrukavina.upisisebackend.common.SifraOpis;
 import hr.lrukavina.upisisebackend.model.upis.request.AzurUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.request.SpremiUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
+import hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus;
 import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 
@@ -18,7 +19,8 @@ public class UpisMapper {
       SifraOpis visokoUciliste,
       SifraOpis studij,
       List<SifraOpis> obavezniKolegiji,
-      List<SifraOpis> izbroniKolegiji) {
+      List<SifraOpis> izbroniKolegiji,
+      UpisniStatus status) {
 
     String datumVrijemeOd =
         upis.getTstampOd().toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
@@ -39,6 +41,7 @@ public class UpisMapper {
         .maxBrojEctsa(upis.getMaxBrojEctsa())
         .datumVrijemeOd(datumVrijemeOd)
         .datumVrijemeDo(datumVrijemeDo)
+        .status(status != null ? String.valueOf(status) : null)
         .obavezniKolegiji(obavezniKolegiji)
         .izborniKolegiji(izbroniKolegiji)
         .build();
