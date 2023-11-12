@@ -45,6 +45,15 @@
              limit 1
     </select>
 
+    <select id="dohvatiPoSemestruZaStudij" resultMap="upisResultMap">
+        select  <include refid="upisSelectColumns">
+                 <property name="alias" value="upis"/>
+                </include>
+        from upis
+        where upis.semestar = #{semestar}
+          and upis.studij_id = #{studijId}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into upis (semestar,
                           min_broj_ectsa,
