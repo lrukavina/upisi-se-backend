@@ -36,6 +36,7 @@ public class UpisniListServiceImpl implements UpisniListService {
   private final SifraOpisHelper sifraOpisHelper;
   private final KorisnikManager korisnikManager;
   private final StudijManager studijManager;
+  private final UpisniListValidator validator;
 
   @Override
   public UpisniListDto dohvati(String sifra) {
@@ -67,8 +68,8 @@ public class UpisniListServiceImpl implements UpisniListService {
 
   @Override
   @Transactional
-  public UpisniListDto azuriraj(AzurUpisniListRequest request, String sifra) {
-    UpisniList upisniList = upisniListManager.dohvati(Utils.desifrirajId(sifra));
+  public UpisniListDto azuriraj(AzurUpisniListRequest request, String korisnickoIme) {
+    UpisniList upisniList = upisniListManager.dohvatiPoKorisniku(korisnickoIme);
     if (upisniList == null) {
       throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
     }
@@ -77,6 +78,7 @@ public class UpisniListServiceImpl implements UpisniListService {
         request.getKolegijSifre().stream().map(Utils::desifrirajId).toList();
 
     List<Kolegij> kolegiji = kolegijManager.dohvati(kolegijIdevi);
+    validator.validirajOdabraneKolegije(kolegiji, upisniList.getUpisId());
 
     upisniList.setBrojEctsa(vratiBrojEctsa(kolegiji));
     upisniList.setUkupnaCijena(
