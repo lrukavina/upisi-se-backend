@@ -16,6 +16,11 @@ public class UpisManager {
     return repository.dohvatiAktivneZaKorisnika(korisnickoIme);
   }
 
+  public boolean postojiUpisPoSemestruZaStudij(Upis upis) {
+    Upis upisbaza = repository.dohvatiPoSemestruZaStudij(upis.getSemestar(), upis.getStudijId());
+    return upisbaza != null;
+  }
+
   public void spremi(Upis upis) {
     repository.spremi(upis);
   }

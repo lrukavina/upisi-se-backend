@@ -34,6 +34,7 @@ public class UpisServiceImpl implements UpisService {
   private final UpisKolegijManager upisKolegijManager;
   private final UpisniListManager upisniListManager;
   private final UpisniListService upisniListService;
+  private final UpisValidator validator;
 
   @Override
   public UpisDto dohvati(String sifra) {
@@ -84,6 +85,7 @@ public class UpisServiceImpl implements UpisService {
   @Transactional
   public UpisDto spremi(SpremiUpisRequest request) {
     Upis upis = UpisMapper.pripremiSpremanje(request);
+    validator.validirajSpremanje(upis);
     upisManager.spremi(upis);
 
     List<String> kolegijSifre = new ArrayList<>();
