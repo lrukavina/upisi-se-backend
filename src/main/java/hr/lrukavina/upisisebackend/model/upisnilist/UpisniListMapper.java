@@ -1,14 +1,9 @@
 package hr.lrukavina.upisisebackend.model.upisnilist;
 
 import hr.lrukavina.upisisebackend.common.SifraOpis;
-import hr.lrukavina.upisisebackend.model.studij.Studij;
-import hr.lrukavina.upisisebackend.model.studij.request.AzurStudijRequest;
-import hr.lrukavina.upisisebackend.model.studij.request.SpremiStudijRequest;
-import hr.lrukavina.upisisebackend.model.upisnilist.request.AzurUpisniListRequest;
 import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
-import org.springframework.beans.BeanUtils;
 
 import java.text.NumberFormat;
 
@@ -16,15 +11,23 @@ public class UpisniListMapper {
   private UpisniListMapper() {}
 
   public static UpisniListDto toDto(UpisniList upisniList, SifraOpis korisnik) {
+    String cijenaPoEctsu =
+        upisniList.getCijenaPoEctsu() != null
+            ? NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
+                .format(upisniList.getCijenaPoEctsu())
+            : null;
+
+    String ukupnaCijena =
+        upisniList.getUkupnaCijena() != null
+            ? NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
+                .format(upisniList.getUkupnaCijena())
+            : null;
+
     return UpisniListDto.builder()
         .sifra(Utils.sifrirajId(upisniList.getId()))
         .brojEctsa(upisniList.getBrojEctsa())
-        .cijenaPoEctsu(
-            NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
-                .format(upisniList.getCijenaPoEctsu()))
-        .ukupnaCijena(
-            NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
-                .format(upisniList.getUkupnaCijena()))
+        .cijenaPoEctsu(cijenaPoEctsu)
+        .ukupnaCijena(ukupnaCijena)
         .upisniBroj(upisniList.getUpisniBroj())
         .status(upisniList.getStatus())
         .upisSifra(Utils.sifrirajId(upisniList.getUpisId()))
