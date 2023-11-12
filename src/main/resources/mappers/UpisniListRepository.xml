@@ -51,6 +51,14 @@
              where korisnik.korisnicko_ime = #{korisnickoIme}
     </select>
 
+    <select id="dohvatiPoUpisId" parameterType="Integer" resultMap="upisniListResultMap">
+        select  <include refid="upisniListSelectColumns">
+                 <property name="alias" value="upisni_list"/>
+                </include>
+        from upisni_list
+        where upisni_list.upis_id = #{upisId}
+    </select>
+
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into upisni_list (broj_ectsa,
                                  cijena_ects,
@@ -82,7 +90,9 @@
 
     <delete id="izbrisi" parameterType="Integer">
         update upisni_list
-           set upisni_list.status          = '${@hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus@NIJE_ZAPOCET}'
+           set upisni_list.status          = '${@hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus@NIJE_ZAPOCET}',
+               upisni_list.broj_ectsa      = null,
+               upisni_list.ukupna_cijena   = null
          where upisni_list.id              = #{id, jdbcType=BIGINT};
         delete from upisni_list_kolegij where upisni_list_id = #{upisniListId};
     </delete>

@@ -13,6 +13,7 @@ import hr.lrukavina.upisisebackend.model.upis.request.AzurUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.request.SpremiUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
 import hr.lrukavina.upisisebackend.model.upis.upiskolegij.UpisKolegijManager;
+import hr.lrukavina.upisisebackend.model.upisnilist.UpisniList;
 import hr.lrukavina.upisisebackend.model.upisnilist.UpisniListManager;
 import hr.lrukavina.upisisebackend.model.upisnilist.UpisniListService;
 import hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus;
@@ -110,14 +111,24 @@ public class UpisServiceImpl implements UpisService {
     UpisMapper.pripremiZaAzuriranje(request, upis);
     upisManager.azuriraj(upis);
 
+    izbrisiUpisKolegije(request, upis.getId());
+    izbrisiUpisniListKolegije(upis.getId());
+
+    return dohvati(Utils.sifrirajId(upis.getId()));
+  }
+
+  private void izbrisiUpisKolegije(AzurUpisRequest request, Integer upisId) {
     List<String> kolegijSifre = new ArrayList<>();
     kolegijSifre.addAll(request.getObavezniKolegijiSifre());
     kolegijSifre.addAll(request.getIzborniKolegijiSifre());
 
     List<Integer> kolegijIdevi = kolegijSifre.stream().map(Utils::desifrirajId).toList();
-    upisKolegijManager.azuriraj(upis.getId(), kolegijIdevi);
+    upisKolegijManager.azuriraj(upisId, kolegijIdevi);
+  }
 
-    return dohvati(Utils.sifrirajId(upis.getId()));
+  private void izbrisiUpisniListKolegije(Integer upisId) {
+    List<UpisniList> upisniListovi = upisniListManager.dohvatiPoUpisId(upisId);
+    upisniListManager.izbrisi(upisniListovi);
   }
 
   @Override

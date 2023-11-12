@@ -5,6 +5,8 @@ import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UpisniListManager {
@@ -26,6 +28,10 @@ public class UpisniListManager {
     return upisniList.getStatus();
   }
 
+  public List<UpisniList> dohvatiPoUpisId(Integer upisId) {
+    return repository.dohvatiPoUpisId(upisId);
+  }
+
   public void spremi(UpisniList upisniList) {
     repository.spremi(upisniList);
   }
@@ -36,5 +42,11 @@ public class UpisniListManager {
 
   public void izbrisi(Integer upisniListId) {
     repository.izbrisi(upisniListId);
+  }
+
+  public void izbrisi(List<UpisniList> upisniListovi) {
+    for (UpisniList upisniList : upisniListovi) {
+      repository.izbrisi(upisniList.getId());
+    }
   }
 }
