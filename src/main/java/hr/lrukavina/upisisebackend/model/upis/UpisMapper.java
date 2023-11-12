@@ -1,6 +1,7 @@
 package hr.lrukavina.upisisebackend.model.upis;
 
 import hr.lrukavina.upisisebackend.common.SifraOpis;
+import hr.lrukavina.upisisebackend.common.SifraOpisKolegij;
 import hr.lrukavina.upisisebackend.model.upis.request.AzurUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.request.SpremiUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
@@ -19,8 +20,8 @@ public class UpisMapper {
       Upis upis,
       SifraOpis visokoUciliste,
       SifraOpis studij,
-      List<SifraOpis> obavezniKolegiji,
-      List<SifraOpis> izbroniKolegiji,
+      List<SifraOpisKolegij> obavezniKolegiji,
+      List<SifraOpisKolegij> izbroniKolegiji,
       UpisniStatus status) {
 
     String datumVrijemeOd =
