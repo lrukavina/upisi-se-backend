@@ -60,6 +60,15 @@
         limit 1
     </select>
 
+    <select id="dohvatiPoUpisniListId" parameterType="String" resultMap="korisnikResultMap">
+            select  <include refid="korisnikSelectColumns">
+                     <property name="alias" value="korisnik"/>
+                    </include>
+              from korisnik
+        inner join upisni_list on korisnik.id = upisni_list.korisnik_id
+             where upisni_list.id = #{upisniListId}
+    </select>
+
     <select id="dohvatiPoSemestru" parameterType="Integer" resultMap="korisnikResultMap">
         select  <include refid="korisnikSelectColumns">
                  <property name="alias" value="korisnik"/>
