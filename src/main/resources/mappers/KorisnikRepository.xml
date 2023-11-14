@@ -60,7 +60,7 @@
         limit 1
     </select>
 
-    <select id="dohvatiPoUpisniListId" parameterType="String" resultMap="korisnikResultMap">
+    <select id="dohvatiPoUpisniListId" parameterType="Integer" resultMap="korisnikResultMap">
             select  <include refid="korisnikSelectColumns">
                      <property name="alias" value="korisnik"/>
                     </include>

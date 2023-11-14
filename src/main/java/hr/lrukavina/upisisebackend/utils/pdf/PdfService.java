@@ -1,12 +1,12 @@
 package hr.lrukavina.upisisebackend.utils.pdf;
 
-import hr.lrukavina.upisisebackend.model.nalog.Nalog;
-import hr.lrukavina.upisisebackend.model.ugovor.Ugovor;
+import hr.lrukavina.upisisebackend.model.upisnilist.UpisniList;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public interface PdfService {
-  String generirajPdfPrivitak(Ugovor ugovor, Nalog nalog, String barkodPutanja);
+  String generirajPdfPrivitak(UpisniList upisniList);
 
-  ByteArrayOutputStream generirajPdfPrikaz(Ugovor ugovor, Nalog nalog, String barkodPutanja);
+  ByteArrayOutputStream generirajPdfPrikaz(UpisniList upisniList) throws IOException;
 }
