@@ -22,5 +22,4 @@ public class Nalog {
   private String pozivNaBroj;
   private String sifraNamjene;
   private String opis;
-  private String barkod;
 }

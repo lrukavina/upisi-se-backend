@@ -22,24 +22,20 @@ public class NalogServiceImpl implements NalogService {
     Korisnik korisnik = korisnikManager.dohvatiPoUpisniListId(upisniList.getId());
     VisokoUciliste visokoUciliste = visokoUcilisteManager.dohvatiPoUpisniListId(upisniList.getId());
 
-    Nalog nalog =
-        Nalog.builder()
-            .zaglavlje(Konstante.NALOG_ZAGLAVLJE)
-            .valuta(Konstante.NALOG_VALUTA)
-            .iznos(String.valueOf(upisniList.getUkupnaCijena()))
-            .platitelj(korisnik.getImePrezime())
-            .adresaPlatitelja(blankAdresa())
-            .primatelj(visokoUciliste.getNaziv())
-            .adresaPrimatelja(dohvatiAdresu(visokoUciliste))
-            .ibanPrimatelja(visokoUciliste.getIban())
-            .model(Konstante.NALOG_MODEL)
-            .pozivNaBroj(generirajPozivNaBroj(korisnik.getJmbag()))
-            .sifraNamjene(Konstante.NALOG_SIF_NAMJENE)
-            .opis(generirajOpis(upisniList.getUpisniBroj(), korisnik.getSemestar()))
-            .build();
-
-    nalog.setBarkod(NalogMapper.toBarkod(nalog));
-    return nalog;
+    return Nalog.builder()
+        .zaglavlje(Konstante.NALOG_ZAGLAVLJE)
+        .valuta(Konstante.NALOG_VALUTA)
+        .iznos(String.valueOf(upisniList.getUkupnaCijena()))
+        .platitelj(korisnik.getImePrezime())
+        .adresaPlatitelja(blankAdresa())
+        .primatelj(visokoUciliste.getNaziv())
+        .adresaPrimatelja(dohvatiAdresu(visokoUciliste))
+        .ibanPrimatelja(visokoUciliste.getIban())
+        .model(Konstante.NALOG_MODEL)
+        .pozivNaBroj(generirajPozivNaBroj(korisnik.getJmbag()))
+        .sifraNamjene(Konstante.NALOG_SIF_NAMJENE)
+        .opis(generirajOpis(upisniList.getUpisniBroj(), korisnik.getSemestar()))
+        .build();
   }
 
   private Adresa blankAdresa() {
