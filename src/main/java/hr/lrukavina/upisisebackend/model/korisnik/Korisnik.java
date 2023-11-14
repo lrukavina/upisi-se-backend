@@ -1,5 +1,6 @@
 package hr.lrukavina.upisisebackend.model.korisnik;
 
+import hr.lrukavina.upisisebackend.utils.Konstante;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -65,5 +66,9 @@ public class Korisnik implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public String getImePrezime() {
+    return this.ime + Konstante.RAZMAK + this.prezime;
   }
 }

@@ -38,9 +38,9 @@ public class UgovorMapper {
 
   private static String generirajPozivNaBroj(String jmbag) {
     return Konstante.UPISNI_BROJ_PREFIX
-        + Konstante.SEPEARATOR
+        + Konstante.CRTA
         + jmbag
-        + Konstante.SEPEARATOR
+        + Konstante.CRTA
         + Konstante.POZIV_NA_BROJ_SUFIX;
   }
 }
