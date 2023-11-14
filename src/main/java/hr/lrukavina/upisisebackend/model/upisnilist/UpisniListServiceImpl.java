@@ -127,6 +127,6 @@ public class UpisniListServiceImpl implements UpisniListService {
   }
 
   private String generirajUpisniBroj(Integer upisId) {
-    return Konstante.UPISNI_BROJ_PREFIX + Konstante.SEPEARATOR + String.format("%06d", upisId);
+    return Konstante.UPISNI_BROJ_PREFIX + Konstante.CRTA + String.format("%06d", upisId);
   }
 }

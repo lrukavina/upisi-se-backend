@@ -29,11 +29,11 @@ public class UgovorHelper {
     String id = String.format("%03d", upisniListId);
 
     return Konstante.KLASA_PREFIX
-        + Konstante.SEPEARATOR
+        + Konstante.CRTA
         + id
-        + Konstante.UGOVOR_SEPARATOR
+        + Konstante.KOSA_CRTA
         + generirajGodinuMjesec(false)
-        + Konstante.UGOVOR_SEPARATOR
+        + Konstante.KOSA_CRTA
         + Konstante.KLASA_SUFIX;
   }
 
@@ -43,18 +43,18 @@ public class UgovorHelper {
     String mjesec = String.format("%02d", datum.getMonthValue());
 
     if (obrnuto) {
-      return godina + Konstante.SEPEARATOR + mjesec;
+      return godina + Konstante.CRTA + mjesec;
     }
-    return mjesec + Konstante.SEPEARATOR + godina;
+    return mjesec + Konstante.CRTA + godina;
   }
 
   public String generirajUrbroj(Integer upisniListId) {
     String id = String.format("%03d", upisniListId);
 
     return Konstante.URBROJ_PREFIX
-        + Konstante.SEPEARATOR
+        + Konstante.CRTA
         + generirajGodinuMjesec(true)
-        + Konstante.SEPEARATOR
+        + Konstante.CRTA
         + id;
   }
 }
