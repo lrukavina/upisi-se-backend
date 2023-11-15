@@ -30,7 +30,7 @@ public class NalogMapper {
             + Konstante.NOVI_RED
             + nalog.getIbanPrimatelja()
             + Konstante.NOVI_RED
-            + nalog.getModel()
+            + nalog.getModelBarkod()
             + Konstante.NOVI_RED
             + nalog.getPozivNaBroj()
             + Konstante.NOVI_RED

@@ -16,9 +16,16 @@ import java.time.format.DateTimeFormatter;
 public class PdfHelper {
 
   private static final String PRAZAN_REDAK = "<br>";
+  private static final String PRAZAN_PARAGRAF = "<p>&nbsp; </p>";
 
-  public String generirajHtml(Ugovor ugovor, Nalog nalog, String barkodPutanja) {
+  public String generirajHtml(Ugovor ugovor, Nalog nalog, String hub3Putanja) {
     StringBuilder html = new StringBuilder();
+
+    html.append("<body style=\"font-family: \"times\">");
+
+    html.append("<p style=\"text-align:center\"><strong>")
+        .append(nalog.getPrimatelj())
+        .append("</strong></p>");
 
     html.append("<p style=\"text-align:center\"><strong>")
         .append(ugovor.getNazivStudija())
@@ -27,11 +34,13 @@ public class PdfHelper {
         .append(")")
         .append("</strong></p>");
 
-    html.append("<p>KLASA: ").append(ugovor.getKlasa()).append("</p>");
+    html.append(PRAZAN_REDAK);
 
-    html.append("<p>URBROJ: ").append(ugovor.getUrbroj()).append("</p>");
+    html.append("<p>KLASA: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ").append(ugovor.getKlasa()).append("</p>");
 
-    html.append("<p>Ime:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
+    html.append("<p>URBROJ: &nbsp; &nbsp; &nbsp; &nbsp; ").append(ugovor.getUrbroj()).append("</p>");
+
+    html.append("<p>Ime:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ")
         .append(ugovor.getIme())
         .append("</p>");
 
@@ -39,11 +48,9 @@ public class PdfHelper {
         .append(ugovor.getPrezime())
         .append("</p>");
 
-    html.append("<p>Jmbag:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
+    html.append("<p>Jmbag:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;")
         .append(ugovor.getJmbag())
         .append("</p>");
-
-    html.append(PRAZAN_REDAK);
 
     html.append(
             "<p style=\"text-align:center\"><u><strong>UPISNI LIST I IZRAČUN &Scaron;KOLARINE ZA AKADEMSKU GODINU")
@@ -57,7 +64,7 @@ public class PdfHelper {
     html.append("<p>Upisani predmeti: ").append("</p>");
 
     html.append(
-            "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"margin-left:auto; margin-right:auto; text-align:center; width:500px\">")
+            "<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"margin-left:auto; margin-right:auto; text-align:center; width:500px\">")
         .append("<thead>")
         .append("<tr>")
         .append("<th scope=\"col\">&Scaron;ifra</th>")
@@ -88,29 +95,26 @@ public class PdfHelper {
 
     html.append("</tbody>").append("</table>");
 
-    html.append(PRAZAN_REDAK);
-
     BigDecimal ukupnaCIjena = cijenaEctsa.multiply(BigDecimal.valueOf(brojEctsa));
     html.append("<p>Broj upisanih ECTS bodova po datumu upisa: ")
         .append(brojEctsa)
-        .append(" x")
+        .append(" x ")
         .append(cijenaEctsa)
         .append(" = ")
         .append(ukupnaCIjena)
+        .append(Konstante.RAZMAK)
         .append("&euro;&nbsp;</p>");
 
     html.append("<p>Iznos &scaron;kolarine student plaća na IBAN: ")
         .append("<b>")
-        .append(ugovor.getIban())
+        .append(nalog.getIbanPrimatelja())
         .append("</b>")
         .append(Konstante.RAZMAK)
         .append("s pozivom na broj odobrenja ")
-        .append(ugovor.getPozivNaBroj());
+        .append(nalog.getPozivNaBroj());
 
     html.append(
         "<p>Upisni list i izračun &scaron;kolarine sukladan je odluci Upravnog vijeća o iznosu &scaron;kolarine i ostalim tro&scaron;kovima koji proizlaze iz upisa, a koja se primjenjuje u ak. godini u kojoj se semestar upisuje kao i nastavnom planu i programu predviđenom za upisanu ak.godinu. Ovaj Upisni list i Izračun &scaron;kolarine sastavljen je u 2 (dva) jednaka primjerka: (1) jedan za studenta, a 1 (jedan) za Visoko učili&scaron;te</p>");
-
-    html.append(PRAZAN_REDAK).append(PRAZAN_REDAK);
 
     html.append("<p>Student</p>");
 
@@ -120,19 +124,23 @@ public class PdfHelper {
         .append(ugovor.getPrezime())
         .append("</p>");
 
-    html.append(PRAZAN_REDAK);
-
     html.append("<p>__________________________</p>");
 
     html.append("<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (potpis)</p>");
 
-    html.append("<p style=\"text-align:right\">Datum i mjesto izdavanja</p>");
+    html.append(PRAZAN_PARAGRAF);
 
-    html.append("<p style=\"text-align:right\">")
-        .append(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+    html.append("<p style=\"text-align:left\">Datum i mjesto izdavanja: <br>")
+        .append(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy.")))
         .append(Konstante.ZAREZ)
         .append(Konstante.RAZMAK)
-        .append(nalog.getAdresaPrimatelja().getMjesto());
+        .append(nalog.getAdresaPrimatelja().getMjesto())
+        .append("</p>");
+
+    html.append(PRAZAN_PARAGRAF).append(PRAZAN_PARAGRAF);
+    html.append("<img src=\"").append(hub3Putanja).append("\" width=\"100%\" height=\"auto\" />");
+
+    html.append("</body>");
 
     return html.toString();
   }

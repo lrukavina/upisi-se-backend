@@ -21,7 +21,7 @@ public class BarkodServiceImpl implements BarkodService {
   public String generirajBarkod(Nalog nalog) throws IOException {
     PDF417Bean barcodeGenerator = new PDF417Bean();
     BitmapCanvasProvider canvas =
-        new BitmapCanvasProvider(180, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        new BitmapCanvasProvider(200, BufferedImage.TYPE_BYTE_BINARY, false, 0);
     barcodeGenerator.setColumns(9);
 
     barcodeGenerator.generateBarcode(canvas, NalogMapper.toBarkod(nalog));
@@ -33,7 +33,7 @@ public class BarkodServiceImpl implements BarkodService {
   }
 
   private String puniNazivBarkoda() {
-    return Konstante.BARKOD_PUTANJA
+    return Konstante.RESURSI_PUTANJA
         + Konstante.BARKOD_NAZIV
         + Konstante.TOCKA
         + Konstante.BARKOD_FORMAT;

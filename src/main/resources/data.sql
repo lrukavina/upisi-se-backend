@@ -82,7 +82,7 @@ insert into upis_kolegij(upis_id, kolegij_id) values
 (1, 5);
 
 insert into upisni_list(broj_ectsa, upisni_broj, cijena_ects, ukupna_cijena, status, upis_id, korisnik_id) values
-(30, 'UB0001', 33.33, 1000, 'U_TIJEKU', 1, 1);
+(30, 'UB0001', 33.33, 1000, 'U_TIJEKU', 1, 2);
 
 insert into upisni_list_kolegij(upisni_list_id, kolegij_id) values
 (1, 1),
