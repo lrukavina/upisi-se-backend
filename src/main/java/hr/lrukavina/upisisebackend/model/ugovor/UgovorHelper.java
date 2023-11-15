@@ -19,7 +19,7 @@ public class UgovorHelper {
   private final KolegijManager kolegijManager;
 
   public List<UgovorKolegijDto> dohvatiKolegijeZaUgovor(Integer upisniListId, Studij studij) {
-    List<Kolegij> kolegiji = kolegijManager.dohvatiPoUpisId(upisniListId);
+    List<Kolegij> kolegiji = kolegijManager.dohvatiPoUpisniListId(upisniListId);
     return kolegiji.stream()
         .map(kolegij -> KolegijMapper.toUgovorKolegijDto(kolegij, studij))
         .collect(Collectors.toList());

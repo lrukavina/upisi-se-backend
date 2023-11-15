@@ -4,8 +4,12 @@ import hr.lrukavina.upisisebackend.model.upis.request.AzurUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.request.SpremiUpisRequest;
 import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/upis")
@@ -33,6 +37,15 @@ public class UpisController {
   public ResponseEntity<UpisDto> azuriraj(
       @RequestBody AzurUpisRequest request, @PathVariable final String sifra) {
     return ResponseEntity.ok(upisService.azuriraj(request, sifra));
+  }
+
+  @GetMapping(
+      path = "/dohvati/pregled/korisnik/{korisnickoIme}",
+      produces = MediaType.APPLICATION_PDF_VALUE)
+  public ResponseEntity<byte[]> dohvatiPregledUpisa(@PathVariable final String korisnickoIme)
+      throws IOException {
+    ByteArrayOutputStream pdf = upisService.dohvatiPregledUpisa(korisnickoIme);
+    return ResponseEntity.ok(pdf.toByteArray());
   }
 
   @DeleteMapping("/izbrisi/{sifra}")

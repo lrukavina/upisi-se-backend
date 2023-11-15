@@ -18,10 +18,13 @@ import hr.lrukavina.upisisebackend.model.upisnilist.UpisniListManager;
 import hr.lrukavina.upisisebackend.model.upisnilist.UpisniListService;
 import hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus;
 import hr.lrukavina.upisisebackend.utils.Utils;
+import hr.lrukavina.upisisebackend.utils.pdf.PdfService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class UpisServiceImpl implements UpisService {
   private final UpisniListManager upisniListManager;
   private final UpisniListService upisniListService;
   private final UpisValidator validator;
+  private final PdfService pdfService;
 
   @Override
   public UpisDto dohvati(String sifra) {
@@ -129,6 +133,15 @@ public class UpisServiceImpl implements UpisService {
   private void izbrisiUpisniListKolegije(Integer upisId) {
     List<UpisniList> upisniListovi = upisniListManager.dohvatiPoUpisId(upisId);
     upisniListManager.izbrisi(upisniListovi);
+  }
+
+  @Override
+  public ByteArrayOutputStream dohvatiPregledUpisa(String korisnickoIme) throws IOException {
+    UpisniList upisniList = upisniListManager.dohvatiPoKorisniku(korisnickoIme);
+    if (upisniList == null) {
+      throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
+    }
+    return pdfService.generirajPdfPrikaz(upisniList);
   }
 
   @Override
