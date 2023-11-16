@@ -48,7 +48,7 @@ public class SifraOpisHelper {
     }
     return SifraOpis.builder()
         .sifra(Utils.sifrirajId(studij.getId()))
-        .opis(studij.getNazivStudija() + "(" + studij.getNazivSmjera() + ")")
+        .opis(studij.getNazivStudija() + " (" + studij.getNazivSmjera() + ")")
         .build();
   }
 
