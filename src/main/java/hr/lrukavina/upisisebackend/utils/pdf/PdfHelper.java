@@ -36,9 +36,13 @@ public class PdfHelper {
 
     html.append(PRAZAN_REDAK);
 
-    html.append("<p>KLASA: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ").append(ugovor.getKlasa()).append("</p>");
+    html.append("<p>KLASA: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ")
+        .append(ugovor.getKlasa())
+        .append("</p>");
 
-    html.append("<p>URBROJ: &nbsp; &nbsp; &nbsp; &nbsp; ").append(ugovor.getUrbroj()).append("</p>");
+    html.append("<p>URBROJ: &nbsp; &nbsp; &nbsp; &nbsp; ")
+        .append(ugovor.getUrbroj())
+        .append("</p>");
 
     html.append("<p>Ime:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ")
         .append(ugovor.getIme())

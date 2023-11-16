@@ -8,6 +8,7 @@ import hr.lrukavina.upisisebackend.model.visokouciliste.VisokoUcilisteManager;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.barkod.BarkodService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -15,6 +16,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,8 +31,6 @@ public class NalogServiceImpl implements NalogService {
   private static final String HUB3_PUTANJA =
       Konstante.RESURSI_PUTANJA + Konstante.NALOG_NAZIV + Konstante.TOCKA + Konstante.NALOG_FORMAT;
 
-  private static final int IZNOS_X_DEFAULT = 1440;
-
   @Override
   public Nalog generirajZaUpisniList(UpisniList upisniList) {
     Korisnik korisnik = korisnikManager.dohvatiPoUpisniListId(upisniList.getId());
@@ -38,8 +39,8 @@ public class NalogServiceImpl implements NalogService {
     return Nalog.builder()
         .zaglavlje(Konstante.NALOG_ZAGLAVLJE)
         .valuta(Konstante.NALOG_VALUTA)
-        // todo doraditi iznos za nalog
-        .iznos(String.valueOf(upisniList.getUkupnaCijena()))
+        .iznos(formatirajIznos(upisniList.getUkupnaCijena(), false))
+        .iznosBarkod(formatirajIznos(upisniList.getUkupnaCijena(), true))
         .platitelj(korisnik.getImePrezime())
         .adresaPlatitelja(blankAdresa())
         .primatelj(visokoUciliste.getNaziv())
@@ -51,6 +52,13 @@ public class NalogServiceImpl implements NalogService {
         .sifraNamjene(Konstante.NALOG_SIF_NAMJENE)
         .opis(generirajOpis(upisniList.getUpisniBroj(), korisnik.getSemestar()))
         .build();
+  }
+
+  private String formatirajIznos(BigDecimal iznos, boolean isBarkod) {
+    iznos = iznos.setScale(2, RoundingMode.CEILING);
+    String formatted =
+        StringUtils.leftPad(String.valueOf(iznos), 16, isBarkod ? "0" : Konstante.RAZMAK);
+    return formatted.replace('.', ',');
   }
 
   private Adresa blankAdresa() {
@@ -102,8 +110,8 @@ public class NalogServiceImpl implements NalogService {
   }
 
   @Override
-  public String generirajHub3(Nalog nalog, String upisniBroj) throws IOException {
-    String barkodPutanja = barkodService.generirajBarkod(nalog);
+  public PutanjaDatoteke generirajHub3(Nalog nalog, String upisniBroj) throws IOException {
+    String barkodPutanja = barkodService.generirajBarkod(nalog, upisniBroj);
 
     final BufferedImage hub3 = ImageIO.read(new File(HUB3_PUTANJA));
     final BufferedImage barkod = ImageIO.read(new File(barkodPutanja));
@@ -113,7 +121,7 @@ public class NalogServiceImpl implements NalogService {
     g.setColor(Color.BLACK);
     g.drawString(nalog.getPlatitelj(), 50, 130);
     g.drawString(Nalog.dodajRazmake(nalog.getValuta()), 810, 95);
-    g.drawString(Nalog.dodajRazmake(nalog.getIznos()), izracunajIznosX(nalog.getIznos()), 95);
+    g.drawString(Nalog.dodajRazmake(nalog.getIznos()), 1130, 95);
     g.drawString(Nalog.dodajRazmake(nalog.getIbanPrimatelja()), 870, 310);
     g.drawString(Nalog.dodajRazmake(nalog.getModelDrzava()), 555, 400);
     g.drawString(Nalog.dodajRazmake(nalog.getModelBroj()), 630, 400);
@@ -134,11 +142,11 @@ public class NalogServiceImpl implements NalogService {
 
     String nazivDatoteke = generirajNaziv(upisniBroj);
     ImageIO.write(hub3, "jpg", new File(nazivDatoteke));
-    return nazivDatoteke;
-  }
 
-  private int izracunajIznosX(String iznos) {
-    return IZNOS_X_DEFAULT;
+    return PutanjaDatoteke.builder()
+        .barkodPutanja(barkodPutanja)
+        .hub3Putanja(nazivDatoteke)
+        .build();
   }
 
   private String generirajNaziv(String upisniBroj) {

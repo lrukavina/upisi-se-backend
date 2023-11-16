@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -17,6 +18,7 @@ public class Nalog {
   private String zaglavlje;
   private String valuta;
   private String iznos;
+  private String iznosBarkod;
   private String platitelj;
   private Adresa adresaPlatitelja;
   private String primatelj;
@@ -40,10 +42,17 @@ public class Nalog {
     List<String> podaci = new ArrayList<>();
     int index = 0;
     while (index < podatak.length()) {
-      podaci.add(podatak.substring(index, Math.min(index + brZnakova,podatak.length())));
+      podaci.add(podatak.substring(index, Math.min(index + brZnakova, podatak.length())));
       index += brZnakova;
     }
-    return podaci;
+    return podaci.stream().map(Nalog::makniPocetniRazmak).collect(Collectors.toList());
+  }
+
+  private static String makniPocetniRazmak(String podatak) {
+    if (podatak.startsWith(Konstante.RAZMAK)) {
+      return podatak.substring(1);
+    }
+    return podatak;
   }
 
   public String getModelBarkod() {

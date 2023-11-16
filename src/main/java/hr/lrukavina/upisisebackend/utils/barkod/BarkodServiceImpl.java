@@ -18,7 +18,7 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class BarkodServiceImpl implements BarkodService {
   @Override
-  public String generirajBarkod(Nalog nalog) throws IOException {
+  public String generirajBarkod(Nalog nalog, String upisniBroj) throws IOException {
     PDF417Bean barcodeGenerator = new PDF417Bean();
     BitmapCanvasProvider canvas =
         new BitmapCanvasProvider(200, BufferedImage.TYPE_BYTE_BINARY, false, 0);
@@ -28,13 +28,14 @@ public class BarkodServiceImpl implements BarkodService {
     ImageIO.write(
         canvas.getBufferedImage(),
         Konstante.BARKOD_FORMAT.toUpperCase(Locale.ROOT),
-        new File(puniNazivBarkoda()));
-    return puniNazivBarkoda();
+        new File(puniNazivBarkoda(upisniBroj)));
+    return puniNazivBarkoda(upisniBroj);
   }
 
-  private String puniNazivBarkoda() {
+  private String puniNazivBarkoda(String upisniBroj) {
     return Konstante.RESURSI_PUTANJA
         + Konstante.BARKOD_NAZIV
+        + upisniBroj
         + Konstante.TOCKA
         + Konstante.BARKOD_FORMAT;
   }
