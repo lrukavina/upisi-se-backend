@@ -8,6 +8,7 @@ import hr.lrukavina.upisisebackend.model.visokouciliste.VisokoUcilisteManager;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.barkod.BarkodService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -15,6 +16,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,8 +41,8 @@ public class NalogServiceImpl implements NalogService {
     return Nalog.builder()
         .zaglavlje(Konstante.NALOG_ZAGLAVLJE)
         .valuta(Konstante.NALOG_VALUTA)
-        // todo doraditi iznos za nalog
-        .iznos(String.valueOf(upisniList.getUkupnaCijena()))
+        .iznos(formatirajIznos(upisniList.getUkupnaCijena(), false))
+        .iznosBarkod(formatirajIznos(upisniList.getUkupnaCijena(), true))
         .platitelj(korisnik.getImePrezime())
         .adresaPlatitelja(blankAdresa())
         .primatelj(visokoUciliste.getNaziv())
@@ -51,6 +54,13 @@ public class NalogServiceImpl implements NalogService {
         .sifraNamjene(Konstante.NALOG_SIF_NAMJENE)
         .opis(generirajOpis(upisniList.getUpisniBroj(), korisnik.getSemestar()))
         .build();
+  }
+
+  private String formatirajIznos(BigDecimal iznos, boolean isBarkod) {
+    iznos = iznos.setScale(2, RoundingMode.CEILING);
+    String formatted =
+        StringUtils.leftPad(String.valueOf(iznos), 16, isBarkod ? "0" : Konstante.RAZMAK);
+    return formatted.replace('.', ',');
   }
 
   private Adresa blankAdresa() {
@@ -113,7 +123,7 @@ public class NalogServiceImpl implements NalogService {
     g.setColor(Color.BLACK);
     g.drawString(nalog.getPlatitelj(), 50, 130);
     g.drawString(Nalog.dodajRazmake(nalog.getValuta()), 810, 95);
-    g.drawString(Nalog.dodajRazmake(nalog.getIznos()), izracunajIznosX(nalog.getIznos()), 95);
+    g.drawString(Nalog.dodajRazmake(nalog.getIznos()), 1130, 95);
     g.drawString(Nalog.dodajRazmake(nalog.getIbanPrimatelja()), 870, 310);
     g.drawString(Nalog.dodajRazmake(nalog.getModelDrzava()), 555, 400);
     g.drawString(Nalog.dodajRazmake(nalog.getModelBroj()), 630, 400);

@@ -14,7 +14,7 @@ public class NalogMapper {
             + Konstante.NOVI_RED
             + nalog.getValuta()
             + Konstante.NOVI_RED
-            + nalog.getIznos()
+            + nalog.getIznosBarkod()
             + Konstante.NOVI_RED
             + nalog.getPlatitelj()
             + Konstante.NOVI_RED
