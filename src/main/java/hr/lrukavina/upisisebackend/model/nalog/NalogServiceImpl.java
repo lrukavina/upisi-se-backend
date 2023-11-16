@@ -31,8 +31,6 @@ public class NalogServiceImpl implements NalogService {
   private static final String HUB3_PUTANJA =
       Konstante.RESURSI_PUTANJA + Konstante.NALOG_NAZIV + Konstante.TOCKA + Konstante.NALOG_FORMAT;
 
-  private static final int IZNOS_X_DEFAULT = 1440;
-
   @Override
   public Nalog generirajZaUpisniList(UpisniList upisniList) {
     Korisnik korisnik = korisnikManager.dohvatiPoUpisniListId(upisniList.getId());
@@ -145,10 +143,6 @@ public class NalogServiceImpl implements NalogService {
     String nazivDatoteke = generirajNaziv(upisniBroj);
     ImageIO.write(hub3, "jpg", new File(nazivDatoteke));
     return nazivDatoteke;
-  }
-
-  private int izracunajIznosX(String iznos) {
-    return IZNOS_X_DEFAULT;
   }
 
   private String generirajNaziv(String upisniBroj) {
