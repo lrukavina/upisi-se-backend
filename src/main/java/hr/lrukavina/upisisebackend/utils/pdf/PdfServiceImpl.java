@@ -20,12 +20,6 @@ public class PdfServiceImpl implements PdfService {
   private final PdfHelper pdfHelper;
 
   @Override
-  public String generirajPdfPrivitak(UpisniList upisniList) {
-    // todo implementirati
-    return null;
-  }
-
-  @Override
   public ByteArrayOutputStream generirajPdfPrikaz(UpisniList upisniList) throws IOException {
     Ugovor ugovor = ugovorService.generirajZaUpisniList(upisniList);
     Nalog nalog = nalogService.generirajZaUpisniList(upisniList);
@@ -35,6 +29,7 @@ public class PdfServiceImpl implements PdfService {
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     HtmlConverter.convertToPdf(html, outputStream);
+
     return outputStream;
   }
 }

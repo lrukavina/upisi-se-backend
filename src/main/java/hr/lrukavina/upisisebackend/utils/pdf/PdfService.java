@@ -6,7 +6,5 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public interface PdfService {
-  String generirajPdfPrivitak(UpisniList upisniList);
-
   ByteArrayOutputStream generirajPdfPrikaz(UpisniList upisniList) throws IOException;
 }
