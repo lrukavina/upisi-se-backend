@@ -48,6 +48,7 @@ public class KorisnikMapper {
     return KorisnikInfoDto.builder()
         .ime(korisnik.getIme())
         .prezime(korisnik.getPrezime())
+        .jmbag(korisnik.getJmbag())
         .nazivStudija(studij != null ? studij.getNazivStudija() : null)
         .nazivSmjera(studij != null ? studij.getNazivSmjera() : null)
         .semestar(korisnik.getSemestar())
