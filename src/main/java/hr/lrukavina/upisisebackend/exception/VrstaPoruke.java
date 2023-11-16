@@ -10,7 +10,8 @@ public enum VrstaPoruke {
   UPIS_NE_POSTOJI_U_BAZI("07", "Upis ne postoji u bazi podataka"),
   UPIS_VEC_POSTOJI_U_BAZI("08", "Upis za semestar već postoji"),
   UPISNI_LIST_NE_POSTOJI_U_BAZI("09", "Upisni list ne postoji u bazi podataka"),
-  UPIS_NEDOZVOLJENI_KOLEGIJ("10", "Odabrani kolegij nije na upisnom listu za semestar");
+  UPIS_NEDOZVOLJENI_KOLEGIJ("10", "Odabrani kolegij nije na upisnom listu za semestar"),
+  DATOTEKA_NE_POSTOJI("11", "Greška kod brisanja privremene datoteke");
 
   private final String sifra;
   private final String poruka;

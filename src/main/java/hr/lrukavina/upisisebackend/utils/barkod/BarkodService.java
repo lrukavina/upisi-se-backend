@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface BarkodService {
 
-  String generirajBarkod(Nalog nalog) throws IOException;
+  String generirajBarkod(Nalog nalog, String upisniBroj) throws IOException;
 }

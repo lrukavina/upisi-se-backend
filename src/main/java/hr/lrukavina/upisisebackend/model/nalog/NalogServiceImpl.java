@@ -110,8 +110,8 @@ public class NalogServiceImpl implements NalogService {
   }
 
   @Override
-  public String generirajHub3(Nalog nalog, String upisniBroj) throws IOException {
-    String barkodPutanja = barkodService.generirajBarkod(nalog);
+  public PutanjaDatoteke generirajHub3(Nalog nalog, String upisniBroj) throws IOException {
+    String barkodPutanja = barkodService.generirajBarkod(nalog, upisniBroj);
 
     final BufferedImage hub3 = ImageIO.read(new File(HUB3_PUTANJA));
     final BufferedImage barkod = ImageIO.read(new File(barkodPutanja));
@@ -142,7 +142,11 @@ public class NalogServiceImpl implements NalogService {
 
     String nazivDatoteke = generirajNaziv(upisniBroj);
     ImageIO.write(hub3, "jpg", new File(nazivDatoteke));
-    return nazivDatoteke;
+
+    return PutanjaDatoteke.builder()
+        .barkodPutanja(barkodPutanja)
+        .hub3Putanja(nazivDatoteke)
+        .build();
   }
 
   private String generirajNaziv(String upisniBroj) {

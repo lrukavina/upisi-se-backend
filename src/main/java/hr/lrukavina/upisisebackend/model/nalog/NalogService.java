@@ -8,5 +8,5 @@ public interface NalogService {
 
   Nalog generirajZaUpisniList(UpisniList upisniList);
 
-  String generirajHub3(Nalog nalog, String upisniBroj) throws IOException;
+  PutanjaDatoteke generirajHub3(Nalog nalog, String upisniBroj) throws IOException;
 }
