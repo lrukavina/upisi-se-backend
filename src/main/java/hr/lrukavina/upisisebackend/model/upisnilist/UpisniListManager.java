@@ -40,6 +40,10 @@ public class UpisniListManager {
     repository.azuriraj(upisniList);
   }
 
+  public void potvrdi(UpisniList upisniList) {
+    repository.potvrdi(upisniList);
+  }
+
   public void izbrisi(Integer upisniListId) {
     repository.izbrisi(upisniListId);
   }

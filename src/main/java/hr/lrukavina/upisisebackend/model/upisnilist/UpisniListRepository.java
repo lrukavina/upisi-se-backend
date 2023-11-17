@@ -20,5 +20,7 @@ public interface UpisniListRepository {
 
   void azuriraj(UpisniList upisniList);
 
+  void potvrdi(UpisniList upisniList);
+
   void izbrisi(Integer upisniListId);
 }

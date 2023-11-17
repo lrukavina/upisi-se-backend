@@ -1,6 +1,7 @@
 package hr.lrukavina.upisisebackend.model.upisnilist;
 
 import hr.lrukavina.upisisebackend.model.upisnilist.request.AzurUpisniListRequest;
+import hr.lrukavina.upisisebackend.model.upisnilist.request.PotvrdiUpisniListRequest;
 import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,12 @@ public class UpisniListController {
   public ResponseEntity<UpisniListDto> azuriraj(
       @RequestBody AzurUpisniListRequest request, @PathVariable final String korisnickoIme) {
     return ResponseEntity.ok(upisniListService.azuriraj(request, korisnickoIme));
+  }
+
+  @PutMapping("/potvrdi/{korisnickoIme}")
+  public ResponseEntity<UpisniListDto> potvrdi(
+      @RequestBody PotvrdiUpisniListRequest request, @PathVariable final String korisnickoIme) {
+    return ResponseEntity.ok(upisniListService.potvrdi(request));
   }
 
   @DeleteMapping("/izbrisi/{sifra}")

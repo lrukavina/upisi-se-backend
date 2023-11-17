@@ -13,6 +13,7 @@ import hr.lrukavina.upisisebackend.model.studij.Studij;
 import hr.lrukavina.upisisebackend.model.studij.StudijManager;
 import hr.lrukavina.upisisebackend.model.upis.Upis;
 import hr.lrukavina.upisisebackend.model.upisnilist.request.AzurUpisniListRequest;
+import hr.lrukavina.upisisebackend.model.upisnilist.request.PotvrdiUpisniListRequest;
 import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
 import hr.lrukavina.upisisebackend.model.upisnilist.upisnilistkolegij.UpisniListKolegijManager;
 import hr.lrukavina.upisisebackend.utils.Konstante;
@@ -100,6 +101,19 @@ public class UpisniListServiceImpl implements UpisniListService {
 
   private BigDecimal izracunajUkupnuCijenu(Integer brojEctsa, BigDecimal cijenaEctsa) {
     return cijenaEctsa.multiply(BigDecimal.valueOf(brojEctsa));
+  }
+
+  @Override
+  public UpisniListDto potvrdi(PotvrdiUpisniListRequest request) {
+    UpisniList upisniList = upisniListManager.dohvatiPoKorisniku(request.getKorisnickoIme());
+    if (upisniList == null) {
+      throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
+    }
+    upisniListManager.potvrdi(upisniList);
+    return UpisniListMapper.toDto(
+        upisniList,
+        sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()),
+        Collections.emptyList());
   }
 
   @Override
