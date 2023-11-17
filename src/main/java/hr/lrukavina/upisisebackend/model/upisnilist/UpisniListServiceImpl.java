@@ -108,6 +108,11 @@ public class UpisniListServiceImpl implements UpisniListService {
   }
 
   @Override
+  public void izbrisiPoKorisniku(String korisnickoIme) {
+    upisniListManager.izbrisiPoKorisniku(korisnickoIme);
+  }
+
+  @Override
   @Transactional
   public void inicijalizirajUpisniList(Upis upis) {
     List<Korisnik> korisnici = korisnikManager.dohvatiPoSemestru(upis.getSemestar());

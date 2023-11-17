@@ -35,4 +35,9 @@ public class UpisniListController {
   public void izbrisi(@PathVariable final String sifra) {
     upisniListService.izbrisi(sifra);
   }
+
+  @DeleteMapping("/izbrisi/korisnik/{korisnickoIme}")
+  public void izbrisiPoKorisniku(@PathVariable final String korisnickoIme) {
+    upisniListService.izbrisiPoKorisniku(korisnickoIme);
+  }
 }

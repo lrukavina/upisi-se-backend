@@ -13,5 +13,7 @@ public interface UpisniListService {
 
   void izbrisi(String sifra);
 
+  void izbrisiPoKorisniku(String korisnikSifra);
+
   void inicijalizirajUpisniList(Upis upis);
 }

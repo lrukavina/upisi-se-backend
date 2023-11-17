@@ -49,4 +49,12 @@ public class UpisniListManager {
       repository.izbrisi(upisniList.getId());
     }
   }
+
+  public void izbrisiPoKorisniku(String korisnickoIme) {
+    UpisniList upisniList = dohvatiPoKorisniku(korisnickoIme);
+    if (upisniList == null) {
+      return;
+    }
+    repository.izbrisi(upisniList.getId());
+  }
 }
