@@ -58,6 +58,7 @@ public class PdfHelper {
 
     html.append(
             "<p style=\"text-align:center\"><u><strong>UPISNI LIST I IZRAČUN &Scaron;KOLARINE ZA AKADEMSKU GODINU")
+        .append(Konstante.RAZMAK)
         .append(LocalDate.now().getYear())
         .append(Konstante.KOSA_CRTA)
         .append(LocalDate.now().plusYears(1).getYear())
