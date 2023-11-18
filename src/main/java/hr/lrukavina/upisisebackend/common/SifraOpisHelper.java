@@ -12,6 +12,9 @@ import hr.lrukavina.upisisebackend.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class SifraOpisHelper {
@@ -29,6 +32,21 @@ public class SifraOpisHelper {
         .sifra(Utils.sifrirajId(visokoUciliste.getId()))
         .opis(visokoUciliste.getNaziv())
         .build();
+  }
+
+  public List<SifraOpis> dohvatiVisokaUcilista() {
+    List<VisokoUciliste> visokaUcilista = visokoUcilisteManager.dohvatiSve();
+    List<SifraOpis> visokaUcilistaSifOpis = new ArrayList<>();
+
+    for (VisokoUciliste visokoUciliste : visokaUcilista) {
+      SifraOpis sifraOpis =
+          SifraOpis.builder()
+              .sifra(Utils.sifrirajId(visokoUciliste.getId()))
+              .opis(visokoUciliste.getNaziv())
+              .build();
+      visokaUcilistaSifOpis.add(sifraOpis);
+    }
+    return visokaUcilistaSifOpis;
   }
 
   public SifraOpis dohvatiStudij(Integer id) {
