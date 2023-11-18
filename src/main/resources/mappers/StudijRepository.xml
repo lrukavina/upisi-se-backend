@@ -20,6 +20,13 @@
         ${alias}.visoko_uciliste_id
     </sql>
 
+    <select id="dohvatiSve" resultMap="studijResultMap">
+        select  <include refid="studijSelectColumns">
+                 <property name="alias" value="studij"/>
+                </include>
+        from studij
+    </select>
+
     <select id="dohvati" parameterType="Integer" resultMap="studijResultMap">
         select  <include refid="studijSelectColumns">
                  <property name="alias" value="studij"/>
@@ -37,6 +44,15 @@
         inner join upisni_list on upis.id = upisni_list.upis_id
              where upisni_list.id = #{upisniListId}
     </select>
+
+    <select id="dohvatiPoVisokoUcilisteId" parameterType="Integer" resultMap="studijResultMap">
+        select  <include refid="studijSelectColumns">
+                 <property name="alias" value="studij"/>
+                </include>
+        from studij
+        where studij.visoko_uciliste_id = #{visokoUcilisteId}
+    </select>
+
 
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into studij (naziv_studija,

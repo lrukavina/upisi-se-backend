@@ -1,5 +1,6 @@
 package hr.lrukavina.upisisebackend.model.studij;
 
+import hr.lrukavina.upisisebackend.common.SifraOpis;
 import hr.lrukavina.upisisebackend.common.SifraOpisHelper;
 import hr.lrukavina.upisisebackend.exception.UpisiSeException;
 import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
@@ -11,11 +12,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StudijServiceImpl implements StudijService {
   private final StudijManager manager;
   private final SifraOpisHelper sifraOpisHelper;
+
+  @Override
+  public List<SifraOpis> dohvatiZaPadajuciIzbornik(String sifra) {
+    return sifraOpisHelper.dohvatiStudije(sifra);
+  }
 
   @Override
   public StudijDto dohvati(String sifra) {

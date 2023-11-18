@@ -70,6 +70,22 @@ public class SifraOpisHelper {
         .build();
   }
 
+  public List<SifraOpis> dohvatiStudije(String sifra) {
+    List<Studij> visokaUcilista =
+        studijManager.dohvatiPoVisokoUcilisteId(Utils.desifrirajId(sifra));
+    List<SifraOpis> studijiSifOpis = new ArrayList<>();
+
+    for (Studij studij : visokaUcilista) {
+      SifraOpis sifraOpis =
+          SifraOpis.builder()
+              .sifra(Utils.sifrirajId(studij.getId()))
+              .opis(studij.getNazivStudija() + " (" + studij.getNazivSmjera() + ")")
+              .build();
+      studijiSifOpis.add(sifraOpis);
+    }
+    return studijiSifOpis;
+  }
+
   public SifraOpis dohvatiKolegij(Integer id) {
     Kolegij kolegij = kolegijManager.dohvati(id);
     if (kolegij == null) {
