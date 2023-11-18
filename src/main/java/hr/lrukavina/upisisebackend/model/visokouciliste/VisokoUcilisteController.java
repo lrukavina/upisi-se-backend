@@ -28,6 +28,11 @@ public class VisokoUcilisteController {
     return ResponseEntity.ok(visokoUcilisteService.dohvati(sifra));
   }
 
+  @GetMapping("/dohvati/sve")
+  public ResponseEntity<List<VisokoUcilisteDto>> dohvatiSve() {
+    return ResponseEntity.ok(visokoUcilisteService.dohvatiSve());
+  }
+
   @PostMapping("/spremi")
   public ResponseEntity<VisokoUcilisteDto> spremi(
       @RequestBody SpremiVisokoUcilisteRequest request) {

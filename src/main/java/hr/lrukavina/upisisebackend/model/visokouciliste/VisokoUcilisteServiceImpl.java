@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,13 @@ public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
       throw new UpisiSeException(VrstaPoruke.VISOKO_UCILISTE_NE_POSTOJI_U_BAZI);
     }
     return VisokoUcilisteMapper.toDto(visokoUciliste);
+  }
+
+  @Override
+  public List<VisokoUcilisteDto> dohvatiSve() {
+    return manager.dohvatiSve().stream()
+        .map(VisokoUcilisteMapper::toDto)
+        .collect(Collectors.toList());
   }
 
   @Override

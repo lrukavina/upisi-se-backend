@@ -12,6 +12,8 @@ public interface VisokoUcilisteService {
 
   VisokoUcilisteDto dohvati(String sifra);
 
+  List<VisokoUcilisteDto> dohvatiSve();
+
   VisokoUcilisteDto spremi(SpremiVisokoUcilisteRequest visokoUciliste);
 
   VisokoUcilisteDto azuriraj(AzurVisokoUcilisteRequest visokoUciliste, String sifra);
