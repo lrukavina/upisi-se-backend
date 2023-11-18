@@ -89,10 +89,11 @@ public class UpisniListServiceImpl implements UpisniListService {
     upisniListManager.azuriraj(upisniList);
     upisniListKolegijManager.azuriraj(upisniList.getId(), kolegijIdevi);
 
+    List<KolegijUpisniListDto> odabraniKolegiji =
+        kolegijService.dohvatiPoUpisniListId(upisniList.getId());
+
     return UpisniListMapper.toDto(
-        upisniList,
-        sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()),
-        Collections.emptyList());
+        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()), odabraniKolegiji);
   }
 
   private Integer vratiBrojEctsa(List<Kolegij> kolegiji) {
