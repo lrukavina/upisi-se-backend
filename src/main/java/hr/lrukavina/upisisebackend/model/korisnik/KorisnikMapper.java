@@ -37,7 +37,7 @@ public class KorisnikMapper {
         .korisnickoIme(korisnik.getKorisnickoIme())
         .jmbag(korisnik.getJmbag())
         .semestar(korisnik.getSemestar())
-        .adresa(korisnik.getJmbag())
+        .adresa(korisnik.getAdresa())
         .rola(korisnik.getRola())
         .visokoUciliste(visokoUciliste)
         .studij(studij)

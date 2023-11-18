@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 @Mapper
 public interface KorisnikRepository {
+  List<Korisnik> dohvatiSveStudente();
+
   Korisnik dohvati(Integer korisnikId);
 
   Korisnik dohvatiPoKorisnickomImenu(String korisnickoIme);

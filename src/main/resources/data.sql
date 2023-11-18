@@ -1,6 +1,15 @@
 insert into korisnik(ime, prezime, jmbag, semestar, adresa, email, korisnicko_ime, lozinka, rola, visoko_uciliste_id, studij_id) values
 ('Luka', 'Rukavina', null, null, null, 'lrukavina@tvz.hr', 'lrukavina', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'ADMIN', null, null),
-('Pero', 'Perić', '1234567890', 3, 'Vukovarska 25', 'pperic@tvz.hr', 'pperic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1);
+('Pero', 'Perić', '1234567890', 3, 'Vukovarska 25', 'pperic@tvz.hr', 'pperic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Ivo', 'Ivić', '1234567890', 3, 'Vukovarska 25', 'iivic@tvz.hr', 'iivic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Maro', 'Marić', '1234567890', 3, 'Vukovarska 25', 'mmaric@tvz.hr', 'mmaric', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Đuro', 'Đurić', '1234567890', 3, 'Vukovarska 25', 'dduric@tvz.hr', 'dduric', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Maja', 'Majić', '1234567890', 3, 'Vukovarska 25', 'mmajic@tvz.hr', 'mmajic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Zoran', 'Zorić', '1234567890', 3, 'Vukovarska 25', 'zzoric@tvz.hr', 'zzoric', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Gogo', 'Gogić', '1234567890', 3, 'Vukovarska 25', 'ggogic@tvz.hr', 'ggogic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Tara', 'Tarić', '1234567890', 3, 'Vukovarska 25', 'ttaric@tvz.hr', 'ttaric', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Mijo', 'Mijić', '1234567890', 3, 'Vukovarska 25', 'mmijic@tvz.hr', 'mmijic', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1),
+('Igor', 'Igorić', '1234567890', 3, 'Vukovarska 25', 'iigoric@tvz.hr', 'iigoric', '$2a$10$AmPJwsPTr14JM16zGoxeEOBEYPWcaFA.liTXvR5jionq4YUP4/rru', 'STUDENT', 1, 1);
 
 insert into visoko_uciliste(naziv, adresa, postanski_broj, mjesto, iban, oib) values
 ('Tehničko veleučilište u Zagrebu', 'Vrbik 8', '10000', 'Zagreb', 'HR1723600001101234565', '08814003451'),
