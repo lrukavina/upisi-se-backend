@@ -12,4 +12,5 @@ public class UgovorKolegijDto {
   private String naziv;
   private Integer ects;
   private BigDecimal ectsCijena;
+  private boolean obavezan;
 }

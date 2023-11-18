@@ -83,6 +83,7 @@ public class KolegijMapper {
         .semestar(kolegij.getSemestar())
         .isvuSifra(kolegij.getIsvuSifra())
         .ects(kolegij.getEcts())
+        .obavezan(kolegij.isObavezan())
         .cijena(cijenaFormatirana)
         .build();
   }
@@ -93,6 +94,7 @@ public class KolegijMapper {
         .naziv(kolegij.getNaziv())
         .ects(kolegij.getEcts())
         .ectsCijena(studij.getEctsCijena())
+        .obavezan(kolegij.isObavezan())
         .build();
   }
 
