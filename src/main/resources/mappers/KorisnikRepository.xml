@@ -77,12 +77,14 @@
              where upisni_list.id = #{upisniListId}
     </select>
 
-    <select id="dohvatiPoSemestru" parameterType="Integer" resultMap="korisnikResultMap">
+    <select id="dohvatiPoUpisId" parameterType="Integer" resultMap="korisnikResultMap">
         select  <include refid="korisnikSelectColumns">
                  <property name="alias" value="korisnik"/>
                 </include>
-        from korisnik
-        where korisnik.semestar = #{semestar}
+        from  korisnik
+        inner join studij on studij.id = korisnik.studij_id
+        inner join upis on studij.id = upis.studij_id
+        where upis.id = #{upisId}
     </select>
 
     <insert id="spremi" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
