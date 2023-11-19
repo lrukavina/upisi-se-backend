@@ -35,6 +35,10 @@ public class KolegijManager {
     return repository.dohvatiPoUpisniListId(upisniListId);
   }
 
+  public List<Kolegij> dohvatiPoStudijId(Integer studijId) {
+    return repository.dohvatiPoStudijId(studijId);
+  }
+
   public void spremi(Kolegij kolegij) {
     repository.spremi(kolegij);
   }

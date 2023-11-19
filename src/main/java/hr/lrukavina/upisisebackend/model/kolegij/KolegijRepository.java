@@ -16,6 +16,8 @@ public interface KolegijRepository {
 
   List<Kolegij> dohvatiPoUpisniListId(Integer upisniListId);
 
+  List<Kolegij> dohvatiPoStudijId(Integer studijId);
+
   void spremi(Kolegij kolegij);
 
   void azuriraj(Kolegij kolegij);

@@ -86,17 +86,6 @@ public class SifraOpisHelper {
     return studijiSifOpis;
   }
 
-  public SifraOpis dohvatiKolegij(Integer id) {
-    Kolegij kolegij = kolegijManager.dohvati(id);
-    if (kolegij == null) {
-      return null;
-    }
-    return SifraOpis.builder()
-        .sifra(Utils.sifrirajId(kolegij.getId()))
-        .opis(kolegij.getNaziv())
-        .build();
-  }
-
   public SifraOpis dohvatiKolegij(Kolegij kolegij) {
     if (kolegij == null) {
       return null;
