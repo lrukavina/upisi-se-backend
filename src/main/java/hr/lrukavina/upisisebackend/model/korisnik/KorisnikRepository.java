@@ -18,7 +18,7 @@ public interface KorisnikRepository {
 
   Korisnik dohvatiPoUpisniListId(Integer upisniListId);
 
-  List<Korisnik> dohvatiPoSemestru(Integer semestar);
+  List<Korisnik> dohvatiPoUpisId(Integer upisId);
 
   void spremi(Korisnik korisnik);
 

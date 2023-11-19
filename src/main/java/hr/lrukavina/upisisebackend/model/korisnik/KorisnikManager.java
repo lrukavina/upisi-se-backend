@@ -32,8 +32,8 @@ public class KorisnikManager {
     return repository.dohvatiPoUpisniListId(upisniListId);
   }
 
-  public List<Korisnik> dohvatiPoSemestru(Integer semestar) {
-    return repository.dohvatiPoSemestru(semestar);
+  public List<Korisnik> dohvatiPoUpisId(Integer upisId) {
+    return repository.dohvatiPoUpisId(upisId);
   }
 
   public void spremi(Korisnik korisnik) {

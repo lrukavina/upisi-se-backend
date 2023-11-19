@@ -153,7 +153,7 @@ public class UpisniListServiceImpl implements UpisniListService {
   @Override
   @Transactional
   public void inicijalizirajUpisniList(Upis upis) {
-    List<Korisnik> korisnici = korisnikManager.dohvatiPoSemestru(upis.getSemestar());
+    List<Korisnik> korisnici = korisnikManager.dohvatiPoUpisId(upis.getId());
     Studij studij = studijManager.dohvati(upis.getStudijId());
 
     for (Korisnik korisnik : korisnici) {
