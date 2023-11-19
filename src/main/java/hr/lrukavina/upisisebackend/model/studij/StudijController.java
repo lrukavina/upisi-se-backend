@@ -23,6 +23,11 @@ public class StudijController {
     return ResponseEntity.ok(studijService.dohvatiZaPadajuciIzbornik(visokoUcilisteSifra));
   }
 
+  @GetMapping("/dohvati/sve")
+  public ResponseEntity<List<StudijDto>> dohvatiSve() {
+    return ResponseEntity.ok(studijService.dohvatiSve());
+  }
+
   @GetMapping("/dohvati/{sifra}")
   public ResponseEntity<StudijDto> dohvati(@PathVariable final String sifra) {
     return ResponseEntity.ok(studijService.dohvati(sifra));

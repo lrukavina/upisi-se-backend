@@ -10,6 +10,8 @@ import java.util.List;
 public interface StudijService {
   List<SifraOpis> dohvatiZaPadajuciIzbornik(String sifra);
 
+  List<StudijDto> dohvatiSve();
+
   StudijDto dohvati(String sifra);
 
   StudijDto spremi(SpremiStudijRequest request);

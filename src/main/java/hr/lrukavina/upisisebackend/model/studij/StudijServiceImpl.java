@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,16 @@ public class StudijServiceImpl implements StudijService {
   @Override
   public List<SifraOpis> dohvatiZaPadajuciIzbornik(String sifra) {
     return sifraOpisHelper.dohvatiStudije(sifra);
+  }
+
+  @Override
+  public List<StudijDto> dohvatiSve() {
+    return manager.dohvatiSve().stream()
+        .map(
+            studij ->
+                StudijMapper.toDto(
+                    studij, sifraOpisHelper.dohvatiVisokoUciliste(studij.getVisokoUcilisteId())))
+        .collect(Collectors.toList());
   }
 
   @Override
