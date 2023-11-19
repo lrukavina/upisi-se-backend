@@ -32,6 +32,13 @@
         where kolegij.id = #{kolegijId}
     </select>
 
+    <select id="dohvatiSve" resultMap="kolegijResultMap">
+        select  <include refid="kolegijSelectColumns">
+                 <property name="alias" value="kolegij"/>
+                </include>
+        from kolegij
+    </select>
+
     <select id="dohvatiPoUpisId" parameterType="Integer" resultMap="kolegijResultMap">
         select  <include refid="kolegijSelectColumns">
                  <property name="alias" value="kolegij"/>

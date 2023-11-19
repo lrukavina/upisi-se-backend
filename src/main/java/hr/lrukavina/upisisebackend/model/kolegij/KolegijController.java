@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/kolegij")
@@ -17,6 +19,11 @@ public class KolegijController {
   @GetMapping("/dohvati/{sifra}")
   public ResponseEntity<KolegijDto> dohvati(@PathVariable final String sifra) {
     return ResponseEntity.ok(kolegijService.dohvati(sifra));
+  }
+
+  @GetMapping("/dohvati/sve")
+  public ResponseEntity<List<KolegijDto>> dohvatiSve() {
+    return ResponseEntity.ok(kolegijService.dohvatiSve());
   }
 
   @PostMapping("/spremi")

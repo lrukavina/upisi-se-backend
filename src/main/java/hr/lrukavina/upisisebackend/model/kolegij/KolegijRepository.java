@@ -10,6 +10,8 @@ import java.util.List;
 public interface KolegijRepository {
   Kolegij dohvati(Integer kolegijId);
 
+  List<Kolegij> dohvatiSve();
+
   List<Kolegij> dohvatiPoUpisId(Integer upisId);
 
   List<Kolegij> dohvatiPoUpisniListId(Integer upisniListId);

@@ -41,6 +41,10 @@ public class KolegijServiceImpl implements KolegijService {
     if (kolegij == null) {
       throw new UpisiSeException(VrstaPoruke.KOLEGIJ_NE_POSTOJI_U_BAZI);
     }
+    return popuniOstalePodatkeKolegija(kolegij);
+  }
+
+  private KolegijDto popuniOstalePodatkeKolegija(Kolegij kolegij) {
     KolegijInfo kolegijInfo = kolegijInfoManager.dohvatiPoKolegijId(kolegij.getId());
 
     List<KolegijNastavnik> kolegijNastavnici =
@@ -50,6 +54,12 @@ public class KolegijServiceImpl implements KolegijService {
 
     return KolegijMapper.toDto(
         kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  @Override
+  public List<KolegijDto> dohvatiSve() {
+    List<Kolegij> kolegiji = kolegijManager.dohvatiSve();
+    return kolegiji.stream().map(this::popuniOstalePodatkeKolegija).collect(Collectors.toList());
   }
 
   @Override

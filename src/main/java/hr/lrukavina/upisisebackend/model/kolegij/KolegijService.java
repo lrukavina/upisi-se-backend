@@ -10,6 +10,8 @@ import java.util.List;
 public interface KolegijService {
   KolegijDto dohvati(String sifra);
 
+  List<KolegijDto> dohvatiSve();
+
   KolegijDto spremi(SpremiKolegijRequest request);
 
   List<KolegijUpisniListDto> dohvatiPoUpisniListId(Integer upisniListId);
