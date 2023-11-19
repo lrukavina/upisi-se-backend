@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -21,6 +22,11 @@ public class UpisController {
   @GetMapping("/dohvati/{sifra}")
   public ResponseEntity<UpisDto> dohvati(@PathVariable final String sifra) {
     return ResponseEntity.ok(upisService.dohvati(sifra));
+  }
+
+  @GetMapping("/dohvati/sve")
+  public ResponseEntity<List<UpisDto>> dohvati() {
+    return ResponseEntity.ok(upisService.dohvatiSve());
   }
 
   @GetMapping("/dohvati/aktivne/korisnik/{korisnickoIme}")

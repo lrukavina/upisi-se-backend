@@ -3,6 +3,8 @@ package hr.lrukavina.upisisebackend.model.upis;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UpisManager {
@@ -10,6 +12,10 @@ public class UpisManager {
 
   public Upis dohvati(Integer upisId) {
     return repository.dohvati(upisId);
+  }
+
+  public List<Upis> dohvatiSve() {
+    return repository.dohvatiSve();
   }
 
   public Upis dohvatiAktivneZaKorisnika(String korisnickoIme) {

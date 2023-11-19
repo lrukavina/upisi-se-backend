@@ -6,9 +6,12 @@ import hr.lrukavina.upisisebackend.model.upis.response.UpisDto;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public interface UpisService {
   UpisDto dohvati(String sifra);
+
+  List<UpisDto> dohvatiSve();
 
   UpisDto dohvatiAktivneZaKorisnika(String korisnickoIme);
 

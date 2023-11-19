@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -88,6 +89,13 @@ public class UpisServiceImpl implements UpisService {
 
     return UpisMapper.toDto(
         upis, visokoUcilisteSifOpis, studijSifOpis, obavezniKolegiji, izborniKolegiji, status);
+  }
+
+  @Override
+  public List<UpisDto> dohvatiSve() {
+    return upisManager.dohvatiSve().stream()
+        .map(upis -> pripremiUpisDto(upis, dohvatiStatus(upis)))
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -32,6 +32,13 @@
         where upis.id = #{upisId}
     </select>
 
+    <select id="dohvatiSve" resultMap="upisResultMap">
+        select  <include refid="upisSelectColumns">
+                 <property name="alias" value="upis"/>
+                </include>
+        from upis
+    </select>
+
     <select id="dohvatiAktivneZaKorisnika" parameterType="String" resultMap="upisResultMap">
             select  <include refid="upisSelectColumns">
                      <property name="alias" value="upis"/>
