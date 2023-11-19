@@ -45,6 +45,8 @@ public class UpisMapper {
         .maxBrojEctsa(upis.getMaxBrojEctsa())
         .datumVrijemeOd(datumVrijemeOd)
         .datumVrijemeDo(datumVrijemeDo)
+        .datumOd(upis.getTstampOd().toLocalDate())
+        .datumDo(upis.getTstampDo().toLocalDate())
         .status(status != null ? String.valueOf(status) : null)
         .obavezniKolegiji(obavezniKolegiji)
         .izborniKolegiji(izbroniKolegiji)

@@ -5,6 +5,7 @@ import hr.lrukavina.upisisebackend.common.SifraOpisKolegij;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -18,6 +19,8 @@ public class UpisDto {
   private Integer maxBrojEctsa;
   private String datumVrijemeOd;
   private String datumVrijemeDo;
+  private LocalDate datumOd;
+  private LocalDate datumDo;
   private String status;
   private List<SifraOpisKolegij> obavezniKolegiji;
   private List<SifraOpisKolegij> izborniKolegiji;
