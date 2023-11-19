@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class AzurUpisRequest {
   private Integer semestar;
   private Integer minBrojEctsa;
   private Integer maxBrojEctsa;
-  private LocalDateTime tstampOd;
-  private LocalDateTime tstampDo;
+  private LocalDate datumOd;
+  private LocalDate datumDo;
   private List<String> obavezniKolegijiSifre;
   private List<String> izborniKolegijiSifre;
 }
