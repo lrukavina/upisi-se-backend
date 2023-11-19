@@ -18,7 +18,8 @@ public class StudijMapper {
         .sifra(Utils.sifrirajId(studij.getId()))
         .nazivStudija(studij.getNazivStudija())
         .nazivSmjera(studij.getNazivSmjera())
-        .ectsCijena(
+        .ectsCijena(studij.getEctsCijena())
+        .ectsCijenaFormatirana(
             NumberFormat.getCurrencyInstance(Konstante.LOCALE_VALUTA)
                 .format(studij.getEctsCijena()))
         .visokoUciliste(visokoUciliste)

@@ -34,6 +34,14 @@
         ${alias}.studij_id
     </sql>
 
+    <select id="dohvatiSveStudente" resultMap="korisnikResultMap">
+        select  <include refid="korisnikSelectColumns">
+                 <property name="alias" value="korisnik"/>
+                </include>
+        from  korisnik
+        where korisnik.rola = '${@hr.lrukavina.upisisebackend.model.korisnik.Rola@STUDENT}'
+    </select>
+
     <select id="dohvati" parameterType="Integer" resultMap="korisnikResultMap">
         select  <include refid="korisnikSelectColumns">
                  <property name="alias" value="korisnik"/>

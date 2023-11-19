@@ -25,8 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +49,20 @@ public class UpisServiceImpl implements UpisService {
     if (upis == null) {
       throw new UpisiSeException(VrstaPoruke.UPIS_NE_POSTOJI_U_BAZI);
     }
-    return pripremiUpisDto(upis, null);
+    return pripremiUpisDto(upis, dohvatiStatus(upis));
+  }
+
+  private UpisniStatus dohvatiStatus(Upis upis) {
+
+    LocalDateTime datumVrijeme = LocalDateTime.now();
+
+    if (datumVrijeme.isBefore(upis.getTstampOd())) {
+      return UpisniStatus.NIJE_ZAPOCET;
+    }
+    if (datumVrijeme.isAfter(upis.getTstampDo())) {
+      return UpisniStatus.ZAVRSEN;
+    }
+    return UpisniStatus.U_TIJEKU;
   }
 
   private UpisDto pripremiUpisDto(Upis upis, UpisniStatus status) {
@@ -74,6 +89,13 @@ public class UpisServiceImpl implements UpisService {
 
     return UpisMapper.toDto(
         upis, visokoUcilisteSifOpis, studijSifOpis, obavezniKolegiji, izborniKolegiji, status);
+  }
+
+  @Override
+  public List<UpisDto> dohvatiSve() {
+    return upisManager.dohvatiSve().stream()
+        .map(upis -> pripremiUpisDto(upis, dohvatiStatus(upis)))
+        .collect(Collectors.toList());
   }
 
   @Override

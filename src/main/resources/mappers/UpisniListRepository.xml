@@ -88,6 +88,12 @@
         where upisni_list.id              = #{id, jdbcType=BIGINT}
     </update>
 
+    <update id="potvrdi">
+        update upisni_list
+           set upisni_list.status            = '${@hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus@ZAVRSEN}'
+        where upisni_list.id              = #{id, jdbcType=BIGINT}
+    </update>
+
     <delete id="izbrisi" parameterType="Integer">
         update upisni_list
            set upisni_list.status          = '${@hr.lrukavina.upisisebackend.model.upisnilist.UpisniStatus@NIJE_ZAPOCET}',

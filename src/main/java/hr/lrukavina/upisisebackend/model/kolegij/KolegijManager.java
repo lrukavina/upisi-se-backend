@@ -15,6 +15,10 @@ public class KolegijManager {
     return repository.dohvati(kolegijId);
   }
 
+  public List<Kolegij> dohvatiSve() {
+    return repository.dohvatiSve();
+  }
+
   public List<Kolegij> dohvati(List<Integer> kolegijIdevi) {
     List<Kolegij> kolegiji = new ArrayList<>();
     for (Integer kolegijId : kolegijIdevi) {
@@ -29,6 +33,10 @@ public class KolegijManager {
 
   public List<Kolegij> dohvatiPoUpisniListId(Integer upisniListId) {
     return repository.dohvatiPoUpisniListId(upisniListId);
+  }
+
+  public List<Kolegij> dohvatiPoStudijId(Integer studijId) {
+    return repository.dohvatiPoStudijId(studijId);
   }
 
   public void spremi(Kolegij kolegij) {

@@ -11,6 +11,10 @@ public class KorisnikManager {
   private final KorisnikRepository repository;
   private static final String LIKE_WILDCARD = "%";
 
+  public List<Korisnik> dohvatiSveStudente() {
+    return repository.dohvatiSveStudente();
+  }
+
   public Korisnik dohvati(Integer korisnikId) {
     return repository.dohvati(korisnikId);
   }

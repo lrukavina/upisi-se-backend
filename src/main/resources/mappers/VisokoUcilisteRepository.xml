@@ -24,6 +24,13 @@
         ${alias}.oib
     </sql>
 
+    <select id="dohvatiSve" resultMap="visokoUcilisteResultMap">
+        select  <include refid="visokoUcilisteSelectColumns">
+                 <property name="alias" value="visoko_uciliste"/>
+                </include>
+        from visoko_uciliste
+    </select>
+
     <select id="dohvati" parameterType="Integer" resultMap="visokoUcilisteResultMap">
         select  <include refid="visokoUcilisteSelectColumns">
                  <property name="alias" value="visoko_uciliste"/>

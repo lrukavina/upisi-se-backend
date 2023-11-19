@@ -1,5 +1,7 @@
 package hr.lrukavina.upisisebackend.model.visokouciliste;
 
+import hr.lrukavina.upisisebackend.common.SifraOpis;
+import hr.lrukavina.upisisebackend.common.SifraOpisHelper;
 import hr.lrukavina.upisisebackend.exception.UpisiSeException;
 import hr.lrukavina.upisisebackend.exception.VrstaPoruke;
 import hr.lrukavina.upisisebackend.model.visokouciliste.request.AzurVisokoUcilisteRequest;
@@ -10,11 +12,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
 
   private final VisokoUcilisteManager manager;
+  private final SifraOpisHelper sifraOpisHelper;
+
+  @Override
+  public List<SifraOpis> dohvatiZaPadajuciIzbornik() {
+    return sifraOpisHelper.dohvatiVisokaUcilista();
+  }
 
   @Override
   public VisokoUcilisteDto dohvati(String sifra) {
@@ -23,6 +34,13 @@ public class VisokoUcilisteServiceImpl implements VisokoUcilisteService {
       throw new UpisiSeException(VrstaPoruke.VISOKO_UCILISTE_NE_POSTOJI_U_BAZI);
     }
     return VisokoUcilisteMapper.toDto(visokoUciliste);
+  }
+
+  @Override
+  public List<VisokoUcilisteDto> dohvatiSve() {
+    return manager.dohvatiSve().stream()
+        .map(VisokoUcilisteMapper::toDto)
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -13,6 +13,7 @@ import hr.lrukavina.upisisebackend.model.kolegij.kolegijnastavnik.request.Spremi
 import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijIzbornikDto;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijUpisniListDto;
 import hr.lrukavina.upisisebackend.model.studij.Studij;
 import hr.lrukavina.upisisebackend.model.studij.StudijManager;
@@ -41,15 +42,53 @@ public class KolegijServiceImpl implements KolegijService {
     if (kolegij == null) {
       throw new UpisiSeException(VrstaPoruke.KOLEGIJ_NE_POSTOJI_U_BAZI);
     }
+    return popuniOstalePodatkeKolegija(kolegij);
+  }
+
+  private KolegijDto popuniOstalePodatkeKolegija(Kolegij kolegij) {
     KolegijInfo kolegijInfo = kolegijInfoManager.dohvatiPoKolegijId(kolegij.getId());
 
     List<KolegijNastavnik> kolegijNastavnici =
         kolegijNastavnikManager.dohvatiPoKolegijId(kolegij.getId());
 
-    SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
+    Studij studij = studijManager.dohvati(kolegij.getStudijId());
+
+    SifraOpis studijSifOpis = sifraOpisHelper.dohvatiStudij(studij);
+
+    SifraOpis visokoUciliste = sifraOpisHelper.dohvatiVisokoUciliste(studij.getVisokoUcilisteId());
 
     return KolegijMapper.toDto(
-        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+        kolegij,
+        studijSifOpis,
+        visokoUciliste,
+        kolegijInfo,
+        kolegijNastavnici,
+        sifraOpisHelper.dohvatiKolegij(kolegij));
+  }
+
+  @Override
+  public List<KolegijDto> dohvatiSve() {
+    List<Kolegij> kolegiji = kolegijManager.dohvatiSve();
+    return kolegiji.stream().map(this::popuniOstalePodatkeKolegija).collect(Collectors.toList());
+  }
+
+  @Override
+  public KolegijIzbornikDto dohvatiZaIzbornikPoStudij(String sifra) {
+    List<Kolegij> kolegiji = kolegijManager.dohvatiPoStudijId(Utils.desifrirajId(sifra));
+
+    List<SifraOpis> obavezniKolegiji =
+        kolegiji.stream().filter(Kolegij::isObavezan).map(sifraOpisHelper::dohvatiKolegij).toList();
+
+    List<SifraOpis> izborniKolegiji =
+        kolegiji.stream()
+            .filter(kolegij -> !kolegij.isObavezan())
+            .map(sifraOpisHelper::dohvatiKolegij)
+            .toList();
+
+    return KolegijIzbornikDto.builder()
+        .obavezniKolegiji(obavezniKolegiji)
+        .izborniKolegiji(izborniKolegiji)
+        .build();
   }
 
   @Override
@@ -74,7 +113,12 @@ public class KolegijServiceImpl implements KolegijService {
 
     SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
     return KolegijMapper.toDto(
-        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+        kolegij,
+        studij,
+        SifraOpis.builder().build(),
+        kolegijInfo,
+        kolegijNastavnici,
+        sifraOpisHelper.dohvatiKolegij(kolegij));
   }
 
   @Override
@@ -127,8 +171,15 @@ public class KolegijServiceImpl implements KolegijService {
       kolegijNastavnici.add(kolegijNastavnik);
     }
 
+    kolegijManager.azuriraj(kolegij);
+
     return KolegijMapper.toDto(
-        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+        kolegij,
+        studij,
+        SifraOpis.builder().build(),
+        kolegijInfo,
+        kolegijNastavnici,
+        sifraOpisHelper.dohvatiKolegij(kolegij));
   }
 
   private KolegijNastavnik azurirajKolegijNastavnik(

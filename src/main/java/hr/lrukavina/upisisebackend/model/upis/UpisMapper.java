@@ -10,6 +10,7 @@ import hr.lrukavina.upisisebackend.utils.Utils;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class UpisMapper {
 
     LocalDateTime tstampDoTransformirani = upis.getTstampDo().minusMinutes(1);
     String datumVrijemeDo =
-            tstampDoTransformirani.toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        tstampDoTransformirani.toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             + " "
             + tstampDoTransformirani.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
@@ -44,6 +45,8 @@ public class UpisMapper {
         .maxBrojEctsa(upis.getMaxBrojEctsa())
         .datumVrijemeOd(datumVrijemeOd)
         .datumVrijemeDo(datumVrijemeDo)
+        .datumOd(upis.getTstampOd().toLocalDate())
+        .datumDo(upis.getTstampDo().toLocalDate())
         .status(status != null ? String.valueOf(status) : null)
         .obavezniKolegiji(obavezniKolegiji)
         .izborniKolegiji(izbroniKolegiji)
@@ -55,8 +58,8 @@ public class UpisMapper {
         .semestar(request.getSemestar())
         .minBrojEctsa(request.getMinBrojEctsa())
         .maxBrojEctsa(request.getMaxBrojEctsa())
-        .tstampOd(request.getTstampOd())
-        .tstampDo(request.getTstampDo())
+        .tstampOd(LocalDateTime.of(request.getDatumOd(), LocalTime.of(0, 0)))
+        .tstampDo(LocalDateTime.of(request.getDatumDo(), LocalTime.of(0, 0)))
         .studijId(Utils.desifrirajId(request.getStudijSifra()))
         .build();
   }
@@ -67,8 +70,8 @@ public class UpisMapper {
             .semestar(request.getSemestar())
             .minBrojEctsa(request.getMinBrojEctsa())
             .maxBrojEctsa(request.getMaxBrojEctsa())
-            .tstampOd(request.getTstampOd())
-            .tstampDo(request.getTstampDo())
+            .tstampOd(LocalDateTime.of(request.getDatumOd(), LocalTime.of(0, 0)))
+            .tstampDo(LocalDateTime.of(request.getDatumDo(), LocalTime.of(0, 0)))
             .studijId(Utils.desifrirajId(request.getStudijSifra()))
             .build();
 

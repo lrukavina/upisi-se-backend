@@ -40,6 +40,10 @@ public class UpisniListManager {
     repository.azuriraj(upisniList);
   }
 
+  public void potvrdi(UpisniList upisniList) {
+    repository.potvrdi(upisniList);
+  }
+
   public void izbrisi(Integer upisniListId) {
     repository.izbrisi(upisniListId);
   }
@@ -48,5 +52,13 @@ public class UpisniListManager {
     for (UpisniList upisniList : upisniListovi) {
       repository.izbrisi(upisniList.getId());
     }
+  }
+
+  public void izbrisiPoKorisniku(String korisnickoIme) {
+    UpisniList upisniList = dohvatiPoKorisniku(korisnickoIme);
+    if (upisniList == null) {
+      return;
+    }
+    repository.izbrisi(upisniList.getId());
   }
 }

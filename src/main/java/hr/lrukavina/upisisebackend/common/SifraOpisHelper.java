@@ -12,6 +12,9 @@ import hr.lrukavina.upisisebackend.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class SifraOpisHelper {
@@ -31,6 +34,21 @@ public class SifraOpisHelper {
         .build();
   }
 
+  public List<SifraOpis> dohvatiVisokaUcilista() {
+    List<VisokoUciliste> visokaUcilista = visokoUcilisteManager.dohvatiSve();
+    List<SifraOpis> visokaUcilistaSifOpis = new ArrayList<>();
+
+    for (VisokoUciliste visokoUciliste : visokaUcilista) {
+      SifraOpis sifraOpis =
+          SifraOpis.builder()
+              .sifra(Utils.sifrirajId(visokoUciliste.getId()))
+              .opis(visokoUciliste.getNaziv())
+              .build();
+      visokaUcilistaSifOpis.add(sifraOpis);
+    }
+    return visokaUcilistaSifOpis;
+  }
+
   public SifraOpis dohvatiStudij(Integer id) {
     Studij studij = studijManager.dohvati(id);
     if (studij == null) {
@@ -48,19 +66,24 @@ public class SifraOpisHelper {
     }
     return SifraOpis.builder()
         .sifra(Utils.sifrirajId(studij.getId()))
-        .opis(studij.getNazivStudija() + "(" + studij.getNazivSmjera() + ")")
+        .opis(studij.getNazivStudija() + " (" + studij.getNazivSmjera() + ")")
         .build();
   }
 
-  public SifraOpis dohvatiKolegij(Integer id) {
-    Kolegij kolegij = kolegijManager.dohvati(id);
-    if (kolegij == null) {
-      return null;
+  public List<SifraOpis> dohvatiStudije(String sifra) {
+    List<Studij> visokaUcilista =
+        studijManager.dohvatiPoVisokoUcilisteId(Utils.desifrirajId(sifra));
+    List<SifraOpis> studijiSifOpis = new ArrayList<>();
+
+    for (Studij studij : visokaUcilista) {
+      SifraOpis sifraOpis =
+          SifraOpis.builder()
+              .sifra(Utils.sifrirajId(studij.getId()))
+              .opis(studij.getNazivStudija() + " (" + studij.getNazivSmjera() + ")")
+              .build();
+      studijiSifOpis.add(sifraOpis);
     }
-    return SifraOpis.builder()
-        .sifra(Utils.sifrirajId(kolegij.getId()))
-        .opis(kolegij.getNaziv())
-        .build();
+    return studijiSifOpis;
   }
 
   public SifraOpis dohvatiKolegij(Kolegij kolegij) {

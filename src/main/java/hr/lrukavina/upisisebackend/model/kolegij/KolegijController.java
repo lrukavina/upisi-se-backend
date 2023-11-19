@@ -3,9 +3,12 @@ package hr.lrukavina.upisisebackend.model.kolegij;
 import hr.lrukavina.upisisebackend.model.kolegij.request.AzurKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.request.SpremiKolegijRequest;
 import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijDto;
+import hr.lrukavina.upisisebackend.model.kolegij.response.KolegijIzbornikDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -17,6 +20,17 @@ public class KolegijController {
   @GetMapping("/dohvati/{sifra}")
   public ResponseEntity<KolegijDto> dohvati(@PathVariable final String sifra) {
     return ResponseEntity.ok(kolegijService.dohvati(sifra));
+  }
+
+  @GetMapping("/dohvati/sve")
+  public ResponseEntity<List<KolegijDto>> dohvatiSve() {
+    return ResponseEntity.ok(kolegijService.dohvatiSve());
+  }
+
+  @GetMapping("/dohvati/izbornik/studij/{sifra}")
+  public ResponseEntity<KolegijIzbornikDto> dohvatiZaIzbornikPoStudij(
+      @PathVariable final String sifra) {
+    return ResponseEntity.ok(kolegijService.dohvatiZaIzbornikPoStudij(sifra));
   }
 
   @PostMapping("/spremi")

@@ -13,7 +13,9 @@ import hr.lrukavina.upisisebackend.model.studij.Studij;
 import hr.lrukavina.upisisebackend.model.studij.StudijManager;
 import hr.lrukavina.upisisebackend.model.upis.Upis;
 import hr.lrukavina.upisisebackend.model.upisnilist.request.AzurUpisniListRequest;
+import hr.lrukavina.upisisebackend.model.upisnilist.request.PotvrdiUpisniListRequest;
 import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
+import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListStatusDto;
 import hr.lrukavina.upisisebackend.model.upisnilist.upisnilistkolegij.UpisniListKolegijManager;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -88,10 +91,11 @@ public class UpisniListServiceImpl implements UpisniListService {
     upisniListManager.azuriraj(upisniList);
     upisniListKolegijManager.azuriraj(upisniList.getId(), kolegijIdevi);
 
+    List<KolegijUpisniListDto> odabraniKolegiji =
+        kolegijService.dohvatiPoUpisniListId(upisniList.getId());
+
     return UpisniListMapper.toDto(
-        upisniList,
-        sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()),
-        Collections.emptyList());
+        upisniList, sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()), odabraniKolegiji);
   }
 
   private Integer vratiBrojEctsa(List<Kolegij> kolegiji) {
@@ -103,8 +107,47 @@ public class UpisniListServiceImpl implements UpisniListService {
   }
 
   @Override
+  public UpisniListDto potvrdi(PotvrdiUpisniListRequest request) {
+    UpisniList upisniList = upisniListManager.dohvatiPoKorisniku(request.getKorisnickoIme());
+    if (upisniList == null) {
+      throw new UpisiSeException(VrstaPoruke.UPISNI_LIST_NE_POSTOJI_U_BAZI);
+    }
+    upisniListManager.potvrdi(upisniList);
+    return UpisniListMapper.toDto(
+        upisniList,
+        sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()),
+        Collections.emptyList());
+  }
+
+  @Override
+  public List<UpisniListStatusDto> dohvatiUpisniListStatuse(String upisSifra) {
+    List<UpisniList> upisniListovi =
+        upisniListManager.dohvatiPoUpisId(Utils.desifrirajId(upisSifra));
+
+    List<UpisniListStatusDto> upisniListStatusi = new ArrayList<>();
+    for (UpisniList upisniList : upisniListovi) {
+      Korisnik korisnik = korisnikManager.dohvatiPoUpisniListId(upisniList.getId());
+      UpisniListStatusDto upisniListStatusDto =
+          UpisniListStatusDto.builder()
+              .ime(korisnik.getIme())
+              .prezime(korisnik.getPrezime())
+              .jmbag(korisnik.getJmbag())
+              .status(upisniList.getStatus())
+              .build();
+
+      upisniListStatusi.add(upisniListStatusDto);
+    }
+    return upisniListStatusi;
+  }
+
+  @Override
   public void izbrisi(String sifra) {
     upisniListManager.izbrisi(Utils.desifrirajId(sifra));
+  }
+
+  @Override
+  public void izbrisiPoKorisniku(String korisnickoIme) {
+    upisniListManager.izbrisiPoKorisniku(korisnickoIme);
   }
 
   @Override

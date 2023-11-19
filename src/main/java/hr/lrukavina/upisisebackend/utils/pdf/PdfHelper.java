@@ -58,6 +58,7 @@ public class PdfHelper {
 
     html.append(
             "<p style=\"text-align:center\"><u><strong>UPISNI LIST I IZRAČUN &Scaron;KOLARINE ZA AKADEMSKU GODINU")
+        .append(Konstante.RAZMAK)
         .append(LocalDate.now().getYear())
         .append(Konstante.KOSA_CRTA)
         .append(LocalDate.now().plusYears(1).getYear())
@@ -74,6 +75,7 @@ public class PdfHelper {
         .append("<th scope=\"col\">&Scaron;ifra</th>")
         .append("<th scope=\"col\">Naziv</th>")
         .append("<th scope=\"col\">ECTS</th>")
+        .append("<th scope=\"col\">Obavezan</th>")
         .append("</tr>")
         .append("</thead>")
         .append("<tbody>");
@@ -90,6 +92,9 @@ public class PdfHelper {
           .append("</td>")
           .append("<td>")
           .append(kolegij.getEcts())
+          .append("</td>")
+          .append("<td>")
+          .append(kolegij.isObavezan() ? "DA" : "NE")
           .append("</td>")
           .append("</tr>");
 
