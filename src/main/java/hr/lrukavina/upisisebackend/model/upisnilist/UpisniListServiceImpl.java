@@ -15,6 +15,7 @@ import hr.lrukavina.upisisebackend.model.upis.Upis;
 import hr.lrukavina.upisisebackend.model.upisnilist.request.AzurUpisniListRequest;
 import hr.lrukavina.upisisebackend.model.upisnilist.request.PotvrdiUpisniListRequest;
 import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListDto;
+import hr.lrukavina.upisisebackend.model.upisnilist.response.UpisniListStatusDto;
 import hr.lrukavina.upisisebackend.model.upisnilist.upisnilistkolegij.UpisniListKolegijManager;
 import hr.lrukavina.upisisebackend.utils.Konstante;
 import hr.lrukavina.upisisebackend.utils.Utils;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -115,6 +117,27 @@ public class UpisniListServiceImpl implements UpisniListService {
         upisniList,
         sifraOpisHelper.dohvatiKorisnika(upisniList.getKorisnikId()),
         Collections.emptyList());
+  }
+
+  @Override
+  public List<UpisniListStatusDto> dohvatiUpisniListStatuse(String upisSifra) {
+    List<UpisniList> upisniListovi =
+        upisniListManager.dohvatiPoUpisId(Utils.desifrirajId(upisSifra));
+
+    List<UpisniListStatusDto> upisniListStatusi = new ArrayList<>();
+    for (UpisniList upisniList : upisniListovi) {
+      Korisnik korisnik = korisnikManager.dohvatiPoUpisniListId(upisniList.getId());
+      UpisniListStatusDto upisniListStatusDto =
+          UpisniListStatusDto.builder()
+              .ime(korisnik.getIme())
+              .prezime(korisnik.getPrezime())
+              .jmbag(korisnik.getJmbag())
+              .status(upisniList.getStatus())
+              .build();
+
+      upisniListStatusi.add(upisniListStatusDto);
+    }
+    return upisniListStatusi;
   }
 
   @Override
