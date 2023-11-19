@@ -29,7 +29,7 @@ public class Utils {
   }
 
   public static Integer desifrirajId(String sifra) {
-    if (sifra == null) {
+    if (sifra == null || sifra.isEmpty()) {
       return null;
     }
     return Integer.valueOf(sifra);
