@@ -18,6 +18,7 @@ public class KolegijDto {
   private String isvuSifra;
   private boolean obavezan;
   private SifraOpis studij;
+  private SifraOpis visokoUciliste;
   private KolegijInfoDto kolegijInfo;
   private List<KolegijNastavnikDto> nastavnici;
 }

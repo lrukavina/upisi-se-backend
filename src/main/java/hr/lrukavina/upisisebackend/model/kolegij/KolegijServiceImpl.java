@@ -50,10 +50,19 @@ public class KolegijServiceImpl implements KolegijService {
     List<KolegijNastavnik> kolegijNastavnici =
         kolegijNastavnikManager.dohvatiPoKolegijId(kolegij.getId());
 
-    SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
+    Studij studij = studijManager.dohvati(kolegij.getStudijId());
+
+    SifraOpis studijSifOpis = sifraOpisHelper.dohvatiStudij(studij);
+
+    SifraOpis visokoUciliste = sifraOpisHelper.dohvatiVisokoUciliste(studij.getVisokoUcilisteId());
 
     return KolegijMapper.toDto(
-        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+        kolegij,
+        studijSifOpis,
+        visokoUciliste,
+        kolegijInfo,
+        kolegijNastavnici,
+        sifraOpisHelper.dohvatiKolegij(kolegij));
   }
 
   @Override
@@ -84,7 +93,12 @@ public class KolegijServiceImpl implements KolegijService {
 
     SifraOpis studij = sifraOpisHelper.dohvatiStudij(kolegij.getStudijId());
     return KolegijMapper.toDto(
-        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+        kolegij,
+        studij,
+        SifraOpis.builder().build(),
+        kolegijInfo,
+        kolegijNastavnici,
+        sifraOpisHelper.dohvatiKolegij(kolegij));
   }
 
   @Override
@@ -137,8 +151,15 @@ public class KolegijServiceImpl implements KolegijService {
       kolegijNastavnici.add(kolegijNastavnik);
     }
 
+    kolegijManager.azuriraj(kolegij);
+
     return KolegijMapper.toDto(
-        kolegij, studij, kolegijInfo, kolegijNastavnici, sifraOpisHelper.dohvatiKolegij(kolegij));
+        kolegij,
+        studij,
+        SifraOpis.builder().build(),
+        kolegijInfo,
+        kolegijNastavnici,
+        sifraOpisHelper.dohvatiKolegij(kolegij));
   }
 
   private KolegijNastavnik azurirajKolegijNastavnik(

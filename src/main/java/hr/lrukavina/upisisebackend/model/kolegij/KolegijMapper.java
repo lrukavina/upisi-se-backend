@@ -30,6 +30,7 @@ public class KolegijMapper {
   public static KolegijDto toDto(
       Kolegij kolegij,
       SifraOpis studij,
+      SifraOpis visokoUciliste,
       KolegijInfo kolegijInfo,
       List<KolegijNastavnik> kolegijNastavnici,
       SifraOpis kolegijSifOpis) {
@@ -48,6 +49,7 @@ public class KolegijMapper {
         .isvuSifra(kolegij.getIsvuSifra())
         .obavezan(kolegij.isObavezan())
         .studij(studij)
+        .visokoUciliste(visokoUciliste)
         .kolegijInfo(kolegijInfoDto)
         .nastavnici(nastavnici)
         .build();
